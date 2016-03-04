@@ -37,4 +37,5 @@ npm-debug.log
 
 ios/FBSDKCoreKit.framework/
 ios/FBSDKShareKit.framework/
-ios/FBSDKShareKit.framework/
+ios/FBSDKLoginKit.framework/
+
