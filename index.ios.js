@@ -3,50 +3,96 @@
  * https://github.com/facebook/react-native
  */
 'use strict';
-import React, {
+
+var React = require('react-native');
+var {
   AppRegistry,
-  Component,
   StyleSheet,
+  Component,
   Text,
-  View
-} from 'react-native';
+  View,
+  Navigator,
+  TouchableOpacity,
+  StyleSheet,
+} = React;
+
+var SplashPage = require('./app/SplashPage');
+var LoginPage = require('./app/LoginPage');
+var MainPage = require('./app/MainPage');
+var Messages = require('./app/Messages');
+var Profile = require('./app/Profile');
+var NoNavigatorPage = require('./app/NoNavigatorPage');
+
+var styles = require('./styles');
 
 class AMGSandbox extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
+      <Navigator
+          initialRoute={{id: 'SplashPage', name: 'Index'}}
+          renderScene={this.renderScene.bind(this)}
+          configureScene={(route) => {
+            if (route.sceneConfig) {
+              return route.sceneConfig;
+            }
+            return Navigator.SceneConfigs.FloatFromRight;
+          }} />
+    );
+  }
+  renderScene(route, navigator) {
+    var routeId = route.id;
+    console.log('Index: routeId='+routeId)
+
+    if (routeId === 'SplashPage') {
+      return (
+        <SplashPage
+          navigator={navigator} />
+      );
+    }
+    if (routeId === 'LoginPage') {
+      return (
+        <LoginPage
+          navigator={navigator} />
+      );
+    }
+    if (routeId === 'MainPage') {
+      return (
+        <MainPage
+            navigator={navigator} />
+      );
+    }
+    if (routeId === 'Profile') {
+      return (
+        <Profile
+          navigator={navigator} />
+      );
+    }
+    if (routeId === 'Messages') {
+      return (
+        <Messages
+          navigator={navigator} />
+      );
+    }
+    if (routeId === 'NoNavigatorPage') {
+      return (
+        <NoNavigatorPage
+            navigator={navigator} />
+      );
+    }
+    return this.noRoute(navigator); /* <-- if the route isn't found, it defaults to this method. */
+
+  }
+  noRoute(navigator) {
+    return (
+      <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'center'}}>
+        <TouchableOpacity style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}
+            onPress={() => navigator.pop()}>
+          <Text style={{color: 'red', fontWeight: 'bold'}}>View not found</Text>
+        </TouchableOpacity>
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
 
 AppRegistry.registerComponent('AMGSandbox', () => AMGSandbox);
