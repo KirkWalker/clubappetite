@@ -11,7 +11,7 @@ var {
 } = React;
 
 var styles = require('../styles');
-
+var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
 
 class Messages extends Component {
   render() {
@@ -42,37 +42,5 @@ class Messages extends Component {
     });
   }
 }
-
-var NavigationBarRouteMapper = {
-  LeftButton(route, navigator, index, nextState) {
-    return (
-      <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}
-          onPress={() => navigator.parentNavigator.pop()}>
-        <Text style={{color: 'white', margin: 10,}}>
-          back
-        </Text>
-      </TouchableOpacity>
-    );
-  },
-  RightButton(route, navigator, index, nextState) {
-    return (
-      <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}
-          onPress={() => navigator.parentNavigator.push({id: 'MainPage',name:"Main Page"})}>
-        <Text style={{color: 'white', margin: 10,}}>
-          Home
-        </Text>
-      </TouchableOpacity>
-    );
-  },
-  Title(route, navigator, index, nextState) {
-    return (
-      <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}>
-        <Text style={styles.navbar_title}>
-          Your Messages
-        </Text>
-      </TouchableOpacity>
-    );
-  }
-};
 
 module.exports = Messages;
