@@ -32,7 +32,7 @@ module.exports = {
           onPress={() => navigator.parentNavigator.push({id: 'Profile',name:"Profile"})}>
         <Image source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}
              style={{width: 50, height: 50}}>
-          <Image source={require('../img/Hexagon4.png')}
+          <Image source={require('../img/MenuHex.png')}
                   style={{width: 50, height: 50}}/>
         </Image>
     </TouchableOpacity>
