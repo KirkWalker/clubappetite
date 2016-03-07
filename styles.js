@@ -4,10 +4,24 @@ module.exports = StyleSheet.create({
 
   container: {
     flex: 1,
+    width: null,
+    height: null,
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-    marginTop:80,
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0,0,0,0)',
   },
+  imageContainer: {
+      flex: 1,
+      width: null,
+      height: null,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: 'rgba(0,0,0,0)',
+    },
+  image: {
+    flex: 1
+  },
+
   title: {
     fontSize: 20,
     textAlign: 'center',
@@ -17,10 +31,12 @@ module.exports = StyleSheet.create({
     flex: 1,
     backgroundColor: '#246dd5',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    padding:10,
   },
   navbar: {
-    backgroundColor: '#246dd5'
+    backgroundColor: '#1B898A',
+    height:60
   },
   navbar_title: {
     color: 'white',

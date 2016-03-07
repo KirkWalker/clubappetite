@@ -9,6 +9,7 @@ var {
   Navigator,
   TouchableHighlight,
   TouchableOpacity,
+  Image,
 } = React;
 
 var styles = require('../styles');
@@ -23,16 +24,29 @@ class MainPage extends Component {
             <Navigator.NavigationBar style={styles.navbar}
                 routeMapper={NavigationBarRouteMapper} />
           } />
+
+
+
+
     );
   }
   renderScene(route, navigator) {
     return (
-      <View style={styles.container}>
-        <TouchableHighlight style={{backgroundColor: 'yellow', padding: 10}}
-            onPress={this.gotoMessagesPage.bind(this)}>
-          <Text style={{backgroundColor: 'yellow', color: 'green'}}>Messages</Text>
-        </TouchableHighlight>
-      </View>
+
+        <Image style={styles.imageContainer} source={require('../img/background2.png')} resizeMode="cover">
+
+          <TouchableHighlight style={styles.welcome, {backgroundColor: 'yellow', padding: 10}}
+              onPress={this.gotoMessagesPage.bind(this)}>
+            <Text style={{backgroundColor: 'yellow', color: 'green'}}>Messages</Text>
+          </TouchableHighlight>
+
+
+
+        </Image>
+
+
+
+
     );
   }
   gotoMessagesPage() {
@@ -49,7 +63,8 @@ var NavigationBarRouteMapper = {
       <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}
           onPress={() => navigator.parentNavigator.pop()}>
         <Text style={{color: 'white', margin: 10,}}>
-          Back
+          <Image source={require('../img/MenuButton.png')}
+                            style={{width: 50, height: 50}}/>
         </Text>
       </TouchableOpacity>
     );
@@ -58,19 +73,20 @@ var NavigationBarRouteMapper = {
     return (
     <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}
           onPress={() => navigator.parentNavigator.push({id: 'Profile',name:"Profile"})}>
-        <Text style={{color: 'white', margin: 10,}}>
-          Profile
-        </Text>
+        <Image source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}
+             style={{width: 50, height: 50}}>
+          <Image source={require('../img/Hexagon4.png')}
+                  style={{width: 50, height: 50}}/>
+        </Image>
     </TouchableOpacity>
     );
   },
   Title(route, navigator, index, navState) {
     return (
-      <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}>
-        <Text style={styles.navbar_title}>
-          Club Appetite
-        </Text>
-      </TouchableOpacity>
+    <View style={{flex: 1, justifyContent: 'center',alignItems: 'center'}}>
+      <Image source={require('../img/NavLogo.png')}
+           style={{width: 150, height: 48, marginLeft:40}}/>
+    </View>
     );
   }
 };
