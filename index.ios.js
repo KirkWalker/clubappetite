@@ -23,6 +23,9 @@ var Messages = require('./app/Messages');
 var Profile = require('./app/Profile');
 var NoNavigatorPage = require('./app/NoNavigatorPage');
 
+var BannerAds = require('./datalayer/BannerAds');
+
+
 var styles = require('./styles');
 
 class AMGSandbox extends Component {
@@ -52,7 +55,8 @@ class AMGSandbox extends Component {
     if (routeId === 'LoginPage') {
       return (
         <LoginPage
-          navigator={navigator} />
+          navigator={navigator}
+           bannerads={BannerAds}/>
       );
     }
     if (routeId === 'MainPage') {
