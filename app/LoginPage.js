@@ -39,7 +39,7 @@ class LoginPage extends Component {
 
         <View style={styles.container}>
           <View>
-            <Text style={styles.title}>Please use the form below to login.</Text>
+            <Text style={styles.title}>Please login to Facebook.</Text>
           </View>
 
           <View style={styles.content}>

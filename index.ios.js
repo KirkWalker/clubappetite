@@ -30,7 +30,7 @@ var Drawer = require('react-native-drawer');
 var ControlPanel = require('./ControlPanel')
 
 var BannerAds = require('./datalayer/BannerAds');
-
+var Users = require('./datalayer/User');
 
 var styles = require('./styles');
 var drawerStyles = {
@@ -155,8 +155,8 @@ class AMGSandbox extends Component {
     Users.handleLogout();
     this.drawer.close();
     this.navigatorObj.push({
-      id: 'Login',
-      name: 'Login',
+      id: 'LoginPage',
+      name: 'Login Page',
     });
    }
 
