@@ -12,7 +12,7 @@ var {
 
 
 var styles = require('../styles');
-
+var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
 
 class Profile extends Component {
   render() {
@@ -43,37 +43,5 @@ class Profile extends Component {
     });
   }
 }
-
-var NavigationBarRouteMapper = {
-  LeftButton(route, navigator, index, nextState) {
-    return (
-      <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}
-          onPress={() => navigator.parentNavigator.pop()}>
-        <Text style={{color: 'white', margin: 10,}}>
-          back
-        </Text>
-      </TouchableOpacity>
-    );
-  },
-  RightButton(route, navigator, index, nextState) {
-    return (
-      <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}
-          onPress={() => navigator.parentNavigator.push({id: 'MainPage',name:"Main Page"})}>
-        <Text style={{color: 'white', margin: 10,}}>
-          Home
-        </Text>
-      </TouchableOpacity>
-    );
-  },
-  Title(route, navigator, index, nextState) {
-    return (
-      <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}>
-        <Text style={styles.navbar_title}>
-          Your Profile
-        </Text>
-      </TouchableOpacity>
-    );
-  }
-};
 
 module.exports = Profile;

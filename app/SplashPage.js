@@ -4,7 +4,7 @@ var React = require('react-native');
 var {
   Component,
   View,
-  Text,
+  Image,
 } = React;
 
 var styles = require('../styles');
@@ -20,9 +20,7 @@ class SplashPage extends Component {
   }
   render() {
     return (
-      <View style={styles.splashPageContainer}>
-        <Text style={{color: 'white', fontSize: 32,}}>Club Appetite</Text>
-      </View>
+      <Image style={styles.imageContainer} source={require('../img/Splash.png')} resizeMode="cover" />
     );
   }
 }
