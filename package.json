@@ -6,6 +6,9 @@
     "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
-    "react-native": "^0.20.0"
+    "react-native": "^0.20.0",
+    "react-native-facebook-login": "^1.0.3",
+    "react-native-db-models": "^0.1.3"
+
   }
 }
