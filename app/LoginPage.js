@@ -10,7 +10,14 @@ var {
   TouchableOpacity,
 } = React;
 
+
+
+
 var styles = require('../styles');
+var FBLogin = require('react-native-facebook-login');
+var Users = require('../datalayer/User');
+
+
 var result;
 
 class LoginPage extends Component {
@@ -19,31 +26,47 @@ class LoginPage extends Component {
 
   constructor(props) {
       super(props);
-      this.state = {count: null, dataObj: null};
-      result = props.bannerads.getAdData(this);
+      this.state = { data: null};
+      this.navigatorObj = props.navigator;
 
   }
 
   render() {
 
-    var _this = this;
-    console.log("data:");
-    console.log(this.props.bannerads.getResult());
+      var _this = this;
 
-    return (
-      <View style={styles.container}>
-        <Text style={styles.title}>Welcome to Club Appetite</Text>
-        <Text>The would be the login page</Text>
-        <TouchableHighlight
-            onPress={this.gotoNext.bind(this)}>
-          <Text style={{color: 'red'}}>Go Home</Text>
-        </TouchableHighlight>
+      return (
+
+        <View style={styles.container}>
+          <View>
+            <Text style={styles.title}>Please use the form below to login.</Text>
+          </View>
+
+          <View style={styles.content}>
+            <FBLogin
+                onLogin={function(data){
+                  console.log('Login:onLogin');
+                  console.log('going to main page');
+                  _this.navigatorObj.push({
+                    id: 'MainPage',
+                    name: 'Main Page',
+                    data: data,
+                  });
+                  console.log('done');
+                }}
+                onLogout={function(e){
+                  console.log('Login:onLogout')
+                  Users.eraseUsers();
+                }}
+                onCancel={function(e){console.log(e)}}
+                onPermissionsMissing={function(e){console.log(e)}}
+              />
+          </View>
 
 
-        <Text>Count:{this.state.count}</Text>
+        </View>
 
-      </View>
-    );
+      );
   }
   gotoNext() {
     this.props.navigator.push({

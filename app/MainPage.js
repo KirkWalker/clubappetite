@@ -7,14 +7,37 @@ var {
   View,
   Text,
   Navigator,
+  Image,
   TouchableHighlight,
   TouchableOpacity,
 } = React;
 
 var styles = require('../styles');
+var Users = require('../datalayer/User');
 
 class MainPage extends Component {
-  render() {
+
+
+    constructor(props) {
+        super(props);
+        this.state = {user_profile: []};
+        //result = props.bannerads.getAdData(this);
+
+    }
+
+    componentDidMount() {
+      var _this = this;
+      /*
+      This method sets the state variables for the user profile
+      It will add a new user on first login or retrieve current info
+      If not logged in it will redirect to login page
+
+      successful result is an object: this.state.user_profile
+      */
+      Users.getProfile(_this);
+    }
+
+    render() {
     return (
       <Navigator
           renderScene={this.renderScene.bind(this)}
@@ -26,12 +49,23 @@ class MainPage extends Component {
     );
   }
   renderScene(route, navigator) {
+
+    var _this = this;
+    var ImageURL = Users.getImageUrl(_this);
+    var Username = this.state.user_profile.name;
+    var Email = this.state.user_profile.email;
+
     return (
       <View style={styles.container}>
-        <TouchableHighlight style={{backgroundColor: 'yellow', padding: 10}}
-            onPress={this.gotoMessagesPage.bind(this)}>
-          <Text style={{backgroundColor: 'yellow', color: 'green'}}>Messages</Text>
-        </TouchableHighlight>
+        <Text style={styles.mainPanelTitle}>
+            Welcome to Club Appetite
+          </Text>
+          <Image
+           source={{uri: ImageURL}}
+           style={[styles.base, {borderRadius: 5 }]}
+         />
+        <Text>Hello {Username + '\n\n'}</Text>
+        <Text>Get ready for spam, we now have your email. {'\n\n'}Want proof? {Email}</Text>
       </View>
     );
   }

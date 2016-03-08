@@ -29,6 +29,20 @@ var BannerAds = require('./datalayer/BannerAds');
 var styles = require('./styles');
 
 class AMGSandbox extends Component {
+
+  constructor(props) {
+      super(props);
+      this.state = { user_profile: [] };
+      this.gotoLogin = this.gotoLogin.bind(this);
+  }
+  gotoLogin() {
+    this.drawer.close();
+    this.navigatorObj.push({
+      id: 'LoginPage',
+      name: 'Login Page',
+    });
+  }
+
   render() {
     return (
       <Navigator
@@ -43,8 +57,11 @@ class AMGSandbox extends Component {
     );
   }
   renderScene(route, navigator) {
+    //used by methods that control navigation later
+    this.navigatorObj = navigator;
+    var _this=this;
     var routeId = route.id;
-    console.log('Index: routeId='+routeId)
+    console.log('index: route.routeId='+routeId);
 
     if (routeId === 'SplashPage') {
       return (
@@ -56,13 +73,15 @@ class AMGSandbox extends Component {
       return (
         <LoginPage
           navigator={navigator}
-           bannerads={BannerAds}/>
+          bannerads={BannerAds}/>
       );
     }
     if (routeId === 'MainPage') {
       return (
         <MainPage
-            navigator={navigator} />
+            navigator={navigator}
+            data={route.data}
+        />
       );
     }
     if (routeId === 'Profile') {
