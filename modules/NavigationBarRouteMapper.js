@@ -13,12 +13,12 @@ var {
 
 var styles = require('../styles');
 
-module.exports = {
+module.exports = props =>({
 
   LeftButton(route, navigator, index, navState) {
     return (
       <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}
-          onPress={() => navigator.parentNavigator.pop()}>
+          onPress={() => props[1]()}>
         <Text style={{color: 'white', margin: 10,}}>
           <Image source={require('../img/MenuButton.png')}
                             style={{width: 50, height: 50}}/>
@@ -30,7 +30,7 @@ module.exports = {
     return (
     <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}
           onPress={() => navigator.parentNavigator.push({id: 'Profile',name:"Profile"})}>
-        <Image source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}
+        <Image source={{uri: props[0]}}
              style={{width: 50, height: 50}}>
           <Image source={require('../img/MenuHex.png')}
                   style={{width: 50, height: 50}}/>
@@ -47,4 +47,4 @@ module.exports = {
     );
   }
 
-}
+})

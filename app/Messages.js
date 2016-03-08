@@ -11,17 +11,38 @@ var {
 } = React;
 
 var styles = require('../styles');
+
+var Users = require('../datalayer/User');
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
 
 class Messages extends Component {
+
+  constructor(props) {
+      super(props);
+      this.state = {user_profile: []};
+
+  }
+
+  componentDidMount() {
+    /*
+    successful result is an object: this.state.user_profile
+    */
+    Users.getProfile(this);
+  }
+
   render() {
+
+    var data = [];
+    data.push(Users.getImageUrl(this));
+    data.push(this.props.openDrawer);
+
     return (
       <Navigator
           renderScene={this.renderScene.bind(this)}
           navigator={this.props.navigator}
           navigationBar={
             <Navigator.NavigationBar style={styles.navbar}
-                routeMapper={NavigationBarRouteMapper} />
+                routeMapper={NavigationBarRouteMapper(data)} />
           } />
     );
   }

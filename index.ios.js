@@ -18,22 +18,60 @@ var {
 
 var SplashPage = require('./app/SplashPage');
 var LoginPage = require('./app/LoginPage');
+var InfoPage = require('./app/InfoPage');
+var Shop = require('./app/Shop');
+var Share = require('./app/Share');
+var Donate = require('./app/Donate');
 var MainPage = require('./app/MainPage');
 var Messages = require('./app/Messages');
 var Profile = require('./app/Profile');
 var NoNavigatorPage = require('./app/NoNavigatorPage');
+var Drawer = require('react-native-drawer');
+var ControlPanel = require('./ControlPanel')
 
 var BannerAds = require('./datalayer/BannerAds');
 
 
 var styles = require('./styles');
+var drawerStyles = {
+  drawer: {
+    shadowColor: "#000000",
+    shadowOpacity: 0.8,
+    shadowRadius: 0,
+  }
+}
+
+
+
 
 class AMGSandbox extends Component {
 
   constructor(props) {
       super(props);
+
+      this.settings = {
+          drawerType: 'overlay',
+          openDrawerOffset:100,
+          closedDrawerOffset:0,
+          panOpenMask: .1,
+          panCloseMask: .9,
+          relativeDrag: false,
+          panStartCompensation: true,
+          openDrawerThreshold: .25,
+          tweenHandlerOn: false,
+          tweenDuration: 350,
+          tweenEasing: 'linear',
+          disabled: false,
+          tweenHandlerPreset: null,
+          acceptDoubleTap: true,
+          acceptTap: false,
+          acceptPan: true,
+          rightSide: false,
+      }
+
+      this.openDrawer = this.openDrawer.bind(this);
       this.state = { user_profile: [] };
-      this.gotoLogin = this.gotoLogin.bind(this);
+
   }
   gotoLogin() {
     this.drawer.close();
@@ -43,9 +81,134 @@ class AMGSandbox extends Component {
     });
   }
 
+  openDrawer(){
+    this.drawer.open()
+  }
+  gotoProfile() {
+      this.drawer.close();
+      this.navigatorObj.push({
+        id: 'Profile',
+        name: 'Profile',
+      });
+  }
+
+  gotoDonate() {
+        this.drawer.close();
+        this.navigatorObj.push({
+          id: 'Donate',
+          name: 'Donate',
+        });
+  }
+
+  gotoHome() {
+       this.drawer.close();
+       this.navigatorObj.push({
+         id: 'MainPage',
+         name: 'Main PAge',
+       });
+  }
+
+  gotoMessage() {
+      this.drawer.close();
+      this.navigatorObj.push({
+        id: 'Messages',
+        name: 'Messages',
+      });
+  }
+  gotoShare() {
+      this.drawer.close();
+      this.navigatorObj.push({
+        id: 'Share',
+        name: 'Share',
+      });
+  }
+  gotoFaq() {
+      this.drawer.close();
+      this.navigatorObj.push({
+        id: 'Faq',
+        name: 'Faq',
+      });
+  }
+  gotoFoodBank() {
+      this.drawer.close();
+      this.navigatorObj.push({
+        id: 'FoodBank',
+        name: 'FoodBank',
+      });
+  }
+  gotoTerms() {
+       this.drawer.close();
+       this.navigatorObj.push({
+         id: 'Terms',
+         name: 'Terms',
+       });
+  }
+  gotoShop() {
+       this.drawer.close();
+       this.navigatorObj.push({
+         id: 'Shop',
+         name: 'Shop Appetite',
+       });
+  }
+  handleLogout(){
+
+    Users.handleLogout();
+    this.drawer.close();
+    this.navigatorObj.push({
+      id: 'Login',
+      name: 'Login',
+    });
+   }
+
   render() {
+
+    /*
+    this is an example of how to add navagation items to the drawer.
+    gotoShoppingCart is a function in this class that we expose to our control panel module here
+    */
+
+    var controlPanel = <ControlPanel
+        closeDrawer={() => {this.drawer.close()}}
+        gotoProfile={() => {this.gotoProfile()}}
+        gotoMessage={() => {this.gotoMessage()}}
+        gotoHome={() => {this.gotoHome()}}
+        gotoFaq={() => {this.gotoFaq()}}
+        gotoTerms={() => {this.gotoTerms()}}
+        gotoFoodBank={() => {this.gotoFoodBank()}}
+        handleLogout={() => {this.handleLogout()}}
+        gotoShop={() => {this.gotoShop()}}
+        gotoDonate={() => {this.gotoDonate()}}
+        gotoShare={() => {this.gotoShare()}}
+
+    />
+
+
     return (
-      <Navigator
+      <Drawer
+        ref={c => this.drawer = c}
+        type={this.settings.drawerType}
+        animation={this.settings.animation}
+        openDrawerOffset={this.settings.openDrawerOffset}
+        closedDrawerOffset={this.settings.closedDrawerOffset}
+        panOpenMask={this.settings.panOpenMask}
+        panCloseMask={this.settings.panCloseMask}
+        relativeDrag={this.settings.relativeDrag}
+        panStartCompensation={this.settings.panStartCompensation}
+        openDrawerThreshold={this.settings.openDrawerThreshold}
+        content={controlPanel}
+        styles={drawerStyles}
+        disabled={this.settings.disabled}
+        tweenHandler={this.tweenHandler}
+        tweenDuration={this.settings.tweenDuration}
+        tweenEasing={this.settings.tweenEasing}
+        acceptDoubleTap={this.settings.acceptDoubleTap}
+        acceptTap={this.settings.acceptTap}
+        acceptPan={this.settings.acceptPan}
+        changeVal={this.settings.changeVal}
+        negotiatePan={false}
+        side={this.settings.rightSide ? 'right' : 'left'}
+      >
+        <Navigator
           initialRoute={{id: 'SplashPage', name: 'Index'}}
           renderScene={this.renderScene.bind(this)}
           configureScene={(route) => {
@@ -54,6 +217,7 @@ class AMGSandbox extends Component {
             }
             return Navigator.SceneConfigs.FloatFromRight;
           }} />
+      </Drawer>
     );
   }
   renderScene(route, navigator) {
@@ -61,7 +225,7 @@ class AMGSandbox extends Component {
     this.navigatorObj = navigator;
     var _this=this;
     var routeId = route.id;
-    console.log('index: route.routeId='+routeId);
+    //console.log('index: route.routeId='+routeId);
 
     if (routeId === 'SplashPage') {
       return (
@@ -76,24 +240,90 @@ class AMGSandbox extends Component {
           bannerads={BannerAds}/>
       );
     }
+    /*
+
+    we pass the props data and openDrawer to the module
+    the data is used for the login process
+    openDrawer is used in the main navigator
+    */
     if (routeId === 'MainPage') {
       return (
         <MainPage
             navigator={navigator}
             data={route.data}
+            openDrawer={this.openDrawer}
         />
       );
     }
     if (routeId === 'Profile') {
       return (
         <Profile
-          navigator={navigator} />
+          navigator={navigator}
+          openDrawer={this.openDrawer}
+        />
       );
     }
     if (routeId === 'Messages') {
       return (
         <Messages
-          navigator={navigator} />
+          navigator={navigator}
+          openDrawer={this.openDrawer}
+        />
+      );
+    }
+    if (routeId === 'Shop') {
+      return (
+        <Shop
+          navigator={navigator}
+          openDrawer={this.openDrawer}
+        />
+      );
+    }
+    if (routeId === 'Share') {
+      return (
+        <Share
+          navigator={navigator}
+          openDrawer={this.openDrawer}
+        />
+      );
+    }
+    if (routeId === 'Donate') {
+      return (
+        <Donate
+          navigator={navigator}
+          openDrawer={this.openDrawer}
+        />
+      );
+    }
+
+    /*
+    pageName is passed to infoPage to populate the dynamic content.
+    */
+    if (routeId === 'Terms') {
+      return (
+        <InfoPage
+          navigator={navigator}
+          openDrawer={this.openDrawer}
+          pageName="Terms And Conditions"
+        />
+      );
+    }
+    if (routeId === 'Faq') {
+      return (
+        <InfoPage
+          navigator={navigator}
+          openDrawer={this.openDrawer}
+          pageName="Frequenty asked questions"
+        />
+      );
+    }
+    if (routeId === 'FoodBank') {
+      return (
+        <InfoPage
+          navigator={navigator}
+          openDrawer={this.openDrawer}
+          pageName="My Food Bank"
+        />
       );
     }
     if (routeId === 'NoNavigatorPage') {

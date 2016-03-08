@@ -10,20 +10,18 @@ var {
   TouchableOpacity,
 } = React;
 
-
 var styles = require('../styles');
-var Users = require('../datalayer/User');
 
+var Users = require('../datalayer/User');
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
 
-class Profile extends Component {
+class Donate extends Component {
 
+  constructor(props) {
+      super(props);
+      this.state = {user_profile: []};
 
-    constructor(props) {
-        super(props);
-        this.state = {user_profile: []};
-    }
-
+  }
 
   componentDidMount() {
     /*
@@ -31,7 +29,6 @@ class Profile extends Component {
     */
     Users.getProfile(this);
   }
-
 
   render() {
 
@@ -56,11 +53,6 @@ class Profile extends Component {
             onPress={this.gotoNext.bind(this)}>
           <Text>Slide Up Example</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-            onPress={this.gotoMessages.bind(this)}>
-          <Text>Messages</Text>
-        </TouchableOpacity>
-
       </View>
     );
   }
@@ -70,15 +62,6 @@ class Profile extends Component {
       sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
     });
   }
-
-    gotoMessages() {
-      this.props.navigator.push({
-        id: 'Messages',
-        name:'Messages',
-      });
-    }
-
-
 }
 
-module.exports = Profile;
+module.exports = Donate;

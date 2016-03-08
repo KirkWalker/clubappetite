@@ -21,7 +21,20 @@ module.exports = StyleSheet.create({
   image: {
     flex: 1
   },
-
+  controlPanel: {
+    flex: 1,
+    backgroundColor:'#333333',
+  },
+  controlPanelText: {
+    color:'white',
+  },
+  controlPanelWelcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 25,
+    color:'white',
+    fontWeight:'bold',
+  },
   title: {
     fontSize: 20,
     textAlign: 'center',

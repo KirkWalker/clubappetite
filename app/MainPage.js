@@ -15,6 +15,8 @@ var {
 var styles = require('../styles');
 var Users = require('../datalayer/User');
 
+var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
+
 class MainPage extends Component {
 
 
@@ -26,7 +28,6 @@ class MainPage extends Component {
     }
 
     componentDidMount() {
-      var _this = this;
       /*
       This method sets the state variables for the user profile
       It will add a new user on first login or retrieve current info
@@ -34,17 +35,21 @@ class MainPage extends Component {
 
       successful result is an object: this.state.user_profile
       */
-      Users.getProfile(_this);
+      Users.getProfile(this);
     }
 
     render() {
+
+    var data = [];
+    data.push(Users.getImageUrl(this));
+    data.push(this.props.openDrawer);
     return (
       <Navigator
           renderScene={this.renderScene.bind(this)}
           navigator={this.props.navigator}
           navigationBar={
             <Navigator.NavigationBar style={styles.navbar}
-                routeMapper={NavigationBarRouteMapper} />
+                routeMapper={NavigationBarRouteMapper(data)} />
           } />
     );
   }
@@ -76,8 +81,8 @@ class MainPage extends Component {
     });
   }
 }
-
-var NavigationBarRouteMapper = {
+/*
+var NavigationBarRouteMapper = props => ({
   LeftButton(route, navigator, index, navState) {
     return (
       <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}
@@ -92,9 +97,11 @@ var NavigationBarRouteMapper = {
     return (
     <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}
           onPress={() => navigator.parentNavigator.push({id: 'Profile',name:"Profile"})}>
-        <Text style={{color: 'white', margin: 10,}}>
-          Profile
-        </Text>
+        <Image source={{uri: props[0]}}
+                     style={{width: 50, height: 50}}>
+                  <Image source={require('../img/MenuHex.png')}
+                          style={{width: 50, height: 50}}/>
+                </Image>
     </TouchableOpacity>
     );
   },
@@ -107,6 +114,6 @@ var NavigationBarRouteMapper = {
       </TouchableOpacity>
     );
   }
-};
-
+});
+*/
 module.exports = MainPage;
