@@ -76,36 +76,50 @@ module.exports = {
         */
         DB.users.get_all(function(results){
 
-            if(results.totalrows == 0){
+            if(results.totalrows == 0){ // user not in local datalayer
 
+                /*
+                _this.props.data is the packet sent from the Login module.
+                If this data is present, we need to insert into the database
+                When a user logs out, the data is deleted from the local store.
+
+                Saves user profile to local data store
+                Async call, it runs last and in the back ground
+                When completed, it repopulates the state variable and refreshes the DOM
+                */
                 if(_this.props.data){
-                    /*
-                    _this.props.data is the packet sent from the Login module.
-                    If this data is present, we need to insert into the database
-                    When a user logs out, the data is deleted from the local store.
 
-                    Saves user profile to local data store
-                    Async call, it runs last and in the back ground
-                    When completed, it repopulates the state variable and refreshes the DOM
-                    */
-                    DB.users.add(_this.props.data.profile,function(result){
-                        console.log("DataLayer : User Added");
-                        var newStuff = _this.props.data.profile;
+                   console.log("DataLayer : Adding User");
+
+                   var data = _this.props.data;
+
+                   fetch('https://graph.facebook.com/me?fields=id,email,first_name,last_name,gender,link,picture,locale,name,timezone,updated_time,verified&access_token='+data.token, {method: "GET"})
+                   .then(response => response.json())
+                   .then(json => {
+                      console.log('facebook response');
+
+                        //console.log(newStuff);
+
+                        DB.users.add(json,function(result){
+
+                            /*
+                            We send a one time post to the server.
+                            The server will either add the user or update the users last login time
+
+                            successful result will return additional profile information, like points
+                            */
+
+                            _this.setState({user_profile: json}); //<--this runs very last and forces the dom to refresh
+                        });
 
 
-                        /*
-                        We send a one time post to the server.
-                        The server will either add the user or update the users last login time
-
-                        successful result will return additional profile information, like points
-                        */
+                   })
+                   .done();
 
 
 
 
 
-                        _this.setState({user_profile: newStuff}); //<--this runs very last and forces the dom to refresh
-                    });
 
                 } else {
 

@@ -28,6 +28,10 @@ class MainPage extends Component {
     }
 
     componentDidMount() {
+
+      console.log('main page object');
+      //console.log(this);
+
       /*
       This method sets the state variables for the user profile
       It will add a new user on first login or retrieve current info
