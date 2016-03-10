@@ -31,7 +31,7 @@ class MainPage extends Component {
 
     componentDidMount() {
 
-      console.log('main page object');
+      //console.log('main page object');
       //console.log(this);
 
       /*
@@ -97,39 +97,5 @@ class MainPage extends Component {
     });
   }
 }
-/*
-var NavigationBarRouteMapper = props => ({
-  LeftButton(route, navigator, index, navState) {
-    return (
-      <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}
-          onPress={() => navigator.parentNavigator.pop()}>
-        <Text style={{color: 'white', margin: 10,}}>
-          Back
-        </Text>
-      </TouchableOpacity>
-    );
-  },
-  RightButton(route, navigator, index, navState) {
-    return (
-    <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}
-          onPress={() => navigator.parentNavigator.push({id: 'Profile',name:"Profile"})}>
-        <Image source={{uri: props[0]}}
-                     style={{width: 50, height: 50}}>
-                  <Image source={require('../img/MenuHex.png')}
-                          style={{width: 50, height: 50}}/>
-                </Image>
-    </TouchableOpacity>
-    );
-  },
-  Title(route, navigator, index, navState) {
-    return (
-      <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}>
-        <Text style={styles.navbar_title}>
-          Club Appetite
-        </Text>
-      </TouchableOpacity>
-    );
-  }
-});
-*/
+
 module.exports = MainPage;

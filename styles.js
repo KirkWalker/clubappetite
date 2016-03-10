@@ -6,16 +6,22 @@ module.exports = StyleSheet.create({
     flex: 1,
     width: null,
     height: null,
-    alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: 'rgba(0,0,0,0)',
+    marginTop:60,
   },
   imageContainer: {
       justifyContent: 'center',
       backgroundColor: 'rgba(0,0,0,0)',
       marginTop:60,
-
-    },
+  },
+  centerContent: {
+        alignItems: 'center',
+      justifyContent: 'center',
+  },
+  floatRight: {
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
+  },
   image: {
     flex: 1
   },
@@ -87,6 +93,9 @@ module.exports = StyleSheet.create({
     width: 38,
     height: 38,
   },
-
-
+  webView: {
+    backgroundColor: 'rgba(255,255,255,0.8)',
+    height: 350,
+    width:350,
+  },
 });
