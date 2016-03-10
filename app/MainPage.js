@@ -69,7 +69,7 @@ class MainPage extends Component {
     return (
     <View>
 
-        <Image style={[styles.imageContainer, {width:width}]} source={require('../img/ViewBG.png')} resizeMode="cover"></Image>
+        <Image style={[styles.imageContainer,{width: width}]} source={require('../img/ViewBG.png')} resizeMode="cover"></Image>
 
         <TouchableHighlight style={styles.welcome, {backgroundColor: 'yellow', padding: 10}}
             onPress={this.gotoMessagesPage.bind(this)}>

@@ -35,12 +35,6 @@ class InfoPage extends Component {
         htmlText: '',
         count: 0,
         dataObj: [],
-        url: DEFAULT_URL,
-        status: 'No Page Loaded',
-        backButtonEnabled: false,
-        forwardButtonEnabled: false,
-        loading: true,
-        scalesPageToFit: true,
       };
 
 
@@ -52,6 +46,8 @@ class InfoPage extends Component {
   }
 
   componentDidMount() {
+
+    var _this = this;
 /*
     successful result is an object: this.state.user_profile
     */
@@ -60,9 +56,11 @@ class InfoPage extends Component {
     var pageID = this.props.id;
 
     if(pageID == "Terms"){
-      InfoPageData.getTermPageData(this);
+      InfoPageData.getTermPageData(_this);
     }else if(pageID == "Faq"){
-      InfoPageData.getFaqPageData(this);
+      InfoPageData.getFaqPageData(_this);
+    }else if(pageID == "FoodBank"){
+      InfoPageData.getFoodBankPageData(_this);
     }
 
     //console.log(this.state);
@@ -89,7 +87,8 @@ class InfoPage extends Component {
   }
   renderScene(route, navigator) {
 
-    console.log('state');
+    //console.log('state');
+   // console.log(this.state);
     var src = require("../img/background2.png");
 
     return (
@@ -102,6 +101,8 @@ class InfoPage extends Component {
 
           <View style={styles.centerContent}>
             <Text style={styles.title}>{this.props.pageName}</Text>
+
+
             <WebView
               ref={WEBVIEW_REF}
               automaticallyAdjustContentInsets={false}
@@ -111,12 +112,17 @@ class InfoPage extends Component {
               //domStorageEnabled={true}
               //decelerationRate="normal"
               startInLoadingState={false}
-              scalesPageToFit={this.state.scalesPageToFit}
+              scalesPageToFit={true}
             />
+
+
           </View>
       </View>
     );
   }
+
+
+
   gotoNext() {
     this.props.navigator.push({
       id: 'NoNavigatorPage',
