@@ -9,8 +9,8 @@ module.exports = {
         DB.infopage.get_all(function(result){
 
 
-            console.log(result);
-            //_this.setState({count: result.totalrows, dataObj: result});
+            //console.log(result);
+            _this.setState({count: result.totalrows, dataObj: result});
         })
     },
 
@@ -19,8 +19,8 @@ module.exports = {
 
 
 
-            console.log(result);
-            //_this.setState({count: result.totalrows, dataObj: result});
+            //console.log(result);
+            _this.setState({count: result.totalrows, dataObj: result});
         })
     }
 

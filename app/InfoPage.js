@@ -13,21 +13,33 @@ var {
 var styles = require('../styles');
 
 var Users = require('../datalayer/User');
+var InfoPageData = require('../datalayer/InfoPage');
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
 
 class InfoPage extends Component {
 
   constructor(props) {
       super(props);
-      this.state = {user_profile: []};
+      this.state = {user_profile: [],count: 0, dataObj: [] };
 
   }
 
   componentDidMount() {
+
+    var pageName = this.props.pageName;
+    var pageID = this.props.id;
+
+    if(pageID == "Terms"){
+      InfoPageData.getTermPageData(this);
+    }else if(pageID == "Faq"){
+      InfoPageData.getFaqPageData(this);
+    }
+
     /*
     successful result is an object: this.state.user_profile
     */
     Users.getProfile(this);
+
   }
 
   render() {
@@ -47,6 +59,10 @@ class InfoPage extends Component {
     );
   }
   renderScene(route, navigator) {
+
+    console.log('state');
+    console.log(this.state);
+
     return (
       <View style={styles.container}>
         <Text>{this.props.pageName}</Text>

@@ -11,12 +11,10 @@ module.exports = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0)',
   },
   imageContainer: {
-      flex: 1,
-      width: null,
-      height: null,
-      alignItems: 'center',
       justifyContent: 'center',
       backgroundColor: 'rgba(0,0,0,0)',
+      marginTop:60,
+
     },
   image: {
     flex: 1

@@ -7,6 +7,7 @@ var DB = {
     "directory": new RNDBModel.create_db('directory'),
     "products": new RNDBModel.create_db('products'),
     "messages": new RNDBModel.create_db('messages'),
+    "infopage": new RNDBModel.create_db('infopage'),
 }
 
 module.exports = DB

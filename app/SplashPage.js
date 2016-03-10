@@ -7,6 +7,10 @@ var {
   Image,
 } = React;
 
+
+var Dimensions = require('Dimensions');
+var {width, height} = Dimensions.get('window');
+
 var styles = require('../styles');
 
 class SplashPage extends Component {
@@ -19,8 +23,12 @@ class SplashPage extends Component {
     }, 1000);
   }
   render() {
+
+    console.log('width:'+width);
+    console.log('height:'+height);
+
     return (
-      <Image style={styles.imageContainer} source={require('../img/Splash.png')} resizeMode="cover" />
+      <Image style={[styles.imageContainer, {width: width}, {height: height}]} source={require('../img/Splash.png')} resizeMode={Image.resizeMode.sretch} />
     );
   }
 }
