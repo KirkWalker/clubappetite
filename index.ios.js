@@ -297,7 +297,7 @@ class AMGSandbox extends Component {
     }
 
     /*
-    pageName is passed to infoPage to populate the dynamic content.
+    pageName and id are passed to infoPage to populate the dynamic content.
     */
     if (routeId === 'Terms') {
       return (
@@ -305,6 +305,7 @@ class AMGSandbox extends Component {
           navigator={navigator}
           openDrawer={this.openDrawer}
           pageName="Terms And Conditions"
+          id={routeId}
         />
       );
     }
@@ -314,6 +315,7 @@ class AMGSandbox extends Component {
           navigator={navigator}
           openDrawer={this.openDrawer}
           pageName="Frequenty asked questions"
+          id={routeId}
         />
       );
     }
@@ -323,6 +325,7 @@ class AMGSandbox extends Component {
           navigator={navigator}
           openDrawer={this.openDrawer}
           pageName="My Food Bank"
+          id={routeId}
         />
       );
     }

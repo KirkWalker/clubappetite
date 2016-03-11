@@ -4,6 +4,7 @@ var React = require('react-native');
 var {
   StyleSheet,
   Component,
+  Dimensions,
   View,
   Text,
   Navigator,
@@ -16,6 +17,7 @@ var styles = require('../styles');
 var Users = require('../datalayer/User');
 
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
+var {width,height} = Dimensions.get('window');
 
 class MainPage extends Component {
 
@@ -29,7 +31,7 @@ class MainPage extends Component {
 
     componentDidMount() {
 
-      console.log('main page object');
+      //console.log('main page object');
       //console.log(this);
 
       /*
@@ -65,7 +67,15 @@ class MainPage extends Component {
     var Email = this.state.user_profile.email;
 
     return (
-      <View style={styles.container}>
+    <View>
+
+        <Image style={[styles.imageContainer,{width: width}]} source={require('../img/ViewBG.png')} resizeMode="cover"></Image>
+
+        <TouchableHighlight style={styles.welcome, {backgroundColor: 'yellow', padding: 10}}
+            onPress={this.gotoMessagesPage.bind(this)}>
+          <Text style={{backgroundColor: 'yellow', color: 'green'}}>Messages</Text>
+        </TouchableHighlight>
+
         <Text style={styles.mainPanelTitle}>
             Welcome to Club Appetite
           </Text>
@@ -75,7 +85,9 @@ class MainPage extends Component {
          />
         <Text>Hello {Username + '\n\n'}</Text>
         <Text>Get ready for spam, we now have your email. {'\n\n'}Want proof? {Email}</Text>
+
       </View>
+
     );
   }
   gotoMessagesPage() {
@@ -85,39 +97,5 @@ class MainPage extends Component {
     });
   }
 }
-/*
-var NavigationBarRouteMapper = props => ({
-  LeftButton(route, navigator, index, navState) {
-    return (
-      <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}
-          onPress={() => navigator.parentNavigator.pop()}>
-        <Text style={{color: 'white', margin: 10,}}>
-          Back
-        </Text>
-      </TouchableOpacity>
-    );
-  },
-  RightButton(route, navigator, index, navState) {
-    return (
-    <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}
-          onPress={() => navigator.parentNavigator.push({id: 'Profile',name:"Profile"})}>
-        <Image source={{uri: props[0]}}
-                     style={{width: 50, height: 50}}>
-                  <Image source={require('../img/MenuHex.png')}
-                          style={{width: 50, height: 50}}/>
-                </Image>
-    </TouchableOpacity>
-    );
-  },
-  Title(route, navigator, index, navState) {
-    return (
-      <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}>
-        <Text style={styles.navbar_title}>
-          Club Appetite
-        </Text>
-      </TouchableOpacity>
-    );
-  }
-});
-*/
+
 module.exports = MainPage;
