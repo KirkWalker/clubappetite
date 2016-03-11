@@ -89,6 +89,56 @@ module.exports = StyleSheet.create({
     width: 38,
     height: 38,
   },
+   picker: {
+       backgroundColor: '#cccccc',
+       width:200,
+       height:30,
+       borderWidth:1,
+       borderColor:'black'
 
+   },
+  contentForm: {
+    flex:2,
+    flexDirection:'row',
+  },
+    banner: {
+      flex:1,
+      alignSelf: "stretch",
+      borderColor: "#cccccc",
+      borderWidth: 1,
+    },
 
+  module: {
+    flexDirection:'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+    padding:10,
+    margin:5,
+    borderColor: "#cccccc",
+    borderWidth: 1,
+    height:150,
+
+  },
+button: {
+    backgroundColor: "#eeeeee",
+    marginRight: 5,
+    marginLeft: 5,
+    padding: 10,
+  },
+  input: {
+    padding: 4,
+    height: 40,
+    borderWidth: 1,
+    borderColor: '#424242',
+    borderRadius: 1,
+    margin: 5,
+    backgroundColor: '#FFFFFF',
+    width: 200,
+  },
+facebook: {
+
+    marginTop: 35,
+    marginBottom: 35,
+  },
 });
