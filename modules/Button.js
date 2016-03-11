@@ -57,6 +57,7 @@ import React, {
   TouchableOpacity,
 } from 'react-native';
 
+
 /* Button Component */
 class Button extends Component {
 	constructor(props){
