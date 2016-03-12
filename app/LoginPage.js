@@ -13,14 +13,10 @@ var {
     TextInput,
 } = React;
 
-
-var mock_token = 'CAAMHEaDezm4BAMqDHU41mERKbuaa0MMSqrUP1THss8eVUZBH6ZCyOuJZAdkP04nGaQStQk0XDAtP0GZBGuCb0qe50TEiSpZBUw4wFqBOUXBKRUgSJ0O5bX3zgE7IqbyQKxK0Sc7zBykoyYiq4fiIkKk8qPYCW3vuJ5OZCHmUPZBUxM3qGz2Ah0QyJUQbPSvEfUZD';
-
-
 var styles = require('../styles');
-var FBLogin = require('react-native-facebook-login');
+//var FBLogin = require('react-native-facebook-login');
 var Users = require('../datalayer/User');
-var FBLoginManager = require('NativeModules').FBLoginManager;
+//var FBLoginManager = require('NativeModules').FBLoginManager;
 
 var result;
 
@@ -32,14 +28,11 @@ class LoginPage extends Component {
       super(props);
       this.state = { inputTxt: 'Username', inputPass: 'Password', data: null, language: "kelowna"};
       this.navigatorObj = props.navigator;
-      //console.log(mock_token);
   }
 
   render() {
 
       var _this = this;
-        //console.log(this.state.data);
-        //console.log('end data');
       return (
 
         <View style={styles.container}>
@@ -122,90 +115,43 @@ I think we have to abandon this as the user must choose from one of our pre-defi
         </View>
 
       );
-  }
-  onUserFocus() {
-  	if(this.state.inputTxt == "Username") {
-  		this.setState({inputTxt: ''});
-  	}
-  }
+    }
+    onUserFocus() {
+        if(this.state.inputTxt == "Username") {
+            this.setState({inputTxt: ''});
+        }
+    }
 
-  onUserBlur() {
-  	if(this.state.inputTxt == "") {
-  		this.setState({inputTxt: 'Username'});
-  	}
-  }
+    onUserBlur() {
+        if(this.state.inputTxt == "") {
+            this.setState({inputTxt: 'Username'});
+        }
+    }
 
-  onPassFocus() {
-  	if(this.state.inputPass == "Password") {
-  		this.setState({inputPass: ''});
-  	}
-  }
+    onPassFocus() {
+        if(this.state.inputPass == "Password") {
+            this.setState({inputPass: ''});
+        }
+    }
 
-  onPassBlur() {
-  	if(this.state.inputPass == "") {
-  		this.setState({inputPass: 'Password'});
-  	}
-  }
-  gotoNext() {
-    this.props.navigator.push({
-      id: 'MainPage',
-      name: 'Main Page',
-    });
-  }
-
+    onPassBlur() {
+        if(this.state.inputPass == "") {
+            this.setState({inputPass: 'Password'});
+        }
+    }
+    gotoNext() {
+        this.props.navigator.push({
+          id: 'MainPage',
+          name: 'Main Page',
+        });
+    }
     _onPressButtonPOST() {
 
-
-      //var username = this.state.inputTxt;
-      //console.log('State :', this.state.inputTxt);
-      var username = this.state.inputTxt;
-      var password = this.state.inputPass;
-
-      fetch('http://cj.kirkwalker.ca/api/login/', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username: username,
-          password: password,
-        })
-      })
-      .then((response) => response.json())
-      .then((responseData) => {
-
-   		var resData = JSON.parse(responseData);
-
-          console.log('Response:', resData);
-
-  	  	if(resData.res == 'error'){
-  	  		//ToastAndroid.show('Login Has Failed', ToastAndroid.SHORT);
-  	  	} else {
-
-  	  		//this.gotoNext();
-  	  	}
-
-  	})
-      .catch(function(error) {
-        console.log('request failed', error);
-
-      })
-      .done();
+        var username = this.state.inputTxt;
+        var password = this.state.inputPass;
+        Users.handleLogin(username,password,this);
 
     }
-
-    status(response) {
-      if (response.status >= 200 && response.status < 300) {
-        return response
-      }
-      throw new Error(response.statusText)
-    }
-
-    json(response) {
-      return response.json()
-    }
-
 
 }
 
