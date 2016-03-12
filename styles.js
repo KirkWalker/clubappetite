@@ -93,12 +93,12 @@ module.exports = StyleSheet.create({
     width: 38,
     height: 38,
   },
-<<<<<<< f788a1a83f50373f0e1acd988c9c83cd9f69e505
+
   webView: {
     backgroundColor: 'rgba(255,255,255,0.8)',
     height: 350,
     width:350,
-=======
+    },
    picker: {
        backgroundColor: '#cccccc',
        width:200,
@@ -150,6 +150,5 @@ facebook: {
 
     marginTop: 35,
     marginBottom: 35,
->>>>>>> initial layout
   },
 });
