@@ -1,8 +1,9 @@
 var { View } = require('react-native')
 
 var DB = require('./DB');
-var debug = false;
 
+var debug = true;
+var SERVER_URL = 'http://appdev.appsolutemg.com/api.php';
 
 module.exports = {
 
@@ -16,6 +17,9 @@ module.exports = {
 
                 if(debug) { console.log("inserting faq data"); }
 
+
+
+/*
                 initText = {name: 'faq', text: `<h3>The standard Lorem Ipsum passage, used since the 1500s</h3>
                 <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
                 <h3>Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC</h3>
@@ -29,10 +33,38 @@ module.exports = {
                 or else he endures pains to avoid worse pains."</p>`
                 };
 
-               DB.infopage.add(initText,function(result2){
-                    if(debug) { console.log(result2) }
-                    _this.setState({count: result2.totalrows, dataObj: result2, htmlText: initText.text});
-               });
+                replace with live pull from server
+                http://appdev.appsolutemg.com/api.php?controller=api&action=infopage&name=faq
+*/
+
+                fetch(SERVER_URL + '?controller=api&action=infopage&name=faq', {
+                    method: 'GET',
+                    headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json',
+                    }
+                })
+                .then((response) => response.json())
+                .then((responseData) => {
+
+                    if(responseData.result == 'error'){
+                        console.log('User Class ERROR:',responseData);
+                    } else {
+                        if(responseData[0]){
+                            initText = responseData[0];
+                            DB.infopage.add(initText,function(result2){
+                                if(debug) { console.log(result2) }
+                                _this.setState({count: result2.totalrows, dataObj: result2, htmlText: initText.text});
+                            });
+                        } else {
+                            console.log('responseData failed', responseData);
+                        }
+                    }
+                })
+                .catch(function(error) {
+                    console.log('request failed', error);
+                })
+                .done();
 
             } else {
 
