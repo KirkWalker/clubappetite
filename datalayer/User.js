@@ -41,37 +41,30 @@ module.exports = {
         /*
         This does not remove the data from the server.
         Login will sync the server with new data if needed
+        */
 
-*/
         DB.users.erase_db(function(removed_data){
-            //if(debug){
+            if(debug){
                console.log('Users: remove data result 1');
                console.log(removed_data);
                console.log('------------------ 1');
+            }
 
-               DB.users.get_all(function(results2){
-                   console.log('Users: remove data check');
-                   console.log(results2);
-                   console.log('------------------');
-               });
-               //_this.eraseInfopages();
-            //}
         });
 
 
     },
     eraseInfopages(){
-            /*
-            This does not remove the data from the server.
-            Login will sync the server with new data if needed
-            */
-            DB.infopage.erase_db(function(removed_data){
-                if(debug){
-                   console.log('Infopage: remove data result');
-                   console.log(removed_data.results);
-                   console.log('------------------');
-                }
-            });
+        /*
+        Don't use this. We want to store infopage data after logout
+        */
+        DB.infopage.erase_db(function(removed_data){
+            if(debug){
+               console.log('Infopage: remove data result');
+               console.log(removed_data.results);
+               console.log('------------------');
+            }
+        });
 
     },
 
@@ -85,7 +78,7 @@ module.exports = {
         The apps main views look for the dataset and force user to login if absent
         */
         _this.eraseUsers();
-
+        //_this.eraseInfopages();
 
    },
    getImageUrl(_this){
