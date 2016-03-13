@@ -52,16 +52,7 @@ class InfoPage extends Component {
     successful result is an object: this.state.user_profile
     */
     Users.getProfile(this);
-    var pageName = this.props.pageName;
-    var pageID = this.props.id;
-
-    if(pageID == "Terms"){
-      InfoPageData.getTermPageData(_this);
-    }else if(pageID == "Faq"){
-      InfoPageData.getFaqPageData(_this);
-    }else if(pageID == "FoodBank"){
-      InfoPageData.getFoodBankPageData(_this);
-    }
+    InfoPageData.getPageData(_this,this.props.id.toLowerCase());
 
     //console.log(this.state);
 
