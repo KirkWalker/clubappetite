@@ -96,7 +96,7 @@ module.exports = StyleSheet.create({
 
   webView: {
     backgroundColor: 'rgba(255,255,255,0.8)',
-    height: 350,
+    height: 400,
     width:350,
     },
    picker: {

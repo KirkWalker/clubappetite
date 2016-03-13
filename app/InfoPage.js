@@ -88,11 +88,7 @@ class InfoPage extends Component {
           <Image style={{width: 150, height: 90}} source={src} resizeMode={Image.resizeMode.stretch} />
         </View>
 
-
-
           <View style={styles.centerContent}>
-            <Text style={styles.title}>{this.props.pageName}</Text>
-
 
             <WebView
               ref={WEBVIEW_REF}

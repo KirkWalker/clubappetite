@@ -2,7 +2,7 @@ var { View } = require('react-native')
 
 var DB = require('./DB');
 
-var debug = false;
+var debug = true;
 var SERVER_URL = 'http://appdev.appsolutemg.com/api.php';
 
 module.exports = {
