@@ -18,7 +18,8 @@ var {
   Text,
   Platform,
   ToastAndroid,
-  AlertIOS
+  AlertIOS,
+  AsyncStorage,
 } = React
 
 var DB = require('./DB.js');
@@ -28,21 +29,45 @@ var debug = false;
 
 module.exports = {
 
-
     eraseUsers(){
+
+        //async eraseUsers(){
+        //var value = await AsyncStorage.removeItem('db_store');
+        //console.log('Asyc:',value);
+
+        //var value = await AsyncStorage.getItem('db_store');
+        //console.log('Asyc:',value);
+
         /*
         This does not remove the data from the server.
         Login will sync the server with new data if needed
         */
+
         DB.users.erase_db(function(removed_data){
-            if(debug)
-               console.log('Users: remove data result');
-               console.log(removed_data.results.users);
-               console.log('------------------');
+            if(debug){
+               console.log('Users: remove data result 1');
+               console.log(removed_data);
+               console.log('------------------ 1');
+            }
 
         });
 
+
     },
+    eraseInfopages(){
+        /*
+        Don't use this. We want to store infopage data after logout
+        */
+        DB.infopage.erase_db(function(removed_data){
+            if(debug){
+               console.log('Infopage: remove data result');
+               console.log(removed_data.results);
+               console.log('------------------');
+            }
+        });
+
+    },
+
     handleLogout(){
         var _this=this;
         console.log("Users :onLogout!");
@@ -53,6 +78,7 @@ module.exports = {
         The apps main views look for the dataset and force user to login if absent
         */
         _this.eraseUsers();
+        //_this.eraseInfopages();
 
    },
    getImageUrl(_this){
@@ -82,12 +108,11 @@ module.exports = {
                 The user has not logged in.
                 We send them back to login again as something has gone wrong
                 */
-                if(debug) { console.log('moving to login'); }
+                if(debug) { console.log('moving to login',results); }
                 _this.props.navigator.push({id: 'LoginPage'});
 
 
             } else {
-
 
                 /*
                 The user has logged in and a record has been returned from the local database.
@@ -97,12 +122,12 @@ module.exports = {
                 */
 
                 var data = [];
+
+
+
                 for(var key in results.rows){
                     data.push(results.rows[key]);
                 }
-
-
-                if(debug) { console.log('User profile found:'); }
 
                 /*
                 We should check that the token hasn't expired
@@ -110,7 +135,7 @@ module.exports = {
                 */
                 data = data[0];
 
-                if(debug) { console.log(data); }
+                if(debug) { console.log('User profile found:',results); }
 
 
                 fetch(SERVER_URL + '?controller=api&action=token', {
@@ -121,11 +146,13 @@ module.exports = {
                     },
                     body: JSON.stringify({
                       token: data.token,
-                      id: data.id
+                      id: data.userid
                     })
                 })
                 .then((response) => response.json())
                 .then((responseData) => {
+
+
 
                     if(responseData.result == 'error'){
                         console.log('User Class ERROR:',responseData);
@@ -137,9 +164,10 @@ module.exports = {
                          if(responseData.token){
 
                             var token = responseData.token;
-                            var id = _this.state.user_profile.id;
-                            var name = _this.state.user_profile.name;
+
                             if(debug) { console.log('updateToken:db',token); }
+                            //var userid = _this.state.user_profile.userid;
+                            var name = _this.state.user_profile.name;
 
                             DB.users.update({name: name}, { token: token }, function(updated_table){
                                 data.token = token;
@@ -153,13 +181,16 @@ module.exports = {
 
                     }
 
+
+
+
                 })
                 .catch(function(error) {
-                    console.log('request failed', error);
+                    console.log('updateToken request failed', error);
                 })
                 .done();
 
-
+                _this.setState({user_profile:data});
             }
 
         })
@@ -195,6 +226,8 @@ module.exports = {
             } else {
                 var user_data = resData;
                 delete user_data.result;
+                //console.log(user_data);
+
                 DB.users.add(user_data,function(result){
                     if(debug) {
                     console.log('adding user');
@@ -207,7 +240,7 @@ module.exports = {
 
         })
         .catch(function(error) {
-            console.log('request failed', error);
+            console.log('Login request failed', error);
         })
         .done();
 
