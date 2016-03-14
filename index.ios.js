@@ -27,7 +27,7 @@ var Messages = require('./app/Messages');
 var Profile = require('./app/Profile');
 var NoNavigatorPage = require('./app/NoNavigatorPage');
 var Drawer = require('react-native-drawer');
-var ControlPanel = require('./ControlPanel')
+var ControlPanel = require('./ControlPanel');
 
 var BannerAds = require('./datalayer/BannerAds');
 var Users = require('./datalayer/User');
@@ -209,7 +209,7 @@ class AMGSandbox extends Component {
         side={this.settings.rightSide ? 'right' : 'left'}
       >
         <Navigator
-          initialRoute={{id: 'SplashPage', name: 'Index'}}
+          initialRoute={{id: 'MainPage', name: 'Index'}}
           renderScene={this.renderScene.bind(this)}
           configureScene={(route) => {
             if (route.sceneConfig) {
