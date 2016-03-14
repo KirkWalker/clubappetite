@@ -19,6 +19,7 @@ var {
 var SplashPage = require('./app/SplashPage');
 var LoginPage = require('./app/LoginPage');
 var InfoPage = require('./app/InfoPage');
+var Register = require('./app/Register');
 var Shop = require('./app/Shop');
 var Share = require('./app/Share');
 var Donate = require('./app/Donate');
@@ -225,7 +226,7 @@ class AMGSandbox extends Component {
     this.navigatorObj = navigator;
     var _this=this;
     var routeId = route.id;
-    //console.log('index: route.routeId='+routeId);
+    //console.log('index: route.routeId='+routeId,this.drawer);
 
     if (routeId === 'SplashPage') {
       return (
@@ -234,6 +235,8 @@ class AMGSandbox extends Component {
       );
     }
     if (routeId === 'LoginPage') {
+
+      //this.drawer.disabled = true;
       return (
         <LoginPage
           navigator={navigator}
@@ -295,7 +298,14 @@ class AMGSandbox extends Component {
         />
       );
     }
-
+    if (routeId === 'Register') {
+      return (
+        <Register
+          navigator={navigator}
+          openDrawer={this.openDrawer}
+        />
+      );
+    }
     /*
     pageName and id are passed to infoPage to populate the dynamic content.
     */

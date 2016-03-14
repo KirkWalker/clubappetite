@@ -108,7 +108,6 @@ module.exports = StyleSheet.create({
    },
   contentForm: {
     flex:2,
-    flexDirection:'row',
   },
     banner: {
       flex:1,
@@ -126,10 +125,11 @@ module.exports = StyleSheet.create({
     margin:5,
     borderColor: "#cccccc",
     borderWidth: 1,
-    height:150,
-
   },
-button: {
+  moduleButtons: {
+    flexDirection:'row',
+  },
+  button: {
     backgroundColor: "#eeeeee",
     marginRight: 5,
     marginLeft: 5,

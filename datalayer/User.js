@@ -25,7 +25,7 @@ var {
 var DB = require('./DB.js');
 
 var SERVER_URL = 'http://appdev.appsolutemg.com/api.php';
-var debug = false;
+var DEBUG = false;
 
 module.exports = {
 
@@ -44,7 +44,7 @@ module.exports = {
         */
 
         DB.users.erase_db(function(removed_data){
-            if(debug){
+            if(DEBUG){
                console.log('Users: remove data result 1');
                console.log(removed_data);
                console.log('------------------ 1');
@@ -59,7 +59,7 @@ module.exports = {
         Don't use this. We want to store infopage data after logout
         */
         DB.infopage.erase_db(function(removed_data){
-            if(debug){
+            if(DEBUG){
                console.log('Infopage: remove data result');
                console.log(removed_data.results);
                console.log('------------------');
@@ -108,7 +108,7 @@ module.exports = {
                 The user has not logged in.
                 We send them back to login again as something has gone wrong
                 */
-                if(debug) { console.log('moving to login',results); }
+                if(DEBUG) { console.log('moving to login',results); }
                 _this.props.navigator.push({id: 'LoginPage'});
 
 
@@ -135,7 +135,7 @@ module.exports = {
                 */
                 data = data[0];
 
-                if(debug) { console.log('User profile found:',results); }
+                if(DEBUG) { console.log('User profile found:',results); }
 
 
                 fetch(SERVER_URL + '?controller=api&action=token', {
@@ -158,21 +158,21 @@ module.exports = {
                         console.log('User Class ERROR:',responseData);
                     } else {
 
-                        if(debug) { console.log('updateToken: responseData=', responseData); }
+                        if(DEBUG) { console.log('updateToken: responseData=', responseData); }
 
 
                          if(responseData.token){
 
                             var token = responseData.token;
 
-                            if(debug) { console.log('updateToken:db',token); }
+                            if(DEBUG) { console.log('updateToken:db',token); }
                             //var userid = _this.state.user_profile.userid;
                             var name = _this.state.user_profile.name;
 
                             DB.users.update({name: name}, { token: token }, function(updated_table){
                                 data.token = token;
                                 _this.setState({user_profile:data});
-                                if(debug) { console.log('done updating users:', updated_table); }
+                                if(DEBUG) { console.log('done updating users:', updated_table); }
                             })
 
                          } else {
@@ -229,7 +229,7 @@ module.exports = {
                 //console.log(user_data);
 
                 DB.users.add(user_data,function(result){
-                    if(debug) {
+                    if(DEBUG) {
                     console.log('adding user');
                     console.log(result);
                     }
@@ -244,6 +244,93 @@ module.exports = {
         })
         .done();
 
+    },
+    handleRegister(_this){
+
+        var username = _this.state.inputTxt;
+        var password = _this.state.inputPass;
+        var email = _this.state.inputEmail;
+        var loc = _this.state.location;
+        var API_REQUEST = 'HandleRegister:';
+        var error_message = '';
+
+        if(username == 'Username' || password == 'Password' || email == 'Email') {
+            error_message = 'Please fill in all the form fields';
+        } else if(email.indexOf("@") == -1 || email.indexOf(".") == -1) {
+            error_message = 'Please enter a valid email';
+
+        } else if(loc == '0') {
+           error_message = 'Please choose a region';
+        }
+
+        if(error_message !=''){
+            if(Platform.OS === 'ios'){
+                AlertIOS.alert(
+                 error_message,
+                 'Please try again.'
+                );
+            } else {
+                ToastAndroid.show(error_message, ToastAndroid.SHORT);
+            }
+
+
+        } else {
+
+
+            fetch(SERVER_URL + '?controller=api&action=register', {
+                method: 'POST',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  username: username,
+                  password: password,
+                  email: email,
+                  region: loc,
+                })
+            })
+            .then((response) => response.json())
+            .then((responseData) => {
+
+                if(responseData.result == 'error'){
+
+                    console.log(API_REQUEST+' ERROR:',responseData);
+
+                    if(Platform.OS === 'ios'){
+                        AlertIOS.alert(
+                         responseData.details,
+                         'Please try again.'
+                        );
+                    } else {
+                        ToastAndroid.show(responseData.details, ToastAndroid.SHORT);
+                    }
+                } else if(responseData.result == 'success'){
+                    console.log(API_REQUEST+' SUCCESS:',responseData);
+
+                } else {
+
+                     console.log(API_REQUEST+' FAILED', responseData);
+
+                }
+
+    /*
+                    DB.users.add(user_data,function(result){
+                        if(DEBUG) {
+                        console.log('adding user');
+                        console.log(result);
+                        }
+                        _this.gotoNext();
+                    });
+
+                }
+    */
+            })
+            .catch(function(error) {
+                console.log('Registration request failed', error);
+            })
+            .done();
+        }
     }
 
 };
