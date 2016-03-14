@@ -251,6 +251,7 @@ module.exports = {
         var password = _this.state.inputPass;
         var email = _this.state.inputEmail;
         var loc = _this.state.location;
+        var region = _this.state.regionIds[_this.state.locationIndex];
         var API_REQUEST = 'HandleRegister:';
         var error_message = '';
 
@@ -287,7 +288,7 @@ module.exports = {
                   username: username,
                   password: password,
                   email: email,
-                  region: loc,
+                  region: region,
                 })
             })
             .then((response) => response.json())
@@ -307,6 +308,15 @@ module.exports = {
                     }
                 } else if(responseData.result == 'success'){
                     console.log(API_REQUEST+' SUCCESS:',responseData);
+                    var user_data = responseData;
+                    delete user_data.result;
+                    DB.users.add(user_data,function(result){
+                        //if(DEBUG) {
+                        console.log('adding user');
+                        console.log(result);
+                        //}
+                        _this.gotoNext();
+                    });
 
                 } else {
 
@@ -314,17 +324,7 @@ module.exports = {
 
                 }
 
-    /*
-                    DB.users.add(user_data,function(result){
-                        if(DEBUG) {
-                        console.log('adding user');
-                        console.log(result);
-                        }
-                        _this.gotoNext();
-                    });
 
-                }
-    */
             })
             .catch(function(error) {
                 console.log('Registration request failed', error);

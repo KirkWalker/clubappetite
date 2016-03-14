@@ -1,6 +1,6 @@
 var { View } = require('react-native')
 
-var DEBUG = true;
+var DEBUG = false;
 var SERVER_URL = 'http://appdev.appsolutemg.com/api.php';
 var API_REQUEST = "Region API request";
 
@@ -30,11 +30,13 @@ module.exports = {
                 if(DEBUG) { console.log(API_REQUEST+' SUCCESS:',responseData.details); }
                 var resData = responseData.details;
                 var nk = [];
+                var nk2 = [];
                 for(var key in resData){
                     nk.push(resData[key].region_name);
+                    nk2.push(resData[key].id);
                 }
                 if(DEBUG) { console.log(API_REQUEST+' new regions:',nk); }
-                _this.setState({regions: nk});
+                _this.setState({regions: nk, regionIds: nk2});
 
 
 

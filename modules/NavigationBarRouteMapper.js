@@ -41,8 +41,11 @@ module.exports = props =>({
   Title(route, navigator, index, navState) {
     return (
     <View style={{flex: 1, justifyContent: 'center',alignItems: 'center'}}>
-      <Image source={require('../img/NavLogo.png')}
-           style={{width: 150, height: 48, marginLeft:40}}/>
+        <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}
+                  onPress={() => navigator.parentNavigator.push({id: 'MainPage',name:"Main Page"})}>
+          <Image source={require('../img/NavLogo.png')}
+               style={{width: 150, height: 48, marginLeft:40}}/>
+        </TouchableOpacity>
     </View>
     );
   }

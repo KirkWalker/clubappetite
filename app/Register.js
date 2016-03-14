@@ -33,6 +33,7 @@ class Register extends Component {
           inputEmail: 'Email',
           location: "Kelowna",
           regions: ['Kelowna','Vancouver'],
+          regionIds: ['1','2'],
           locationIndex: 0,
       };
       this.navigatorObj = props.navigator;
@@ -150,6 +151,12 @@ class Register extends Component {
         this.props.navigator.push({
           id: 'LoginPage',
           name: 'Login Page',
+        });
+    }
+    gotoNext() {
+        this.props.navigator.push({
+          id: 'MainPage',
+          name: 'Main Page',
         });
     }
     _onPressButtonPOST() {
