@@ -145,7 +145,7 @@ const BusinessStyles = StyleSheet.create({
 	},
   headerText: {
     fontFamily: 'Gill Sans',
-    color: '#006666',
+    color: 'rgba(027, 135, 136, 1.00)',
     fontSize: 25,
     fontWeight: '400',
   },
