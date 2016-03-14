@@ -73,7 +73,7 @@ class BusinessDirectory extends Component {
   				</View>
           <Image
             style={BusinessStyles.arrow}
-            source={require('../img/BusinessArrow.png')}
+            source={require('../img/NavArrrow.png')}
           />
   			</View>
   		</TouchableOpacity>
