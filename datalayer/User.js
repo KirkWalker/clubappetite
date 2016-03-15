@@ -24,7 +24,7 @@ var {
 
 var DB = require('./DB.js');
 
-var SERVER_URL = 'http://appdev.appsolutemg.com/api.php';
+var SERVER_URL = 'http://restapi.clubappetite.com/api.php';
 var DEBUG = true;
 
 module.exports = {
@@ -276,6 +276,9 @@ module.exports = {
 
 
         } else {
+
+
+            console.log(API_REQUEST+"data:",SERVER_URL + '?controller=api&action=register');
 
 
             fetch(SERVER_URL + '?controller=api&action=register', {
