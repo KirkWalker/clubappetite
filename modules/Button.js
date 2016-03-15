@@ -53,12 +53,6 @@
  * />
  */
 
-// Facebook GRAY: 'rgb(242, 242, 242)'
-// Facebook BLUE: 'rgb(078, 106, 167)'
-// Dark Green: 'rgb(027, 135, 136)'
-// Green: 'rgb(074, 138, 029)'
-// Yellow: 'rgb(239, 186, 026)'
-
 /* Requires */
 import React, {
   Component,
