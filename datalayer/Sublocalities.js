@@ -1,15 +1,15 @@
 var { View } = require('react-native')
 
-var DEBUG = false;
-var SERVER_URL = 'http://appdev.appsolutemg.com/api.php';
-var API_REQUEST = "Region API request";
+var DEBUG = true;
+var SERVER_URL = 'http://restapi.clubappetite.com/api.php';
+var API_REQUEST = "SubLocalities API request";
 
 module.exports = {
 
 
-    getRegions(_this) {
+    getSubLocalities(_this) {
 
-        var URL = SERVER_URL + '?controller=api&action=regions';
+        var URL = SERVER_URL + '?controller=api&action=sublocalities';
 
         fetch(URL, {
             method: 'GET',
@@ -32,11 +32,11 @@ module.exports = {
                 var nk = [];
                 var nk2 = [];
                 for(var key in resData){
-                    nk.push(resData[key].region_name);
+                    nk.push(resData[key].sub_name);
                     nk2.push(resData[key].id);
                 }
-                if(DEBUG) { console.log(API_REQUEST+' new regions:',nk); }
-                _this.setState({regions: nk, regionIds: nk2});
+                if(DEBUG) { console.log(API_REQUEST+' new data:',nk); }
+                _this.setState({sublocalities: nk, sublocalitiesIds: nk2});
 
 
 
@@ -48,15 +48,11 @@ module.exports = {
 
         })
         .catch(function(error) {
-            console.log(API_REQUEST+' UNKNOWN FAILURE:', error);
+            console.log(API_REQUEST+' CONNECTION FAILURE:', error);
         })
         .done();
 
 
     }
 
-
-
-
 }
-

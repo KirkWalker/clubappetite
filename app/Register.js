@@ -17,7 +17,7 @@ var {
 
 var styles = require('../styles');
 var Users = require('../datalayer/User');
-var Regions = require('../datalayer/Regions');
+var SubLocalities = require('../datalayer/Sublocalities');
 var Button = require('../modules/Button');
 
 let RegionList = Platform.OS === 'ios' ? PickerIOS : Picker;
@@ -32,8 +32,8 @@ class Register extends Component {
           inputPass: 'Password',
           inputEmail: 'Email',
           location: "Kelowna",
-          regions: ['Kelowna','Vancouver'],
-          regionIds: ['1','2'],
+          sublocalities: ['Kelowna','Vancouver'],
+          sublocalitiesIds: ['1','2'],
           locationIndex: 0,
       };
       this.navigatorObj = props.navigator;
@@ -42,9 +42,9 @@ class Register extends Component {
 
   render() {
 
-      let data = this.state.regions;
+      let data = this.state.sublocalities;
       //let selectionString = data[this.state.locationIndex];
-      console.log('current state location:',this.state.location);
+      console.log('current state sublocalities:',this.state.location);
       console.log('current state locationIndex:',this.state.locationIndex);
       return (
 
@@ -57,7 +57,7 @@ class Register extends Component {
                 <View style={styles.contentForm}>
                   <View style={styles.module}>
 
-                      <Text>Please choose a region:</Text>
+                      <Text>Please choose a Charity:</Text>
                       <RegionList
                           style={styles.picker}
                           selectedValue={this.state.locationIndex}
@@ -107,7 +107,7 @@ class Register extends Component {
 
     componentDidMount() {
 
-        Regions.getRegions(this);
+        SubLocalities.getSubLocalities(this);
 
 
     }

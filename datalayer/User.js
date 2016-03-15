@@ -24,8 +24,8 @@ var {
 
 var DB = require('./DB.js');
 
-var SERVER_URL = 'http://appdev.appsolutemg.com/api.php';
-var DEBUG = false;
+var SERVER_URL = 'http://restapi.clubappetite.com/api.php';
+var DEBUG = true;
 
 module.exports = {
 
@@ -251,7 +251,7 @@ module.exports = {
         var password = _this.state.inputPass;
         var email = _this.state.inputEmail;
         var loc = _this.state.location;
-        var region = _this.state.regionIds[_this.state.locationIndex];
+        var sublocality = _this.state.sublocalitiesIds[_this.state.locationIndex];
         var API_REQUEST = 'HandleRegister:';
         var error_message = '';
 
@@ -278,6 +278,9 @@ module.exports = {
         } else {
 
 
+            console.log(API_REQUEST+"data:",SERVER_URL + '?controller=api&action=register');
+
+
             fetch(SERVER_URL + '?controller=api&action=register', {
                 method: 'POST',
                 headers: {
@@ -288,7 +291,7 @@ module.exports = {
                   username: username,
                   password: password,
                   email: email,
-                  region: region,
+                  sublocality: sublocality,
                 })
             })
             .then((response) => response.json())
@@ -327,7 +330,7 @@ module.exports = {
 
             })
             .catch(function(error) {
-                console.log('Registration request failed', error);
+                console.log(API_REQUEST+' CONNECTION FAILURE:', error);
             })
             .done();
         }
