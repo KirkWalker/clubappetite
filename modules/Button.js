@@ -24,9 +24,16 @@
  *  The height/width of the image. Leaving blank will set it to 70x80. 
  *  No effect is style is set to default.
  *
+ * color: (OPTIONAL)
+ *  The color of the default button. Leaving blank will set the button
+ *  to dark green. Accepted values: "gray", "blue", "yellow", "green",
+ *  and "default" for dark green.
+ *  No effect if style is set to image.
+ *
  * -- EXAMPLE USAGE: --
  * <Button
  *   buttonText="CONTACT US"
+ *   color="yellow"
  *   onPress={() => {
  *     this.props.navigator.pop();
  *   }}
@@ -45,6 +52,12 @@
  *   onPress={this._onButtonPress()}
  * />
  */
+
+// Facebook GRAY: 'rgb(242, 242, 242)'
+// Facebook BLUE: 'rgb(078, 106, 167)'
+// Dark Green: 'rgb(027, 135, 136)'
+// Green: 'rgb(074, 138, 029)'
+// Yellow: 'rgb(239, 186, 026)'
 
 /* Requires */
 import React, {
@@ -66,17 +79,56 @@ class Button extends Component {
     this.buttonStyle = (this.props.style) ? this.props.style : "default";
     this.imageHeight = (this.props.height) ? this.props.height : 80;
     this.imageWidth = (this.props.width) ? this.props.width : 70;
+    this.color = '';
+    this.textColor = '';
+    switch(this.props.buttonColor){
+      case "gray": {
+        this.color = 'rgb(242, 242, 242)';
+        this.underlayColor = 'rgba(242, 242, 242, 0.5)';
+        this.textColor = "gray";
+        break;
+      }
+      case "blue": {
+        this.color = 'rgb(078, 106, 167)';
+        this.underlayColor = 'rgba(078, 106, 167, 0.5)';
+        this.textColor = "white";
+        break;
+      }
+      case "yellow": {
+        console.log("hey");
+        this.color = 'rgb(239, 186, 026)';
+        this.underlayColor = 'rgba(239, 186, 026, 0.5)';
+        this.textColor = "white";
+        break;
+      }
+      case "green": {
+        this.color = 'rgb(074, 138, 029)';
+        this.underlayColor = 'rgba(074, 138, 029, 0.5)';
+        this.textColor = "white";
+        break;
+      }
+      default: {
+        this.color = 'rgb(027, 135, 136)';
+        this.underlayColor = 'rgba(027, 135, 136, 0.5)';
+        this.textColor = "white";
+        break;
+      }
+    }
+    console.log(this.props.buttonColor);
+    console.log(this.color);
 	}
 
 	render(){
     if(this.buttonStyle === "default"){
       return(
         <TouchableHighlight
-          underlayColor="#004d4d"
-          style={styles.defaultButton}
+          underlayColor={this.underlayColor}
+          style={[styles.defaultButton,
+            {backgroundColor: this.color}
+          ]}
           onPress={this.props.onPress}
         >
-          <Text style={styles.buttonText}>{this.props.buttonText}</Text>
+          <Text style={[styles.buttonText, {color: this.textColor}]}>{this.props.buttonText}</Text>
         </TouchableHighlight>
       )
     }
@@ -113,17 +165,17 @@ class Button extends Component {
 
 const styles = StyleSheet.create({
   defaultButton: {
-    backgroundColor: '#009999',
     borderRadius: 20,
     overflow: 'hidden',
   },
   buttonText: {
-    fontSize: 15,
-    color: 'white',
-    paddingTop: 5,
-    paddingBottom: 5,
-    paddingRight: 10,
-    paddingLeft: 10,
+    fontSize: 18,
+    fontWeight: '500',
+    paddingTop: 8,
+    paddingBottom: 8,
+    paddingRight: 12,
+    paddingLeft: 12,
+    fontFamily: 'Gill Sans',
   },
   buttonImage: {
     resizeMode: 'contain',
