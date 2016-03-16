@@ -26,7 +26,10 @@ module.exports = {
                     action = 'add';
                     current_mod = '1900-01-01 12:00:00';
                 }
-
+                if(current_mod == undefined){
+                    current_mod = '1900-01-01 12:00:00';
+                    action = 'add';
+                }
                 /*
                 Updated with live pull from server
                 http://restapi.clubappetite.com/api.php?controller=api&action=infopage&name=faq
@@ -34,6 +37,8 @@ module.exports = {
 
                 //if(debug) { console.log("Data in state(_this.state):",_this.state);}
                 if(debug) { console.log("API URL:",URL);}
+                if(debug) { console.log("API token:",token);}
+                if(debug) { console.log("API current_mod:",current_mod);}
                 /*
                 we check server for newer version
                 if response is false we have current version
