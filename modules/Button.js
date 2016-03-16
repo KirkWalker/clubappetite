@@ -63,7 +63,7 @@ class Button extends Component {
 	constructor(props){
 		super(props);
 
-    this.buttonStyle = (this.props.style) ? this.props.style : "default";
+    this.buttonStyle = (this.props.buttonStyle) ? this.props.buttonStyle : "default";
     this.imageHeight = (this.props.height) ? this.props.height : 80;
     this.imageWidth = (this.props.width) ? this.props.width : 70;
 	}
@@ -73,10 +73,10 @@ class Button extends Component {
       return(
         <TouchableHighlight
           underlayColor="#004d4d"
-          style={styles.defaultButton}
+          style={buttonStyles.defaultButton}
           onPress={this.props.onPress}
         >
-          <Text style={styles.buttonText}>{this.props.buttonText}</Text>
+          <Text style={buttonStyles.buttonText}>{this.props.buttonText}</Text>
         </TouchableHighlight>
       )
     }
@@ -86,7 +86,7 @@ class Button extends Component {
         <TouchableOpacity>
           <Image
             source={{uri: this.props.buttonImage}}
-            style={[styles.buttonImage,
+            style={[buttonStyles.buttonImage,
               {width: this.imageWidth},
               {height: this.imageHeight}
             ]}
@@ -100,7 +100,7 @@ class Button extends Component {
         <TouchableOpacity>
           <Image
             source={this.props.buttonImage}
-            style={[styles.buttonImage,
+            style={[buttonStyles.buttonImage,
               {width: this.imageWidth},
               {height: this.imageHeight}
             ]}
@@ -111,7 +111,7 @@ class Button extends Component {
 	}
 }
 
-const styles = StyleSheet.create({
+const buttonStyles = StyleSheet.create({
   defaultButton: {
     backgroundColor: '#009999',
     borderRadius: 20,
@@ -119,9 +119,11 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 15,
+    fontFamily: 'Gill Sans',
     color: 'white',
     paddingTop: 5,
     paddingBottom: 5,
+    alignSelf: 'center',
     paddingRight: 10,
     paddingLeft: 10,
   },
