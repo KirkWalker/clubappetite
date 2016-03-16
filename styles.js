@@ -1,7 +1,11 @@
-var { StyleSheet} = require('react-native')
+var {
+  StyleSheet, 
+  Dimensions} = require('react-native')
+
+var width = Dimensions.get('window').width;
+var height = Dimensions.get('window').height;
 
 module.exports = StyleSheet.create({
-
   container: {
     flex: 1,
     width: null,
@@ -108,24 +112,27 @@ module.exports = StyleSheet.create({
 
    },
   contentForm: {
-    flex:2,
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
     banner: {
-      flex:1,
+      flex: 0.5,
       alignSelf: "stretch",
       borderColor: "#cccccc",
       borderWidth: 1,
     },
 
   module: {
-    flexDirection:'column',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-    padding:10,
-    margin:5,
-    borderColor: "#cccccc",
-    borderWidth: 1,
+    flexDirection: 'column'
+    // backgroundColor: '#F5FCFF',
+    // padding: 10,
+    // margin: 5,
+    // borderColor: "#cccccc",
+    // borderWidth: 1,
   },
   moduleButtons: {
     flexDirection:'row',
@@ -137,14 +144,22 @@ module.exports = StyleSheet.create({
     padding: 10,
   },
   input: {
-    padding: 4,
-    height: 40,
-    borderWidth: 1,
-    borderColor: '#424242',
-    borderRadius: 1,
+    // alignItems: 'stretch',
+    padding: 10,
+    // flex: .5,
+    height: height*.06,
+    width: width*.85,
+    // borderWidth: 10,
+    // borderColor: '#424242',
     margin: 5,
-    backgroundColor: '#FFFFFF',
-    width: 200,
+    backgroundColor: '#f2f2f2',
+    shadowColor: '#000',
+    shadowOpacity: .8,
+    shadowRadius: 2,
+    shadowOffset: {
+      height: 1,
+      width: 0
+    },
   },
 facebook: {
 

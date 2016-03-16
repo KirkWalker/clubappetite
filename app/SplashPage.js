@@ -5,6 +5,7 @@ var {
   Component,
   View,
   Image,
+  StyleSheet
 } = React;
 
 
@@ -28,9 +29,42 @@ class SplashPage extends Component {
     //console.log('height:'+height);
 
     return (
-      <Image style={[styles.imageContainer, {width: width}, {height: height}]} source={require('../img/Splash.png')} resizeMode={Image.resizeMode.sretch} />
+      <View>
+
+        <View style={splashStyle.bgContainer}>
+            <Image style={splashStyle.background} source={require('../img/splash-bg.png')} />
+        </View>
+
+        <View style={splashStyle.container}>      
+          <Image style={splashStyle.hex} source={require('../img/splash.png')} />
+        </View>
+
+      </View>
     );
   }
 }
 
+var splashStyle = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center'
+  },
+  hex: {
+    width: width*.80,
+    height: height*.80,
+    resizeMode: 'contain',
+  },
+  bgContainer: {
+    position: 'absolute'
+  },
+  background: {
+    width: width,
+    height: height*.25,
+    position: 'absolute',
+    bottom: -height,
+    flex: 1,
+    resizeMode: 'cover'
+  },
+
+});
 module.exports = SplashPage;

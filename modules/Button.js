@@ -70,7 +70,7 @@ class Button extends Component {
 	constructor(props){
 		super(props);
 
-    this.buttonStyle = (this.props.style) ? this.props.style : "default";
+    this.buttonStyle = (this.props.buttonStyle) ? this.props.buttonStyle : "default";
     this.imageHeight = (this.props.height) ? this.props.height : 80;
     this.imageWidth = (this.props.width) ? this.props.width : 70;
     this.color = '';
@@ -116,6 +116,7 @@ class Button extends Component {
     if(this.buttonStyle === "default"){
       return(
         <TouchableHighlight
+<<<<<<< HEAD
           underlayColor={this.underlayColor}
           style={[styles.defaultButton,
             {backgroundColor: this.color}
@@ -123,6 +124,13 @@ class Button extends Component {
           onPress={this.props.onPress}
         >
           <Text style={[styles.buttonText, {color: this.textColor}]}>{this.props.buttonText}</Text>
+=======
+          underlayColor="#004d4d"
+          style={buttonStyles.defaultButton}
+          onPress={this.props.onPress}
+        >
+          <Text style={buttonStyles.buttonText}>{this.props.buttonText}</Text>
+>>>>>>> feature-login-style
         </TouchableHighlight>
       )
     }
@@ -132,7 +140,7 @@ class Button extends Component {
         <TouchableOpacity>
           <Image
             source={{uri: this.props.buttonImage}}
-            style={[styles.buttonImage,
+            style={[buttonStyles.buttonImage,
               {width: this.imageWidth},
               {height: this.imageHeight}
             ]}
@@ -146,7 +154,7 @@ class Button extends Component {
         <TouchableOpacity>
           <Image
             source={this.props.buttonImage}
-            style={[styles.buttonImage,
+            style={[buttonStyles.buttonImage,
               {width: this.imageWidth},
               {height: this.imageHeight}
             ]}
@@ -157,12 +165,13 @@ class Button extends Component {
 	}
 }
 
-const styles = StyleSheet.create({
+const buttonStyles = StyleSheet.create({
   defaultButton: {
     borderRadius: 20,
     overflow: 'hidden',
   },
   buttonText: {
+<<<<<<< HEAD
     fontSize: 18,
     fontWeight: '500',
     paddingTop: 8,
@@ -170,6 +179,16 @@ const styles = StyleSheet.create({
     paddingRight: 12,
     paddingLeft: 12,
     fontFamily: 'Gill Sans',
+=======
+    fontSize: 15,
+    fontFamily: 'Gill Sans',
+    color: 'white',
+    paddingTop: 5,
+    paddingBottom: 5,
+    alignSelf: 'center',
+    paddingRight: 10,
+    paddingLeft: 10,
+>>>>>>> feature-login-style
   },
   buttonImage: {
     resizeMode: 'contain',

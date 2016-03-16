@@ -6,6 +6,8 @@ var {
   Component,
   View,
   Text,
+  Image,
+  Dimensions,
   Picker,
     TouchableHighlight,
     TouchableOpacity,
@@ -16,7 +18,10 @@ var {
 var styles = require('../styles');
 
 var Users = require('../datalayer/User');
-var Button = require('../modules/Button');
+var Button = require('../modules/ButtonLogin');
+
+var width = Dimensions.get('window').width;
+var height = Dimensions.get('window').height;
 
 var result;
 
@@ -26,7 +31,7 @@ class LoginPage extends Component {
 
   constructor(props) {
       super(props);
-      this.state = { inputTxt: 'Username', inputPass: 'Password', data: null, language: "kelowna"};
+      this.state = { inputTxt: '', inputPass: '', data: null, language: "kelowna"};
       this.navigatorObj = props.navigator;
   }
 
@@ -36,17 +41,16 @@ class LoginPage extends Component {
       return (
 
         <View style={styles.container}>
-          <View>
-            <Text style={styles.title}>Please login to Club Appetite.</Text>
+
+          <View style={loginStyles.container}>
+            <Image source={require('../img/logo.png')} style={loginStyles.logo} />
           </View>
 
-          <View style={styles.contentForm}>
+          <View style={styles.contentForm} top={40}>
             <View style={styles.module}>
-               <TextInput style={styles.input} onFocus={this.onUserFocus.bind(this)} onBlur={this.onUserBlur.bind(this)} onChangeText={(text) => this.setState({inputTxt: text})} value={this.state.inputTxt} />
-
-               <TextInput style={styles.input} onFocus={this.onPassFocus.bind(this)} onBlur={this.onPassBlur.bind(this)} onChangeText={(text) => this.setState({inputPass: text})} value={this.state.inputPass}  />
-
-               <Button onPress={this._onPressButtonPOST.bind(this)} buttonText="Login" height={50} width={50} />
+               <TextInput placeholder="USERNAME" placeholderTextColor='#1B898A' style={styles.input} onChangeText={(text) => this.setState({inputTxt: text})} value={this.state.inputTxt} />
+               <TextInput placeholder="PASSWORD" placeholderTextColor='#1B898A' style={styles.input} onChangeText={(text) => this.setState({inputPass: text})} value={this.state.inputPass}  />
+               <Button onPress={this._onPressButtonPOST.bind(this)} buttonText="LOG IN" style={loginStyles.button}/>
             </View>
           </View>
           <View style={styles.contentForm}>
@@ -62,29 +66,7 @@ class LoginPage extends Component {
 
       );
     }
-    onUserFocus() {
-        if(this.state.inputTxt == "Username") {
-            this.setState({inputTxt: ''});
-        }
-    }
 
-    onUserBlur() {
-        if(this.state.inputTxt == "") {
-            this.setState({inputTxt: 'Username'});
-        }
-    }
-
-    onPassFocus() {
-        if(this.state.inputPass == "Password") {
-            this.setState({inputPass: ''});
-        }
-    }
-
-    onPassBlur() {
-        if(this.state.inputPass == "") {
-            this.setState({inputPass: 'Password'});
-        }
-    }
     gotoNext() {
         this.props.navigator.push({
           id: 'MainPage',
@@ -102,9 +84,24 @@ class LoginPage extends Component {
         var username = this.state.inputTxt;
         var password = this.state.inputPass;
         Users.handleLogin(username,password,this);
-
     }
 
 }
+
+var loginStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row'
+  },
+  logo: {
+    width: width*.75,
+    height: height*.18,
+    alignItems: 'stretch',
+    resizeMode: 'contain' 
+  },
+
+});
 
 module.exports = LoginPage;
