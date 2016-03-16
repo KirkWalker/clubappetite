@@ -21,6 +21,7 @@ var LoginPage = require('./app/LoginPage');
 var InfoPage = require('./app/InfoPage');
 var Register = require('./app/Register');
 var Shop = require('./app/Shop');
+var Cart = require('./app/Cart');
 var Share = require('./app/Share');
 var Donate = require('./app/Donate');
 var MainPage = require('./app/MainPage');
@@ -151,6 +152,14 @@ class AMGSandbox extends Component {
          name: 'Shop Appetite',
        });
   }
+  gotoCart() {
+     this.drawer.close();
+     this.navigatorObj.push({
+       id: 'Cart',
+       name: 'Shopping Cart',
+     });
+  }
+
   handleLogout(){
 
     Users.handleLogout();
@@ -277,6 +286,14 @@ class AMGSandbox extends Component {
     if (routeId === 'Shop') {
       return (
         <Shop
+          navigator={navigator}
+          openDrawer={this.openDrawer}
+        />
+      );
+    }
+    if (routeId === 'Cart') {
+      return (
+        <Cart
           navigator={navigator}
           openDrawer={this.openDrawer}
         />

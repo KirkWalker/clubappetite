@@ -25,7 +25,7 @@ var {
 var DB = require('./DB.js');
 
 var SERVER_URL = 'http://restapi.clubappetite.com/api.php';
-var DEBUG = true;
+var DEBUG = false;
 
 module.exports = {
 
@@ -100,101 +100,106 @@ module.exports = {
         If a record exists in the local datalayer we skip ahead and set the state
         with the result set
         */
-        DB.users.get_all(function(results){
-
-            if(results.totalrows == 0){ // user not in local datalayer
-
-                /*
-                The user has not logged in.
-                We send them back to login again as something has gone wrong
-                */
-                if(DEBUG) { console.log('moving to login',results); }
-                _this.props.navigator.push({id: 'LoginPage'});
 
 
-            } else {
-
-                /*
-                The user has logged in and a record has been returned from the local database.
-                First we must check the server to see if anything has changed since the user last used the app
-                This may happen if we introduce a web console and manually add tokens to a user account or similar
-                We update our state with this result set once completed
-                */
-
-                var data = [];
+        if (_this.mounted === true){ //very important, keep this from firing multiple times.
 
 
+            DB.users.get_all(function(results){
 
-                for(var key in results.rows){
-                    data.push(results.rows[key]);
-                }
+                if(results.totalrows == 0){ // user not in local datalayer
 
-                /*
-                We should check that the token hasn't expired
-                If it has we get a new one and update the database
-                */
-                data = data[0];
-
-                if(DEBUG) { console.log('User profile found:',results); }
+                    /*
+                    The user has not logged in.
+                    We send them back to login again as something has gone wrong
+                    */
+                    if(DEBUG) { console.log('moving to login',results); }
+                    _this.props.navigator.push({id: 'LoginPage'});
 
 
-                fetch(SERVER_URL + '?controller=api&action=token', {
-                    method: 'POST',
-                    headers: {
-                      'Accept': 'application/json',
-                      'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                      token: data.token,
-                      id: data.userid
-                    })
-                })
-                .then((response) => response.json())
-                .then((responseData) => {
+                } else {
+
+                    /*
+                    The user has logged in and a record has been returned from the local database.
+                    First we must check the server to see if anything has changed since the user last used the app
+                    This may happen if we introduce a web console and manually add tokens to a user account or similar
+                    We update our state with this result set once completed
+                    */
+
+                    var data = [];
 
 
 
-                    if(responseData.result == 'error'){
-                        console.log('User Class ERROR:',responseData);
-                    } else {
-
-                        if(DEBUG) { console.log('updateToken: responseData=', responseData); }
-
-
-                         if(responseData.token){
-
-                            var token = responseData.token;
-
-                            if(DEBUG) { console.log('updateToken:db',token); }
-                            //var userid = _this.state.user_profile.userid;
-                            var name = _this.state.user_profile.name;
-
-                            DB.users.update({name: name}, { token: token }, function(updated_table){
-                                data.token = token;
-                                _this.setState({user_profile:data});
-                                if(DEBUG) { console.log('done updating users:', updated_table); }
-                            })
-
-                         } else {
-                            _this.setState({user_profile:data});
-                         }
-
+                    for(var key in results.rows){
+                        data.push(results.rows[key]);
                     }
 
+                    /*
+                    We should check that the token hasn't expired
+                    If it has we get a new one and update the database
+                    */
+                    data = data[0];
+
+                    if(DEBUG) { console.log('User profile found:',results); }
+
+
+                    fetch(SERVER_URL + '?controller=api&action=token', {
+                        method: 'POST',
+                        headers: {
+                          'Accept': 'application/json',
+                          'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                          token: data.token,
+                          id: data.userid
+                        })
+                    })
+                    .then((response) => response.json())
+                    .then((responseData) => {
 
 
 
-                })
-                .catch(function(error) {
-                    console.log('updateToken request failed', error);
-                })
-                .done();
+                        if(responseData.result == 'error'){
+                            console.log('User Class ERROR:',responseData);
+                        } else {
 
-                _this.setState({user_profile:data});
-            }
+                            if(DEBUG) { console.log('updateToken: responseData=', responseData); }
 
-        })
 
+                             if(responseData.token){
+
+                                var token = responseData.token;
+
+                                if(DEBUG) { console.log('updateToken:db',token); }
+                                //var userid = _this.state.user_profile.userid;
+                                var name = _this.state.user_profile.name;
+
+                                DB.users.update({name: name}, { token: token }, function(updated_table){
+                                    data.token = token;
+                                    _this.setState({user_profile:data});
+                                    if(DEBUG) { console.log('done updating users:', updated_table); }
+                                })
+
+                             } else {
+                                _this.setState({user_profile:data});
+                             }
+
+                        }
+
+
+
+
+                    })
+                    .catch(function(error) {
+                        console.log('updateToken request failed', error);
+                    })
+                    .done();
+
+                    _this.setState({user_profile:data});
+                }
+
+            })
+        }
 
     },
 

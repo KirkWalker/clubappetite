@@ -22,17 +22,14 @@ var {width,height} = Dimensions.get('window');
 class MainPage extends Component {
 
 
-    constructor(props) {
+  constructor(props) {
         super(props);
         this.state = {user_profile: []};
         //result = props.bannerads.getAdData(this);
 
-    }
+  }
 
-    componentDidMount() {
-
-      //console.log('main page object');
-      //console.log(this);
+  componentDidMount() {
 
       /*
       This method sets the state variables for the user profile
@@ -41,8 +38,14 @@ class MainPage extends Component {
 
       successful result is an object: this.state.user_profile
       */
+
+      this.mounted = true;
       Users.getProfile(this);
-    }
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
+  }
 
     render() {
 
@@ -71,9 +74,14 @@ class MainPage extends Component {
 
         <Image style={[styles.imageContainer,{width: width}]} source={require('../img/ViewBG.png')} resizeMode="cover"></Image>
 
-        <TouchableHighlight style={styles.welcome, {backgroundColor: 'yellow', padding: 10}}
+        <TouchableHighlight style={styles.welcome, {backgroundColor: 'grey', padding: 10}}
             onPress={this.gotoMessagesPage.bind(this)}>
           <Text style={{backgroundColor: 'yellow', color: 'green'}}>Messages</Text>
+        </TouchableHighlight>
+
+        <TouchableHighlight style={styles.welcome, {backgroundColor: 'grey', padding: 10}}
+            onPress={this.gotoCartPage.bind(this)}>
+          <Text style={{backgroundColor: 'yellow', color: 'green'}}>Shopping Cart</Text>
         </TouchableHighlight>
 
         <Text style={styles.mainPanelTitle}>
@@ -96,6 +104,13 @@ class MainPage extends Component {
       name: 'Messages',
     });
   }
+  gotoCartPage() {
+      this.props.navigator.push({
+        id: 'Cart',
+        name: 'Shopping Cart',
+      });
+  }
+
 }
 
 module.exports = MainPage;
