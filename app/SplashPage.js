@@ -21,7 +21,7 @@ class SplashPage extends Component {
       navigator.replace({
         id: 'MainPage',
       });
-    }, 1000);
+    }, 2000);
   }
   render() {
 
@@ -36,7 +36,7 @@ class SplashPage extends Component {
         </View>
 
         <View style={splashStyle.container}>      
-          <Image style={splashStyle.hex} source={require('../img/splash.png')} />
+          <Image style={splashStyle.hex} source={require('../img/Splash.png')} />
         </View>
 
       </View>

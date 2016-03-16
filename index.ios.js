@@ -219,7 +219,7 @@ class AMGSandbox extends Component {
         side={this.settings.rightSide ? 'right' : 'left'}
       >
         <Navigator
-          initialRoute={{id: 'MainPage', name: 'Index'}}
+          initialRoute={{id: 'SplashPage', name: 'Index'}}
           renderScene={this.renderScene.bind(this)}
           configureScene={(route) => {
             if (route.sceneConfig) {
