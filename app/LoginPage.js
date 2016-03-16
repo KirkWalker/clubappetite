@@ -43,7 +43,7 @@ class LoginPage extends Component {
         <View style={styles.container}>
 
           <View style={loginStyles.container}>
-            <Image source={require('../img/logo.png')} style={loginStyles.logo} />
+            <Image source={require('../img/ClubAppetiteLogo.png')} style={loginStyles.logo} />
           </View>
 
           <View style={styles.contentForm} top={40}>

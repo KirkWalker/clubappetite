@@ -54,7 +54,7 @@ class Register extends Component {
       <View style={styles.container}>
 
         <View style={registerStyles.container}>
-          <Image source={require('../img/logo.png')} style={registerStyles.logo}/>
+          <Image source={require('../img/ClubAppetiteLogo.png')} style={registerStyles.logo}/>
         </View>
 
         <View style={styles.contentForm} top={40}>
