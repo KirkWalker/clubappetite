@@ -9,16 +9,22 @@ import React, {
   Text,
   View,
   TouchableOpacity,
+  Navigator,
+  PixelRatio,
 } from 'react-native';
+
+var styles = require('../styles');
 
 var Directory = require('../datalayer/Directory.js');
 var Users = require('../datalayer/User');
+var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
 
 /* BusinessDirectory Component */
 class BusinessDirectory extends Component {
 
   constructor(props) {
     super(props);
+    this.renderBusiness = this.renderBusiness.bind(this);
     this.state = {
     	dataSource: new ListView.DataSource({
     		rowHasChanged: (r1, r2) => r1 !== r2,
@@ -36,6 +42,13 @@ class BusinessDirectory extends Component {
 
   componentWillUnmount() {
     this.mounted = false;
+  }
+
+  gotoDetails() {
+    this.props.navigator.push({
+      id: 'BusinessPage',
+      name: 'Business Page',
+    });
   }
 
   renderLoadingView() {
@@ -57,21 +70,21 @@ class BusinessDirectory extends Component {
   renderBusiness(business) {
   	return(
   		<TouchableOpacity
+        style={BusinessStyles.listContainer}
+        onPress={() => this.gotoDetails()}
       >
-  			<View style={BusinessStyles.listContainer}>
-  				<Image
-  					style={BusinessStyles.businessThumbnail}
-  					source={{uri: business.sponsor_img}}
-  				/>
-  				<View style={BusinessStyles.listInnerContainer}>
-  					<Text style={BusinessStyles.businessName}>{business.sponsor_name}</Text>
-  					<Text style={BusinessStyles.businessDescription}>e-mail: {business.sponsor_email}</Text>
-  				</View>
-          <Image
-            style={BusinessStyles.arrow}
-            source={require('../img/NavArrow.png')}
-          />
-  			</View>
+				<Image
+					style={BusinessStyles.businessThumbnail}
+					source={{uri: business.sponsor_img}}
+				/>
+				<View style={BusinessStyles.listInnerContainer}>
+					<Text style={BusinessStyles.businessName}>{business.sponsor_name}</Text>
+					<Text style={BusinessStyles.businessDescription}>e-mail: {business.sponsor_email}</Text>
+				</View>
+        <Image
+          style={BusinessStyles.arrow}
+          source={require('../img/NavArrow.png')}
+        />
   		</TouchableOpacity>
   	);
   }
@@ -86,6 +99,22 @@ class BusinessDirectory extends Component {
   }
 
   render() {
+    var data = [];
+    data.push(Users.getImageUrl(this));
+    data.push(this.props.openDrawer);
+
+    return (
+      <Navigator
+          renderScene={this.renderScene.bind(this)}
+          navigator={this.props.navigator}
+          navigationBar={
+            <Navigator.NavigationBar style={styles.navbar}
+                routeMapper={NavigationBarRouteMapper(data)} />
+          } />
+    );
+  }
+
+  renderScene(route, navigator) {
   	if (!this.state.loaded) {
   		return this.renderLoadingView();
   	}
@@ -95,12 +124,21 @@ class BusinessDirectory extends Component {
   			dataSource={this.state.dataSource}
   			renderRow={this.renderBusiness}
   			renderHeader={this.renderHeader}
-        style={{backgroundColor: '#F2F2F2'}}
+        style={[{backgroundColor: '#F2F2F2'}, {paddingTop: 70}]}
         renderSeparator={this.renderSeparator}
   		/>
   	);
   }
 }
+
+// Variables for styles. Used for scaling to different screen sizes.
+var TITLE_TEXT = (PixelRatio.get() <= 2) ? 15 : 25;
+var INFO_TEXT = (PixelRatio.get() <= 2) ? 10 : 15;
+var PADDING = PixelRatio.get();
+console.log(PixelRatio.get());
+
+var THUMBNAIL_SIZE = PixelRatio.getPixelSizeForLayoutSize(15);
+var ARROW_SIZE = PixelRatio.getPixelSizeForLayoutSize(10); 
 
 const BusinessStyles = StyleSheet.create({
 	loadingContainer: {
@@ -112,17 +150,20 @@ const BusinessStyles = StyleSheet.create({
   loadingText: {
     fontFamily: 'Gill Sans',
     color: 'gray',
-    fontSize: 20,
+    fontSize: TITLE_TEXT,
   },
 	listContainer: {
 		flexDirection: 'row',
-		paddingTop: 25,
-    paddingBottom: 25,
-    paddingLeft: 25,
-    paddingRight: 8,
+		paddingTop: PADDING*8.33,
+    paddingBottom: PADDING*8.33,
+    paddingLeft: PADDING*8.33,
+    paddingRight: PADDING*8.33,
     alignItems: 'center',
     backgroundColor: 'white',
     
+    //shadows android
+    elevation: 2,
+    //shadows iOS
     shadowColor: "#000000",
     shadowOpacity: 0.8,
     shadowRadius: 3,
@@ -133,42 +174,42 @@ const BusinessStyles = StyleSheet.create({
 	},
 	listInnerContainer: {
 		flex: 1,
-		paddingLeft: 20,
+		paddingLeft: PADDING*8,
 	},
 	header: {
 		alignItems: 'center',
-    paddingTop: 90,
-    paddingBottom: 20,
+    paddingTop: PADDING*10,
+    paddingBottom: PADDING*10,
 	},
   headerText: {
     fontFamily: 'Gill Sans',
     color: 'rgb(027, 135, 136)',
-    fontSize: 25,
+    fontSize: TITLE_TEXT,
     fontWeight: '400',
   },
   separator: {
     backgroundColor: '#f2f2f2',
-    height: 14,
+    height: PADDING*5.5,
   },
 	businessThumbnail: {
-		width: 45,
-		height: 45,
+		width: THUMBNAIL_SIZE,
+		height: THUMBNAIL_SIZE,
 	},
 	businessName: {
-		fontSize: 15,
+		fontSize: INFO_TEXT,
 		fontWeight: '500',
 		color: 'gray',
 		fontFamily: 'Gill Sans',
 	},
 	businessDescription: {
-		fontSize: 15,
+		fontSize: INFO_TEXT,
     fontWeight: '300',
     color: 'gray',
 		fontFamily: 'Gill Sans',
   },
   arrow: {
-    height: 33,
-    width: 33,
+    height: ARROW_SIZE,
+    width: ARROW_SIZE,
   },
 });
 

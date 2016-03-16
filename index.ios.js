@@ -27,6 +27,8 @@ var Donate = require('./app/Donate');
 var MainPage = require('./app/MainPage');
 var Messages = require('./app/Messages');
 var Profile = require('./app/Profile');
+var BusinessPage = require('./app/BusinessPage');
+var BusinessDirectory = require('./app/BusinessDirectory');
 var NoNavigatorPage = require('./app/NoNavigatorPage');
 var Drawer = require('react-native-drawer');
 var ControlPanel = require('./ControlPanel');
@@ -219,7 +221,7 @@ class AMGSandbox extends Component {
         side={this.settings.rightSide ? 'right' : 'left'}
       >
         <Navigator
-          initialRoute={{id: 'MainPage', name: 'Index'}}
+          initialRoute={{id: 'BusinessDirectory', name: 'Index'}}
           renderScene={this.renderScene.bind(this)}
           configureScene={(route) => {
             if (route.sceneConfig) {
@@ -360,6 +362,25 @@ class AMGSandbox extends Component {
       return (
         <NoNavigatorPage
             navigator={navigator} />
+      );
+    }
+    if (routeId === 'BusinessDirectory') {
+      return (
+        <BusinessDirectory
+          navigator={navigator}
+          openDrawer={this.openDrawer}
+          pageName="Business Directory"
+          id={routeId}
+        />
+      );
+    }
+    if (routeId === 'BusinessPage') {
+      return (
+        <BusinessPage
+          navigator={navigator}
+          openDrawer={this.openDrawer}
+          pageName="Business Page"
+        />
       );
     }
     return this.noRoute(navigator); /* <-- if the route isn't found, it defaults to this method. */
