@@ -11,13 +11,14 @@ import React, {
   TouchableOpacity,
 } from 'react-native';
 
-var REQUEST_URL = 'https://raw.githubusercontent.com/facebook/react-native/master/docs/MoviesExample.json';
+var dummyData = require('../datalayer/dummyData.JSON');
 
 /* BusinessDirectory Component */
 class BusinessDirectory extends Component {
 
   constructor(props) {
     super(props);
+    console.log(dummyData);
     this.state = {
     	dataSource: new ListView.DataSource({
     		rowHasChanged: (r1, r2) => r1 !== r2,
@@ -31,15 +32,11 @@ class BusinessDirectory extends Component {
   }
 
   fetchData() {
-  	fetch(REQUEST_URL)
-    .then((response) => response.json())
-    .then((responseData) => {
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(responseData.movies),
-        loaded: true,
-        });
-      })
-    .done();
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(dummyData),
+      loaded: true,
+    });
+    console.log("data: " +JSON.stringify(this.state.dataSource));
   }
 
   renderLoadingView() {
