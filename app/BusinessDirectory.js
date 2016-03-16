@@ -11,9 +11,7 @@ import React, {
   TouchableOpacity,
 } from 'react-native';
 
-
 var Directory = require('../datalayer/Directory.js');
-
 
 /* BusinessDirectory Component */
 class BusinessDirectory extends Component {
@@ -29,9 +27,7 @@ class BusinessDirectory extends Component {
   }
 
   componentDidMount() {
-
   	Directory.getDirectoryData(this);
-
   }
 
   renderLoadingView() {
@@ -51,7 +47,6 @@ class BusinessDirectory extends Component {
   }
 
   renderBusiness(business) {
-
   	return(
   		<TouchableOpacity
       >
@@ -62,7 +57,7 @@ class BusinessDirectory extends Component {
   				/>
   				<View style={BusinessStyles.listInnerContainer}>
   					<Text style={BusinessStyles.businessName}>{business.sponsor_name}</Text>
-  					<Text style={BusinessStyles.businessDescription}>Email: {business.sponsor_email}</Text>
+  					<Text style={BusinessStyles.businessDescription}>e-mail: {business.sponsor_email}</Text>
   				</View>
           <Image
             style={BusinessStyles.arrow}
@@ -92,7 +87,7 @@ class BusinessDirectory extends Component {
   			dataSource={this.state.dataSource}
   			renderRow={this.renderBusiness}
   			renderHeader={this.renderHeader}
-        style={{backgroundColor: '#f2f2f2'}}
+        style={{backgroundColor: '#F2F2F2'}}
         renderSeparator={this.renderSeparator}
   		/>
   	);
@@ -104,6 +99,7 @@ const BusinessStyles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
+    backgroundColor: '#f2f2f2'
 	},
   loadingText: {
     fontFamily: 'Gill Sans',
@@ -138,7 +134,7 @@ const BusinessStyles = StyleSheet.create({
 	},
   headerText: {
     fontFamily: 'Gill Sans',
-    color: 'rgba(027, 135, 136, 1.00)',
+    color: 'rgb(027, 135, 136)',
     fontSize: 25,
     fontWeight: '400',
   },

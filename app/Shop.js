@@ -15,6 +15,7 @@ var styles = require('../styles');
 var Users = require('../datalayer/User');
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
 var BusinessDirectory = require('./BusinessDirectory');
+var BusinessPage = require('./BusinessPage');
 
 class Shop extends Component {
 
@@ -49,7 +50,7 @@ class Shop extends Component {
   }
   renderScene(route, navigator) {
     return (
-      <BusinessDirectory/>
+      <BusinessPage/>
     );
   }
   gotoNext() {
