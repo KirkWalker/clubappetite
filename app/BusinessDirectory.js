@@ -11,14 +11,15 @@ import React, {
   TouchableOpacity,
 } from 'react-native';
 
-var dummyData = require('../datalayer/dummyData.JSON');
+
+var Directory = require('../datalayer/Directory.js');
+
 
 /* BusinessDirectory Component */
 class BusinessDirectory extends Component {
 
   constructor(props) {
     super(props);
-    console.log(dummyData);
     this.state = {
     	dataSource: new ListView.DataSource({
     		rowHasChanged: (r1, r2) => r1 !== r2,
@@ -28,15 +29,9 @@ class BusinessDirectory extends Component {
   }
 
   componentDidMount() {
-  	this.fetchData();
-  }
 
-  fetchData() {
-    this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(dummyData),
-      loaded: true,
-    });
-    console.log("data: " +JSON.stringify(this.state.dataSource));
+  	Directory.getDirectoryData(this);
+
   }
 
   renderLoadingView() {
@@ -56,17 +51,18 @@ class BusinessDirectory extends Component {
   }
 
   renderBusiness(business) {
+
   	return(
   		<TouchableOpacity
       >
   			<View style={BusinessStyles.listContainer}>
   				<Image
   					style={BusinessStyles.businessThumbnail}
-  					source={{uri: business.posters.thumbnail}}
+  					source={{uri: business.sponsor_img}}
   				/>
   				<View style={BusinessStyles.listInnerContainer}>
-  					<Text style={BusinessStyles.businessName}>Business Name</Text>
-  					<Text style={BusinessStyles.businessDescription}>Quick description of business here...</Text>
+  					<Text style={BusinessStyles.businessName}>{business.sponsor_name}</Text>
+  					<Text style={BusinessStyles.businessDescription}>Email: {business.sponsor_email}</Text>
   				</View>
           <Image
             style={BusinessStyles.arrow}
