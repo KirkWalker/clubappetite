@@ -19,7 +19,7 @@ var {
 
 var styles = require('../styles');
 var Users = require('../datalayer/User');
-var Regions = require('../datalayer/Regions');
+var SubLocalities = require('../datalayer/Sublocalities');
 var Button = require('../modules/ButtonLogin');
 
 var width = Dimensions.get('window').width;
@@ -31,25 +31,23 @@ let PickerItem = RegionList.Item;
 class Register extends Component {
 
   constructor(props) {
-    super(props);
-    this.state = {
-      inputTxt: '',
-      inputPass: '',
-      inputEmail: '',
-      location: "Kelowna",
-      regions: ['Kelowna','Vancouver'],
-      regionIds: ['1','2'],
-      locationIndex: 0,
-    };
-    this.navigatorObj = props.navigator;
-
+      super(props);
+      this.state = {
+          inputTxt: 'Username',
+          inputPass: 'Password',
+          inputEmail: 'Email',
+          location: "Kelowna",
+          sublocalities: ['Kelowna','Vancouver'],
+          sublocalitiesIds: ['1','2'],
+          locationIndex: 0,
+      };
+      this.navigatorObj = props.navigator;
   }
 
   render() {
 
-    let data = this.state.regions;
-    //let selectionString = data[this.state.locationIndex];
-    console.log('current state location:',this.state.location);
+    let data = this.state.sublocalities;
+    console.log('current state sublocalities:',this.state.location);
     console.log('current state locationIndex:',this.state.locationIndex);
     return (
 
@@ -101,7 +99,7 @@ class Register extends Component {
 
 componentDidMount() {
 
-  Regions.getRegions(this);
+  SubLocalities.getSubLocalities(this);
 
 
 }
