@@ -81,6 +81,7 @@ module.exports = StyleSheet.create({
   },
   section: {
     padding: 10,
+    left:25,
     flexDirection: 'row',
     alignItems: 'center',
   },

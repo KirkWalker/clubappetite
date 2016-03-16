@@ -24,8 +24,6 @@ module.exports = React.createClass({
         <Text style={styles.controlPanelWelcome}>
           Menu
         </Text>
-
-
         <ScrollView
           contentContainerStyle={styles.contentContainer}
           style={styles.scrollView}>
@@ -93,8 +91,6 @@ module.exports = React.createClass({
           {/*put more sections here*/}
 
         </ScrollView>
-
-
       </View>
     )
   }
