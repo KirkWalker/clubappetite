@@ -12,6 +12,7 @@ import React, {
 } from 'react-native';
 
 var Directory = require('../datalayer/Directory.js');
+var Users = require('../datalayer/User');
 
 /* BusinessDirectory Component */
 class BusinessDirectory extends Component {
@@ -23,11 +24,18 @@ class BusinessDirectory extends Component {
     		rowHasChanged: (r1, r2) => r1 !== r2,
     	}),
     	loaded: false,
+    	user_profile: [],
     };
   }
 
   componentDidMount() {
+    this.mounted = true;
+    Users.getProfile(this);
   	Directory.getDirectoryData(this);
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
   }
 
   renderLoadingView() {

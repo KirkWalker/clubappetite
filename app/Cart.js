@@ -13,33 +13,30 @@ var {
 var styles = require('../styles');
 
 var Users = require('../datalayer/User');
-var MyMessages = require('../datalayer/Messages');
+var MyProducts = require('../datalayer/Products');
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
 
-class Messages extends Component {
+class Cart extends Component {
 
   constructor(props) {
       super(props);
-      this.state = {user_profile: [], MessageArray: []};
-      this.mounted = false;
+      this.state = {user_profile: [], ProductArray: []};
   }
 
   componentDidMount() {
       this.mounted = true;
       Users.getProfile(this);
-      MyMessages.getMessageData(this);
+      MyProducts.getProductData(this);
   }
 
   componentWillUnmount() {
     this.mounted = false;
   }
-
   render() {
 
-    if(this.state.MessageArray.length > 0 && this.mounted){
-      //console.log('MessageArray::',this.state.MessageArray);
+    if(this.state.ProductArray.length > 0 && this.mounted){
+      console.log('ProductArray::',this.state.ProductArray);
     }
-
 
     var data = [];
     data.push(Users.getImageUrl(this));
@@ -73,4 +70,4 @@ class Messages extends Component {
   }
 }
 
-module.exports = Messages;
+module.exports = Cart;

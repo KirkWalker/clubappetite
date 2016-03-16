@@ -13,6 +13,7 @@ var {
 var styles = require('../styles');
 
 var Users = require('../datalayer/User');
+var MyDirectory = require('../datalayer/Directory');
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
 var BusinessDirectory = require('./BusinessDirectory');
 var BusinessPage = require('./BusinessPage');
@@ -21,18 +22,23 @@ class Shop extends Component {
 
   constructor(props) {
       super(props);
-      this.state = {user_profile: []};
-
+      this.state = {user_profile: [], DirectoryArray: []};
   }
 
   componentDidMount() {
-    /*
-    successful result is an object: this.state.user_profile
-    */
-    Users.getProfile(this);
+      this.mounted = true;
+      Users.getProfile(this);
+      MyDirectory.getDirectoryData(this);
   }
 
+  componentWillUnmount() {
+    this.mounted = false;
+  }
   render() {
+
+    if(this.state.DirectoryArray.length > 0 && this.mounted){
+      //console.log('DirectoryArray::',this.state.DirectoryArray);
+    }
 
     var data = [];
     data.push(Users.getImageUrl(this));
@@ -50,7 +56,7 @@ class Shop extends Component {
   }
   renderScene(route, navigator) {
     return (
-      <BusinessPage/>
+      <BusinessDirectory/>
     );
   }
   gotoNext() {

@@ -36,29 +36,25 @@ class InfoPage extends Component {
         count: 0,
         dataObj: [],
       };
-
-
-
-
-
-
-
   }
 
   componentDidMount() {
 
     var _this = this;
-/*
+    this.mounted = true;
+    /*
     successful result is an object: this.state.user_profile
     */
     Users.getProfile(this);
     InfoPageData.getPageData(_this,this.props.id.toLowerCase());
 
-    //console.log(this.state);
-
-
-
   }
+
+  componentWillUnmount() {
+      this.mounted = false;
+  }
+
+
 
   render() {
 

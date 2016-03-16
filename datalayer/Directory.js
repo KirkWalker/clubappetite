@@ -2,91 +2,32 @@ var { View } = require('react-native')
 
 var DB = require('./DB');
 
-var debug = true;
+var DEBUG = true;
 var SERVER_URL = 'http://restapi.clubappetite.com/api.php';
 var _page_name = 'Directory';
-
-module.exports = {
-
+var DirectoryStore = {};
 
 
-    getDirectoryData(_this) {
+DirectoryStore.getDirectoryData = function (_this) {
 
+    var self = this;
+    var current_mod = '1900-01-01 12:00:00';
 
+    if (_this.mounted === true){ //very important, keep this from firing multiple times.
         /*
         Check to see if the datalayer has latest bersion of sponsors
         If a record exists in the local datalayer we skip ahead and set the state
         with the result set
         */
-
-
         DB.directory.get_all(function(results){
+
+            var token = _this.state.user_profile.token;
 
             if(results.totalrows == 0){ // no data in local datalayer
 
-        /*
-
-        leave this for now, it requires tokens which need this feature merged with development.
-
-                var token = _this.state.user_profile.token;
-                var initText = '';
-                var current_mod = '1900-01-01 12:00:00';
-                var URL = SERVER_URL + '?controller=api&action=sponsors&last_mod='+current_mod+'&token='+token;
-
-
-                console.log(_page_name+' DB records found:', URL);
-
-
-                fetch(URL, {
-                        method: 'POST',
-                        headers: {
-                          'Accept': 'application/json',
-                          'Content-Type': 'application/json',
-                        }
-                    })
-                    .then((response) => response.json())
-                    .then((responseData) => {
-
-
-                        if(responseData.result == 'error'){
-                            console.log(_page_name + ' API ERROR:',responseData);
-                        } else if(responseData.result == 'success'){
-
-                            if(debug) { console.log(_page_name+' success', responseData);}
-                            delete responseData.result;
-
-                            if(responseData.code == 'refresh') {
-                                delete responseData.code;
-                                DB.directory.add(responseData,function(result){
-                                    if(debug) {
-                                       console.log('adding directory listings');
-                                       console.log(result);
-                                    }
-
-                                   //_this.setState({
-                                    // dataSource: _this.state.dataSource.cloneWithRows(DirectoryData),
-                                    // loaded: true,
-                                   //});
-
-                                });
-                            } else {
-                                console.log('data is up to date ');
-
-                            }
-
-                        } else {
-                             console.log(_page_name+' responseData failed(update)', responseData);
-                        }
-
-
-
-                })
-                .catch(function(error) {
-                    console.log(_page_name+' unknown failure(update):', error);
-                })
-                .done();
-          */
-
+                if(token != undefined){
+                   self.fetchData(_this, token, current_mod, '');
+                }
 
             } else {
 
@@ -96,21 +37,105 @@ module.exports = {
                 }
                 //DB.directory.erase_db(function(removed_data){
                    //console.log('Directory: remove data result');
-                  // console.log(removed_data);
+                   //console.log(removed_data.directory);
                    //console.log('------------------');
-                // });
-                //console.log(_page_name+' records found:', nk[0].details);
-                _this.setState({
-                    dataSource: _this.state.dataSource.cloneWithRows(nk[0].details),
-                    loaded: true,
-                });
+                //});
+
+                current_mod = nk[0].max_mod;
+                if(token != undefined){
+                    self.fetchData(_this, token, current_mod, nk);
+                }
 
             }
 
         });
 
-
     }
 
+};
+
+
+DirectoryStore.fetchData = function (_this, token, current_mod, data) {
+
+    var URL = SERVER_URL + '?controller=api&action=sponsors&last_mod='+current_mod+'&token='+token;
+    if(DEBUG) { console.log(_page_name+' fetchData:', URL); }
+
+
+if (_this.mounted === true){ //very important, keep this from firing multiple times.
+        fetch(URL, {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            }
+        })
+        .then((response) => response.json())
+        .then((responseData) => {
+
+            if(responseData.result == 'error'){
+                console.log(_page_name + ' API ERROR:',responseData);
+            } else if(responseData.result == 'success'){
+
+                //if(debug) { console.log(_page_name+' success', responseData);}
+                delete responseData.result;
+
+                if(responseData.code == 'refresh') {
+                    delete responseData.code;
+
+                    if(current_mod == '1900-01-01 12:00:00') {//this is first time, we create the table
+                        DB.directory.add(responseData,function(result){
+                            if(DEBUG) {
+                               console.log(_page_name+' Adding sponsor');
+                               console.log(result);
+                               console.log(_page_name+' Setting state:',responseData.details);
+                            }
+                           _this.setState({
+                               dataSource: _this.state.dataSource.cloneWithRows(responseData.details),
+                               loaded: true,
+                           });
+                        });
+                    } else {
+                        DB.directory.update({max_mod: current_mod}, { details: responseData.details, max_mod: responseData.max_mod }, function(updated_table){
+                            if(DEBUG) {
+                               console.log(_page_name+' Updating sponsors');
+                               console.log(updated_table.sponsors);
+                               console.log(_page_name+' Setting state:',responseData.details);
+                            }
+
+                            _this.setState({
+                                dataSource: _this.state.dataSource.cloneWithRows(responseData.details),
+                                loaded: true,
+                            });
+                        });
+
+                    }
+
+                } else {
+                    if(DEBUG) { console.log(_page_name+' data is up to date2 ',data); }
+
+                    if(_this.state.dataSource != undefined){
+                        _this.setState({
+                            dataSource: _this.state.dataSource.cloneWithRows(data[0].details),
+                            loaded: true,
+                        });
+                    }
+
+                }
+
+            } else {
+                 console.log(_page_name+' responseData failed(update)', responseData);
+            }
+
+        })
+        .catch(function(error) {
+            console.log(_page_name+' unknown failure(update):', error);
+        })
+        .done();
 
 }
+
+
+};
+
+
+module.exports = DirectoryStore;
