@@ -161,7 +161,13 @@ class AMGSandbox extends Component {
        name: 'Shopping Cart',
      });
   }
-
+  gotoDirectory() {
+     this.drawer.close();
+     this.navigatorObj.push({
+       id: 'BusinessDirectory',
+       name: 'Business Directory',
+     });
+  }
   handleLogout(){
 
     Users.handleLogout();
@@ -189,6 +195,7 @@ class AMGSandbox extends Component {
         gotoFoodBank={() => {this.gotoFoodBank()}}
         handleLogout={() => {this.handleLogout()}}
         gotoShop={() => {this.gotoShop()}}
+        gotoDirectory={() => {this.gotoDirectory()}}
         gotoDonate={() => {this.gotoDonate()}}
         gotoShare={() => {this.gotoShare()}}
 
@@ -221,7 +228,7 @@ class AMGSandbox extends Component {
         side={this.settings.rightSide ? 'right' : 'left'}
       >
         <Navigator
-          initialRoute={{id: 'SplashPage', name: 'Index'}}
+          initialRoute={{id: 'SplashPage', name: 'Splash Page'}}
           renderScene={this.renderScene.bind(this)}
           configureScene={(route) => {
             if (route.sceneConfig) {
@@ -325,25 +332,6 @@ class AMGSandbox extends Component {
         />
       );
     }
-    if (routeId === 'BusinessDirectory') {
-      return (
-        <BusinessDirectory
-          navigator={navigator}
-          openDrawer={this.openDrawer}
-          pageName="Business Directory"
-          id={routeId}
-        />
-      );
-    }
-    if (routeId === 'BusinessPage') {
-      return (
-        <BusinessPage
-          navigator={navigator}
-          openDrawer={this.openDrawer}
-          pageName="Business Page"
-        />
-      );
-    }
     /*
     pageName and id are passed to infoPage to populate the dynamic content.
     */
@@ -381,6 +369,25 @@ class AMGSandbox extends Component {
       return (
         <NoNavigatorPage
             navigator={navigator} />
+      );
+    }
+    if (routeId === 'BusinessDirectory') {
+      return (
+        <BusinessDirectory
+          navigator={navigator}
+          openDrawer={this.openDrawer}
+          pageName="Business Directory"
+          id={routeId}
+        />
+      );
+    }
+    if (routeId === 'BusinessPage') {
+      return (
+        <BusinessPage
+          navigator={navigator}
+          openDrawer={this.openDrawer}
+          pageName="Business Page"
+        />
       );
     }
     return this.noRoute(navigator); /* <-- if the route isn't found, it defaults to this method. */

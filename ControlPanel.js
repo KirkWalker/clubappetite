@@ -24,6 +24,8 @@ module.exports = React.createClass({
         <Text style={styles.controlPanelWelcome}>
           Menu
         </Text>
+
+
         <ScrollView
           contentContainerStyle={styles.contentContainer}
           style={styles.scrollView}>
@@ -37,7 +39,7 @@ module.exports = React.createClass({
           <Section
             id='Shop'
             name='Shop Appetite'
-            gotoShop={this.props.gotoShop}
+            gotoShop={this.props.gotoDirectory}
             text="Shop Appetite" />
 
           <Section
@@ -91,6 +93,8 @@ module.exports = React.createClass({
           {/*put more sections here*/}
 
         </ScrollView>
+
+
       </View>
     )
   }
@@ -116,6 +120,9 @@ var Section = React.createClass({
 
       if (this.props.gotoShop)
         this.props.gotoShop();
+
+      if (this.props.gotoDirectory)
+        this.props.gotoDirectory();
 
       if (this.props.gotoDonate)
         this.props.gotoDonate();
