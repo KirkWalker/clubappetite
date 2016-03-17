@@ -143,6 +143,15 @@ module.exports = StyleSheet.create({
     marginLeft: 5,
     padding: 10,
   },
+  inputContainer: {
+      shadowColor: '#999999',
+      shadowOpacity: .8,
+      shadowRadius: 2,
+      shadowOffset: {
+        height: 1,
+        width: 1
+      },
+    },
   input: {
     // alignItems: 'stretch',
     padding: 10,
@@ -153,13 +162,6 @@ module.exports = StyleSheet.create({
     // borderColor: '#424242',
     margin: 5,
     backgroundColor: '#f2f2f2',
-    shadowColor: '#000',
-    shadowOpacity: .8,
-    shadowRadius: 2,
-    shadowOffset: {
-      height: 1,
-      width: 0
-    },
   },
 facebook: {
 

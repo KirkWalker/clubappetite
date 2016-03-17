@@ -85,9 +85,18 @@ class Register extends Component {
             })()}
 
           <View style={styles.module} marginTop={5}>
+            <View style={styles.inputContainer}>
               <TextInput placeholder="USERNAME" placeholderTextColor='#1B898A' style={styles.input} onChangeText={(text) => this.setState({inputTxt: text})} value={this.state.inputTxt} />
+            </View>
+
+            <View style={styles.inputContainer}>
               <TextInput style={styles.input} placeholder="PASSWORD" placeholderTextColor='#1B898A' onChangeText={(text) => this.setState({inputPass: text})} value={this.state.inputPass}  />
+            </View>
+
+            <View style={styles.inputContainer}>
               <TextInput style={styles.input} placeholder="EMAIL" placeholderTextColor='#1B898A' onChangeText={(text) => this.setState({inputEmail: text})} value={this.state.inputEmail}  />
+            </View>
+
           </View>
 
           <View style={styles.module} marginTop={10}>

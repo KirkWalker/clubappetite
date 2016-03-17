@@ -133,6 +133,13 @@ const buttonLoginStyles = StyleSheet.create({
     justifyContent: 'center',
     width: width*.85,
     height: height*.06,
+    shadowColor: '#999999',
+        shadowOpacity: .8,
+        shadowRadius: 2,
+        shadowOffset: {
+          height: 1,
+          width: 1
+        },
   },
   buttonText: {
     fontSize: 15,
