@@ -32,7 +32,7 @@ class SplashPage extends Component {
       <View>
 
         <View style={splashStyle.bgContainer}>
-            <Image style={splashStyle.background} source={require('../img/splash-bg.png')} />
+            <Image style={splashStyle.background} source={require('../img/splash-bg-sm.png')} />
         </View>
 
         <View style={splashStyle.container}>      

@@ -1,6 +1,6 @@
 var { View } = require('react-native')
 
-var DEBUG = true;
+var DEBUG = false;
 var SERVER_URL = 'http://restapi.clubappetite.com/api.php';
 var API_REQUEST = "SubLocalities API request";
 

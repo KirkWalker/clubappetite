@@ -260,14 +260,23 @@ module.exports = {
         var API_REQUEST = 'HandleRegister:';
         var error_message = '';
 
-        if(username == 'Username' || password == 'Password' || email == 'Email') {
+        if(username == '' || password == '' || email == '') {
             error_message = 'Please fill in all the form fields';
-        } else if(email.indexOf("@") == -1 || email.indexOf(".") == -1) {
-            error_message = 'Please enter a valid email';
+        //} else if(email.indexOf("@") == -1 || email.indexOf(".") == -1) {
+            //error_message = 'Please enter a valid email';
 
-        } else if(loc == '0') {
-           error_message = 'Please choose a region';
+        } else if(loc == 'Please choose a location:' || loc == '') {
+           error_message = 'Please choose a location';
         }
+
+
+
+        console.log('loc',loc);
+console.log('error_message:',error_message);
+
+error_message = 'die:'+ loc;
+
+
 
         if(error_message !=''){
             if(Platform.OS === 'ios'){

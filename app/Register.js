@@ -15,168 +15,216 @@ var {
   TouchableOpacity,
   ToastAndroid,
   TextInput,
+  InteractionManager
 } = React;
 
 var styles = require('../styles');
 var Users = require('../datalayer/User');
 var SubLocalities = require('../datalayer/Sublocalities');
-var Button = require('../modules/ButtonLogin');
+var SignupButton = require('../modules/ButtonLogin');
+var CancelButton = require('../modules/ButtonLogin');
 
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
 
-let RegionList = Platform.OS === 'ios' ? PickerIOS : Picker;
+//let RegionList = Platform.OS === 'ios' ? PickerIOS : Picker;
+let RegionList = Picker;
 let PickerItem = RegionList.Item;
+
+//var options = ['', 'Kelowna', 'Vancouver'];
+var FMPicker = require('../modules/ApplePicker');
 
 class Register extends Component {
 
   constructor(props) {
       super(props);
       this.state = {
-          inputTxt: 'Username',
-          inputPass: 'Password',
-          inputEmail: 'Email',
-          location: "Kelowna",
-          sublocalities: ['Kelowna','Vancouver'],
-          sublocalitiesIds: ['1','2'],
+          inputTxt: '',
+          inputPass: '',
+          inputEmail: '',
+          location: "",
+          sublocalities: [],
+          sublocalitiesIds: [],
           locationIndex: 0,
+          selectedOption: 'not chosen',
       };
       this.navigatorObj = props.navigator;
   }
 
+
   render() {
 
-    let data = this.state.sublocalities;
-    console.log('current state sublocalities:',this.state.location);
+    var start = ['Please choose a location:'];
+    let end = this.state.sublocalities;
+    let data = start.concat(end);
+
+    console.log('current state location:',this.state.location);
     console.log('current state locationIndex:',this.state.locationIndex);
+    console.log('current state data:',data);
+
     return (
 
-      <View style={styles.container}>
+      <View>
 
-        <View style={registerStyles.container}>
+          <View style={registerStyles.bgContainer}>
+              <Image style={registerStyles.background} source={require('../img/splash-bg-sm.png')} />
+          </View>
+
+        <View style={registerStyles.container} marginTop={50}>
           <Image source={require('../img/ClubAppetiteLogo.png')} style={registerStyles.logo}/>
         </View>
 
-        <View style={styles.contentForm} top={40}>
-          <View style={styles.module}>
-            <Text>Please choose a region:</Text>
-            <RegionList
-            style={styles.picker}
+        <View style={registerStyles.container} marginTop={10}>
+
+
+            {(() => {
+                switch (Platform.OS) {
+                  case "android":   return this.androidPicker(data);
+                  default:      return this.iosPicker(data);
+                }
+            })()}
+
+          <View style={styles.module} marginTop={5}>
+              <TextInput placeholder="USERNAME" placeholderTextColor='#1B898A' style={styles.input} onChangeText={(text) => this.setState({inputTxt: text})} value={this.state.inputTxt} />
+              <TextInput style={styles.input} placeholder="PASSWORD" placeholderTextColor='#1B898A' onChangeText={(text) => this.setState({inputPass: text})} value={this.state.inputPass}  />
+              <TextInput style={styles.input} placeholder="EMAIL" placeholderTextColor='#1B898A' onChangeText={(text) => this.setState({inputEmail: text})} value={this.state.inputEmail}  />
+          </View>
+
+          <View style={styles.module} marginTop={10}>
+            <SignupButton onPress={this._onPressButtonPOST.bind(this)} buttonText="SIGN-UP" color="#009999" textcolor="white" />
+          </View>
+
+          <View style={styles.module} marginTop={10}>
+            <CancelButton onPress={this.gotoLogin.bind(this)} buttonText="CANCEL" marginTop={10} color="#efefef" textcolor="#999999" />
+          </View>
+
+        </View>
+
+
+
+
+
+      </View>
+    );
+  }
+
+
+
+    androidPicker(data) {
+        return(
+
+
+        <RegionList
+            style={registerStyles.picker}
             selectedValue={this.state.locationIndex}
             onValueChange={(locationIndex) => this.setState({locationIndex: locationIndex, location: data[locationIndex]})}>
               {data.map((regionName, locationIndex) => (
                 <PickerItem
-                key={'region_' + locationIndex}
-                value={locationIndex}
-                label={regionName}
+                style={{height: 50, margin:0,padding:0}}
+                  key={'region_' + locationIndex}
+                  value={locationIndex}
+                  label={regionName}
                 />
                 ))}
-              </RegionList>
+        </RegionList>
 
-              {/*<Text>You selected: {selectionString}</Text>*/}
-              <TextInput style={styles.input} placeholder="USERNAME" onChangeText={(text) => this.setState({inputTxt: text})} value={this.state.inputTxt} />
-              <TextInput style={styles.input} placeholder="PASSWORD" onChangeText={(text) => this.setState({inputPass: text})} value={this.state.inputPass}  />
-              <TextInput style={styles.input} placeholder="EMAIL" onChangeText={(text) => this.setState({inputEmail: text})} value={this.state.inputEmail}  />
-          </View>
 
-          <View style={styles.module}>
-            <View style={registerStyles.moduleButtons}>
-              <Button style={registerStyles.button} onPress={this._onPressButtonPOST.bind(this)} buttonText="SIGN-UP" />
-              <Button style={registerStyles.button} onPress={this.gotoLogin.bind(this)} buttonText="CANCEL" />
-            </View>
+    );}
 
-          </View>
 
+
+
+    iosPicker(data) {
+
+        return(
+
+
+        <View>
+            <Text>Current Location: {this.state.selectedOption}</Text>
+            <Text
+                style={{color:'blue'}}
+                onPress={()=>{
+                    this.refs.picker.setoptions(data);
+                    this.refs.picker.show();
+                }}>
+                Click here to select your location
+            </Text>
+
+            <FMPicker ref={'picker'} options={data}
+                onSubmit={(option)=>{
+                    if(option == 'Please choose a location:') {
+                        this.setState({selectedOption: 'not chosen'})
+                    }else {
+                        //locationIndex: locationIndex, location: data[locationIndex]
+                        this.setState({selectedOption: option, location: option})
+                    }
+                }}
+            />
         </View>
 
-        <View style={styles.contentForm}></View>
-        <View style={styles.banner}>
-          <Text>Banner ad</Text>
-        </View>
-      </View>
-  );
-}
-
-componentDidMount() {
-
-  SubLocalities.getSubLocalities(this);
+    )}
 
 
-}
+    componentDidMount() {
+      InteractionManager.runAfterInteractions(() => {
+        SubLocalities.getSubLocalities(this);
+      });
+    }
 
-onEmailFocus() {
-  if(this.state.inputEmail == "Email") {
-    this.setState({inputEmail: ''});
-  }
-}
-
-onEmailBlur() {
-  if(this.state.inputEmail == "") {
-    this.setState({inputEmail: 'Email'});
-  }
-}
-
-onUserFocus() {
-  if(this.state.inputTxt == "Username") {
-    this.setState({inputTxt: ''});
-  }
-}
-
-onUserBlur() {
-  if(this.state.inputTxt == "") {
-    this.setState({inputTxt: 'Username'});
-  }
-}
-
-onPassFocus() {
-  if(this.state.inputPass == "Password") {
-    this.setState({inputPass: ''});
-  }
-}
-
-onPassBlur() {
-  if(this.state.inputPass == "") {
-    this.setState({inputPass: 'Password'});
-  }
-}
-gotoLogin() {
-  this.props.navigator.push({
-    id: 'LoginPage',
-    name: 'Login Page',
-  });
-}
-gotoNext() {
-  this.props.navigator.push({
-    id: 'MainPage',
-    name: 'Main Page',
-  });
-}
-_onPressButtonPOST() {
+    gotoLogin() {
+      this.props.navigator.push({
+        id: 'LoginPage',
+        name: 'Login Page',
+      });
+    }
+    gotoNext() {
+      this.props.navigator.push({
+        id: 'MainPage',
+        name: 'Main Page',
+      });
+    }
+    _onPressButtonPOST() {
 
 
-  Users.handleRegister(this);
+      Users.handleRegister(this);
 
-}
+    }
 
 }
 
 var registerStyles = StyleSheet.create({
 container: {
   flex: 1,
-  justifyContent: 'center',
   alignItems: 'center'
 },
-logo: {
-  width: 300,
-  height: 110,
-},
-button: {
-  paddingTop: 30,
-},
+  logo: {
+    width: width*.75,
+    height: height*.18,
+    alignItems: 'stretch',
+    resizeMode: 'contain'
+  },
 moduleButtons: {
   flexDirection: 'column'
-}
-
+},
+  bgContainer: {
+    position: 'absolute'
+  },
+  background: {
+    width: width,
+    height: height*.25,
+    position: 'absolute',
+    bottom: -height,
+    flex: 1,
+    resizeMode: 'cover'
+  },
+   picker: {
+       backgroundColor: '#efefef',
+       width: width*.85,
+       borderWidth:1,
+       borderColor:'#999999',
+       height: height*.06,
+       color: "#1B898A",
+   },
 });
 
 module.exports = Register;

@@ -61,6 +61,7 @@ import React, {
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
 
+
 /* Button Component */
 class ButtonLogin extends Component {
 	constructor(props){
@@ -69,18 +70,27 @@ class ButtonLogin extends Component {
     this.buttonStyle = (this.props.buttonStyle) ? this.props.buttonStyle : "default";
     this.imageHeight = (this.props.height) ? this.props.height : 80;
     this.imageWidth = (this.props.width) ? this.props.width : 70;
+
+
+    this.color = (this.props.color) ? this.props.color : "#009999";
+    this.textcolor = (this.props.textcolor) ? this.props.textcolor : "white";
+
 	}
 
 	render(){
     if(this.buttonStyle === "default"){
+
+
+
+
       return(
         <TouchableHighlight
           underlayColor="#004d4d"
-          style={buttonLoginStyles.defaultButton}
+          style={[buttonLoginStyles.container, {backgroundColor: this.color}]}
           onPress={this.props.onPress}
         >
         <View style={buttonLoginStyles.container}>
-          <Text style={buttonLoginStyles.buttonText}>{this.props.buttonText}</Text>
+          <Text style={[buttonLoginStyles.buttonText, {color: this.textcolor}]} >{this.props.buttonText}</Text>
         </View>
         </TouchableHighlight>
       )
@@ -121,17 +131,12 @@ const buttonLoginStyles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  defaultButton: {
-    backgroundColor: '#009999',
-    overflow: 'hidden',
     width: width*.85,
-    height: height*.06
+    height: height*.06,
   },
   buttonText: {
     fontSize: 15,
     fontFamily: 'Gill Sans',
-    color: 'white',
     alignSelf: 'center',
   },
   buttonImage: {

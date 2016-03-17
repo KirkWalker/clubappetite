@@ -40,28 +40,35 @@ class LoginPage extends Component {
       var _this = this;
       return (
 
-        <View style={styles.container}>
+        <View>
 
-          <View style={loginStyles.container}>
+          <View style={loginStyles.bgContainer}>
+              <Image style={loginStyles.background} source={require('../img/splash-bg-sm.png')} />
+          </View>
+
+          <View style={loginStyles.container} marginTop={50}>
             <Image source={require('../img/ClubAppetiteLogo.png')} style={loginStyles.logo} />
           </View>
 
-          <View style={styles.contentForm} top={40}>
+          <View style={loginStyles.container} marginTop={40}>
+            <Text style={loginStyles.slogan}>Welcome to Club Appetite{'\n'} where we work to feed our local communities.</Text>
+          </View>
+
+          <View style={loginStyles.container} marginTop={20}>
             <View style={styles.module}>
                <TextInput placeholder="USERNAME" placeholderTextColor='#1B898A' style={styles.input} onChangeText={(text) => this.setState({inputTxt: text})} value={this.state.inputTxt} />
                <TextInput placeholder="PASSWORD" placeholderTextColor='#1B898A' style={styles.input} onChangeText={(text) => this.setState({inputPass: text})} value={this.state.inputPass}  />
-               <Button onPress={this._onPressButtonPOST.bind(this)} buttonText="LOG IN" style={loginStyles.button}/>
+
             </View>
+            <View style={styles.module} marginTop={10}>
+                <Button onPress={this._onPressButtonPOST.bind(this)} buttonText="SIGN IN" marginTop={10} />
+            </View>
+            <View style={styles.module} marginTop={10}>
+                <Button onPress={this.gotoRegister.bind(this)} buttonText="CREATE NEW ACCOUNT" marginTop={10} color="#efefef" textcolor="#999999" />
+            </View>
+
           </View>
-          <View style={styles.contentForm}>
-            <TouchableOpacity
-                onPress={this.gotoRegister.bind(this)}>
-                    <Text>Or create your Club Appetite Account</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.banner}>
-            <Text>Banner ad</Text>
-          </View>
+
         </View>
 
       );
@@ -91,9 +98,8 @@ class LoginPage extends Component {
 var loginStyles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
-    flexDirection: 'row'
+    justifyContent: 'center',
   },
   logo: {
     width: width*.75,
@@ -101,7 +107,24 @@ var loginStyles = StyleSheet.create({
     alignItems: 'stretch',
     resizeMode: 'contain' 
   },
-
+  slogan: {
+    width: width*.70,
+    textAlign: 'center',
+    color:'#F0BB1A',
+    fontSize: 16,
+    fontWeight:'bold',
+  },
+  bgContainer: {
+    position: 'absolute'
+  },
+  background: {
+    width: width,
+    height: height*.25,
+    position: 'absolute',
+    bottom: -height,
+    flex: 1,
+    resizeMode: 'cover'
+  },
 });
 
 module.exports = LoginPage;

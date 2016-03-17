@@ -11,6 +11,7 @@ import React, {
   TouchableOpacity,
   Navigator,
   PixelRatio,
+  InteractionManager,
 } from 'react-native';
 
 var styles = require('../styles');
@@ -36,8 +37,10 @@ class BusinessDirectory extends Component {
 
   componentDidMount() {
     this.mounted = true;
-    Users.getProfile(this);
-  	Directory.getDirectoryData(this);
+    InteractionManager.runAfterInteractions(() => {
+      Users.getProfile(this);
+  	  Directory.getDirectoryData(this);
+  	});
   }
 
   componentWillUnmount() {

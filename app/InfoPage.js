@@ -10,6 +10,7 @@ var {
   WebView,
   Image,
   TouchableOpacity,
+  InteractionManager,
 } = React;
 
 var styles = require('../styles');
@@ -45,9 +46,10 @@ class InfoPage extends Component {
     /*
     successful result is an object: this.state.user_profile
     */
-    Users.getProfile(this);
-    InfoPageData.getPageData(_this,this.props.id.toLowerCase());
-
+    InteractionManager.runAfterInteractions(() => {
+      Users.getProfile(this);
+      InfoPageData.getPageData(_this,this.props.id.toLowerCase());
+    });
   }
 
   componentWillUnmount() {
