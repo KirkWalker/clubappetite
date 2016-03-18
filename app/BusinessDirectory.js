@@ -141,10 +141,11 @@ componentDidMount() {
 }
 
 // Variables for styles. Used for scaling to different screen sizes.
-var TITLE_TEXT = (PixelRatio.get() <= 2) ? 15 : 25;
-var INFO_TEXT = (PixelRatio.get() <= 2) ? 10 : 15;
+var TITLE_TEXT = (PixelRatio.get() <= 2) ? 19 : 25;
+var INFO_TEXT = (PixelRatio.get() <= 2) ? 14 : 15;
 var PADDING = (PixelRatio.get() >= 4) ? 3 : PixelRatio.get();
 var WIDTH = Dimensions.get('window').width;
+if (DEBUG) {console.log("PixelRatio: "+PixelRatio.get());}
 
 const BusinessStyles = StyleSheet.create({
 	loadingContainer: {
@@ -179,7 +180,8 @@ const BusinessStyles = StyleSheet.create({
     }
 	},
 	listInnerContainer: {
-		paddingLeft: PADDING*8,
+    flex: 1,
+    paddingLeft: PADDING*8,
 	},
 	header: {
 		alignItems: 'center',
@@ -199,6 +201,7 @@ const BusinessStyles = StyleSheet.create({
 	businessThumbnail: {
 		width: WIDTH*0.14,
 		height: WIDTH*0.14,
+    resizeMode: 'contain',
 	},
 	businessName: {
 		fontSize: INFO_TEXT,
@@ -215,6 +218,7 @@ const BusinessStyles = StyleSheet.create({
   arrow: {
     height: WIDTH*0.07,
     width: WIDTH*0.07,
+    resizeMode: 'contain',
   },
 });
 
