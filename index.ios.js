@@ -24,6 +24,7 @@ var Shop = require('./app/Shop');
 var Cart = require('./app/Cart');
 var Share = require('./app/Share');
 var Donate = require('./app/Donate');
+var Payment = require('./app/Payment');
 var MainPage = require('./app/MainPage');
 var Messages = require('./app/Messages');
 var Profile = require('./app/Profile');
@@ -323,6 +324,15 @@ class AMGSandbox extends Component {
           openDrawer={this.openDrawer}
         />
       );
+    }
+    if (routeId === 'Payment') {
+        return (
+          <Payment
+            navigator={navigator}
+            openDrawer={this.openDrawer}
+            details={route.details}
+          />
+        );
     }
     if (routeId === 'Register') {
       return (

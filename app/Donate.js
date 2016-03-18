@@ -17,6 +17,7 @@ var styles = require('../styles');
 
 var Users = require('../datalayer/User');
 var ToggleButton = require('../modules/ToggleButton');
+var Button = require('../modules/ButtonLogin');
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
 
 var width = Dimensions.get('window').width;
@@ -95,16 +96,24 @@ class Donate extends Component {
                <ToggleButton onPress={() => this.setSchedule('Monthly')} text='Monthly' compareValue={this.state.schedule} />
                <ToggleButton onPress={() => this.setSchedule('Annually')} text='Annually' compareValue={this.state.schedule} />
              </View>
-             <View style={donateStyles.modulerow}>
-              <Text style={donateStyles.text}>{(() => {
-                  if(this.state.amount>0) { return 'You have selected $' + this.state.amount; }
-                })()}
+            <View style={donateStyles.modulerow2}>
+             {(() => {
+               if(this.state.schedule != '' && this.state.amount>0) {
+               return (
 
-                {(() => {
-                  if(this.state.schedule != '' && this.state.amount>0) { return ' / ' + this.state.schedule; }
-                })()}
-              </Text>
-             </View>
+                  <View style={{marginBottom:10}}>
+                    <View style={donateStyles.alert}>
+                      <Text style={donateStyles.alerttext}>You have selected ${ this.state.amount } / { this.state.schedule }</Text>
+                    </View>
+
+                    <Button buttonText="Continue" marginTop={10} onPress={this.gotoPayment.bind(this)} />
+                  </View>
+
+
+                )
+             }
+          })()}
+            </View>
           </View>
 
           <View style={donateStyles.moduleclear}>
@@ -121,10 +130,12 @@ class Donate extends Component {
       </View>
     );
   }
-  gotoNext() {
+  gotoPayment() {
+  console.log('pushed');
     this.props.navigator.push({
-      id: 'NoNavigatorPage',
-      sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+      id: 'Payment',
+      name: 'Payment Page',
+      details: {amount:this.state.amount, schedule:this.state.schedule}
     });
   }
 }
@@ -147,7 +158,7 @@ var donateStyles = StyleSheet.create({
     padding: 5,
   },
    module2: {
-     flex: 6,
+     flex: 8,
      flexDirection: 'column',
      backgroundColor: 'white',
      width: width*.95,
@@ -155,26 +166,45 @@ var donateStyles = StyleSheet.create({
      padding: 5,
    },
   moduleclear: {
-    flex: 12,
+    flex: 10,
     flexDirection: 'column',
     width: width*.95,
     marginTop: 20,
   },
   modulerow: {
+    marginTop: 5,
     flexDirection: 'row',
     flex:2,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modulerow2: {
+    flexDirection: 'row',
+    flex:6,
     justifyContent: 'center',
     alignItems: 'center',
   },
   title: {
     fontSize: 16,
     fontFamily: 'Gill Sans',
-    flex:1,
+    flex:2,
     marginLeft: 10,
   },
   text: {
     fontSize: 11,
     fontFamily: 'Gill Sans',
+  },
+  alert: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop:10,
+    marginBottom:10,
+    width: width*.85,
+  },
+  alerttext: {
+    fontSize: 11,
+    fontFamily: 'Gill Sans',
+    alignSelf: 'center',
   },
   subtitle: {
     fontSize: 14,
