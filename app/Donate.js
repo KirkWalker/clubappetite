@@ -136,7 +136,6 @@ class Donate extends Component {
     );
   }
   gotoPayment() {
-  console.log('pushed');
     this.props.navigator.push({
       id: 'Payment',
       name: 'Payment Page',

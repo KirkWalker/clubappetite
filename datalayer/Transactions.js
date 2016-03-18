@@ -51,7 +51,7 @@ Transactions.verifyCCForm = function (details) {
 
     } else {
 
-         console.log(API_REQUEST+"data:",SERVER_URL + '?controller=api&action=transaction');
+         //console.log(API_REQUEST+"data:",SERVER_URL + '?controller=api&action=transaction');
          if(DEBUG) { console.log(_page_name+' Post Completed',details); }
          return true;
     }
