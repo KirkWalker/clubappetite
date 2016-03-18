@@ -10,24 +10,23 @@ var {
   TouchableOpacity,
   Dimensions,
   Image,
+  TouchableHighlight,
 } = React;
 
 var styles = require('../styles');
 
 var Users = require('../datalayer/User');
-var Button = require('../modules/ButtonLogin');
+var ToggleButton = require('../modules/ToggleButton');
+var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
 
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
-
-
-var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
 
 class Donate extends Component {
 
   constructor(props) {
       super(props);
-      this.state = {user_profile: []};
+      this.state = {user_profile: [], amount: 0, schedule: ''};
 
   }
 
@@ -54,21 +53,69 @@ class Donate extends Component {
           } />
     );
   }
+
+
+  setAmount(amt) {
+    this.setState({amount: amt});
+  }
+
+  setSchedule(amt) {
+    this.setState({schedule: amt});
+  }
+
+
   renderScene(route, navigator) {
+
+
+  //schedule
+
     return (
-      <View style={styles.container}>
+      <View style={[donateStyles.container, {backgroundColor: '#efefef'}]}>
 
 
-          <View style={donateStyles.container}>
-            <Image source={require('../img/ClubAppetiteLogo.png')} style={donateStyles.logo} />
-          </View>
-          <View style={styles.contentForm} top={40}>
-            <View style={styles.module}>
+          <View style={donateStyles.module}>
+            <Text style={donateStyles.title}>Select Your Amount</Text>
+            <View style={donateStyles.modulerow}>
 
+              <ToggleButton onPress={() => this.setAmount(10)} text='$10' compareValue={this.state.amount} />
+              <ToggleButton onPress={() => this.setAmount(25)} text='$25' compareValue={this.state.amount} />
+              <ToggleButton onPress={() => this.setAmount(50)} text='$50' compareValue={this.state.amount} />
+              <ToggleButton onPress={() => this.setAmount(100)} text='$100' compareValue={this.state.amount} />
 
             </View>
           </View>
 
+          <View style={donateStyles.module2}>
+             <Text style={donateStyles.title}>Select Your Schedule</Text>
+             <View style={donateStyles.modulerow}>
+               <ToggleButton onPress={() => this.setSchedule('One Time')} text='One Time' compareValue={this.state.schedule} />
+               <ToggleButton onPress={() => this.setSchedule('Bi-Weekly')} text='Bi-Weekly' compareValue={this.state.schedule} />
+             </View>
+             <View style={donateStyles.modulerow}>
+               <ToggleButton onPress={() => this.setSchedule('Monthly')} text='Monthly' compareValue={this.state.schedule} />
+               <ToggleButton onPress={() => this.setSchedule('Annually')} text='Annually' compareValue={this.state.schedule} />
+             </View>
+             <View style={donateStyles.modulerow}>
+              <Text style={donateStyles.text}>{(() => {
+                  if(this.state.amount>0) { return 'You have selected $' + this.state.amount; }
+                })()}
+
+                {(() => {
+                  if(this.state.schedule != '' && this.state.amount>0) { return ' / ' + this.state.schedule; }
+                })()}
+              </Text>
+             </View>
+          </View>
+
+          <View style={donateStyles.moduleclear}>
+             <Text style={donateStyles.subtitle}>Cancel At Any Time</Text>
+             <Text style={donateStyles.text}>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+             sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+             quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+             Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+             Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Text>
+
+          </View>
 
 
       </View>
@@ -85,17 +132,76 @@ class Donate extends Component {
 var donateStyles = StyleSheet.create({
   container: {
     flex: 1,
+    width: null,
+    height: null,
     justifyContent: 'center',
     alignItems: 'center',
-    flexDirection: 'row'
+    marginTop: 60,
   },
-  logo: {
-    width: width*.75,
-    height: height*.18,
-    alignItems: 'stretch',
-    resizeMode: 'contain'
+  module: {
+    flex: 3,
+    flexDirection: 'column',
+    backgroundColor: 'white',
+    width: width*.95,
+    marginTop: 10,
+    padding: 5,
   },
-
+   module2: {
+     flex: 6,
+     flexDirection: 'column',
+     backgroundColor: 'white',
+     width: width*.95,
+     marginTop: 10,
+     padding: 5,
+   },
+  moduleclear: {
+    flex: 12,
+    flexDirection: 'column',
+    width: width*.95,
+    marginTop: 20,
+  },
+  modulerow: {
+    flexDirection: 'row',
+    flex:2,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 16,
+    fontFamily: 'Gill Sans',
+    flex:1,
+    marginLeft: 10,
+  },
+  text: {
+    fontSize: 11,
+    fontFamily: 'Gill Sans',
+  },
+  subtitle: {
+    fontSize: 14,
+    fontFamily: 'Gill Sans',
+  },
+  buttoncontainer: {
+    flex: 1,
+    marginRight:5,
+    marginLeft:5,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: height*.05,
+    borderWidth:1,
+    borderColor:'#efefef'
+    //
+  },
+  grey: {
+    backgroundColor: '#efefef',
+  },
+  white: {
+    backgroundColor: '#ffffff',
+  },
+  button: {
+    fontSize: 12,
+    fontFamily: 'Gill Sans',
+    alignSelf: 'center',
+  },
 });
 
 module.exports = Donate;
