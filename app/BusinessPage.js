@@ -10,7 +10,11 @@ import React, {
   Navigator,
   Dimensions,
   PixelRatio,
+  ScrollView,
 } from 'react-native';
+
+var DEBUG = true;
+if (DEBUG) {console.log("BusinessPAGE DEBUG flag set\n---------------------");}
 
 var styles = require('../styles');
 
@@ -27,9 +31,10 @@ class BusinessPage extends Component {
   }
 
   componentDidMount() {
-      this.mounted = true;
-      Users.getProfile(this);
-      Directory.getDirectoryData(this);
+    if (DEBUG) {console.log("Received business_id "+this.props.business_info.id);}
+    this.mounted = true;
+    Users.getProfile(this);
+    Directory.getDirectoryData(this);
   }
 
   componentWillUnmount() {
@@ -55,69 +60,76 @@ class BusinessPage extends Component {
 
   renderScene(route, navigator) {
   	return (
-      <View style={PageStyles.BusinessPageContainer}>
-      	<View style={PageStyles.logoContainer}>
-          <Image
-            source={require('../img/logo.png')}
-            style={PageStyles.logo}
-          />
-        </View>
-
-        <View style={PageStyles.addressContainer}>
-          <Text style={PageStyles.greenText}>1234 Road Name</Text>
-          <Text style={PageStyles.greenText}>Kelowna, BC    V1Z 5H9</Text>
-        </View>
-
-        <View style={PageStyles.separator}/>
-
-        <View style={PageStyles.contactContainer}>
-          <View style={PageStyles.contactRow}>
-            <Image style={PageStyles.icon} source={require('../img/email-icon.png')}/>
-            <Text style={PageStyles.grayText}>name@email.com</Text>
+      <ScrollView>
+        <View style={PageStyles.BusinessPageContainer}>
+        	<View style={PageStyles.logoContainer}>
+            <Image
+              source={{uri: this.props.business_info.sponsor_img2}}
+              style={PageStyles.logo}
+            />
           </View>
-          <View style={PageStyles.contactRow}>
-            <Image style={PageStyles.icon} source={require('../img/phone-icon.png')}/>
-            <Text style={PageStyles.grayText}>1 250-425-6324</Text>
+
+          <View style={PageStyles.addressContainer}>
+            <Text style={PageStyles.greenText}>{this.props.business_info.sponsor_address}</Text>
+            <Text style={PageStyles.greenText}>Kelowna, BC    V1Z 5H9</Text>
           </View>
-          <View style={PageStyles.contactRow}>
-            <Image style={PageStyles.icon} source={require('../img/website-icon.png')}/>
-            <Text style={PageStyles.grayText}>www.websitename.com</Text>
+
+          <View style={PageStyles.separator}/>
+
+          <View style={PageStyles.contactContainer}>
+            <View style={PageStyles.contactRow}>
+              <Image style={PageStyles.icon} source={require('../img/email-icon.png')}/>
+              <Text style={PageStyles.grayText}>{this.props.business_info.sponsor_email}</Text>
+            </View>
+            <View style={PageStyles.contactRow}>
+              <Image style={PageStyles.icon} source={require('../img/phone-icon.png')}/>
+              <Text style={PageStyles.grayText}>{this.props.business_info.sponsor_tel}</Text>
+            </View>
+            <View style={PageStyles.contactRow}>
+              <Image style={PageStyles.icon} source={require('../img/website-icon.png')}/>
+              <Text style={PageStyles.grayText}>{this.props.business_info.sponsor_url}</Text>
+            </View>
           </View>
+
+          <View style={PageStyles.separator}/>
         </View>
-      </View>
+      </ScrollView>
   	);
   }
 }
-
-// Variables for styles. Used for scaling to different screen sizes.
-var TEXT_SIZE = (PixelRatio.get() <= 2) ? 15 : 21;
-var PADDING = PixelRatio.get();
-
-var LOGO_WIDTH = PixelRatio.getPixelSizeForLayoutSize(115);
-var LOGO_HEIGHT = PixelRatio.getPixelSizeForLayoutSize(57); 
-var ICON_WIDTH = PixelRatio.getPixelSizeForLayoutSize(20);
-var ICON_HEIGHT = PixelRatio.getPixelSizeForLayoutSize(20);
-var WINDOW_HEIGHT = Dimensions.get('window').height;
+//Variables for styling. Used for scaling.
+var WIDTH = Dimensions.get('window').width;
+var HEIGHT = Dimensions.get('window').height;
 
 const PageStyles = StyleSheet.create({
   BusinessPageContainer: {
-    backgroundColor: '#F2F2F2',
-    paddingTop: 70,
+    backgroundColor: '#f2f2f2',
     flexDirection: 'column',
-    height: WINDOW_HEIGHT,
+    justifyContent: 'flex-start',
+    height: HEIGHT,
   },
   logoContainer: {
+    flex: 60,
+    paddingTop: 70,
     alignItems: 'center',
+    // borderColor: 'green', borderWidth: 5,
   },
   logo: {
-    height: LOGO_HEIGHT,
-    width: LOGO_WIDTH,
+    width: WIDTH*0.60,
+    height: HEIGHT *0.15,
+    alignItems: 'stretch',
+    resizeMode: 'contain',
+// borderColor: 'green', borderWidth: 5,
   },
   addressContainer: {
-    backgroundColor: 'white',
+    flex: 45,
     alignItems: 'center',
-    padding: PADDING*13,
+    justifyContent: 'center',
+    backgroundColor: 'white',
 
+    //shadows android
+    elevation: 2,
+    //shadows iOS
     shadowColor: "#000000",
     shadowOpacity: 0.8,
     shadowRadius: 3,
@@ -125,28 +137,16 @@ const PageStyles = StyleSheet.create({
       height: 1,
       width: 1
     }
-  },
-  greenText: {
-    color: 'rgb(027, 135, 136)',
-    fontSize: TEXT_SIZE,
-    fontWeight: '500',
-    fontFamily: 'Gill Sans',
-  },
-  grayText: {
-    fontSize: TEXT_SIZE,
-    fontWeight: '500',
-    color: 'gray',
-    fontFamily: 'Gill Sans',
-    paddingLeft: PADDING*18,
-  },
-  separator: {
-    backgroundColor: '#F2F2F2',
-    height: PADDING*15,
+    // borderColor: 'red', borderWidth: 5,
   },
   contactContainer: {
+    flex: 150,
+    justifyContent: 'center',
     backgroundColor: 'white',
-    padding: PADDING*10,
 
+    //shadows android
+    elevation: 2,
+    //shadows iOS
     shadowColor: "#000000",
     shadowOpacity: 0.8,
     shadowRadius: 3,
@@ -154,16 +154,37 @@ const PageStyles = StyleSheet.create({
       height: 1,
       width: 1
     }
+    // borderColor: 'blue', borderWidth:5,
+  },
+  separator: {
+    flex: 10,
+    height: 10,
+    backgroundColor: '#f2f2f2',
+    // borderColor: 'orange', borderWidth:5,
   },
   contactRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: PADDING*5,
+    padding: 5,
+    paddingLeft: 20,
   },
   icon: {
-    width: ICON_WIDTH,
-    height: ICON_HEIGHT,
+    width: WIDTH*0.15,
+    height: WIDTH*0.15,
     resizeMode: 'contain',
+    marginRight: 25,
+  },
+  greenText: {
+    fontSize: 21,
+    fontFamily: 'Gill Sans',
+    color: 'rgb(027, 135, 136)',
+    fontWeight: '500',
+  },
+  grayText: {
+    fontSize: 21,
+    fontFamily: 'Gill Sans',
+    color: 'gray',
+    fontWeight: '500',
   },
 });
 

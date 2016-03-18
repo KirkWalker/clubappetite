@@ -387,6 +387,7 @@ class AMGSandbox extends Component {
           navigator={navigator}
           openDrawer={this.openDrawer}
           pageName="Business Page"
+          business_info={route.business_info}
         />
       );
     }

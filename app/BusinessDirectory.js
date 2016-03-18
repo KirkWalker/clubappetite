@@ -11,7 +11,12 @@ import React, {
   TouchableOpacity,
   Navigator,
   PixelRatio,
+  InteractionManager,
+  Dimensions,
 } from 'react-native';
+
+var DEBUG = true;
+if (DEBUG) {console.log("BusinessDirectory DEBUG flag set\n---------------------");}
 
 var styles = require('../styles');
 
@@ -34,20 +39,24 @@ class BusinessDirectory extends Component {
     };
   }
 
-  componentDidMount() {
-    this.mounted = true;
+componentDidMount() {
+  this.mounted = true;
+  InteractionManager.runAfterInteractions(() => {
     Users.getProfile(this);
-  	Directory.getDirectoryData(this);
-  }
+      Directory.getDirectoryData(this);
+  });
+ }
 
   componentWillUnmount() {
     this.mounted = false;
   }
 
-  gotoDetails() {
+  gotoDetails(business) {
+    if(DEBUG) {console.log("Pushing business_id " + business.id + " to BusinessPage");}
     this.props.navigator.push({
       id: 'BusinessPage',
       name: 'Business Page',
+      business_info: business,
     });
   }
 
@@ -71,7 +80,7 @@ class BusinessDirectory extends Component {
   	return(
   		<TouchableOpacity
         style={BusinessStyles.listContainer}
-        onPress={() => this.gotoDetails()}
+        onPress={() => this.gotoDetails(business)}
       >
 				<Image
 					style={BusinessStyles.businessThumbnail}
@@ -134,11 +143,8 @@ class BusinessDirectory extends Component {
 // Variables for styles. Used for scaling to different screen sizes.
 var TITLE_TEXT = (PixelRatio.get() <= 2) ? 15 : 25;
 var INFO_TEXT = (PixelRatio.get() <= 2) ? 10 : 15;
-var PADDING = PixelRatio.get();
-console.log(PixelRatio.get());
-
-var THUMBNAIL_SIZE = PixelRatio.getPixelSizeForLayoutSize(15);
-var ARROW_SIZE = PixelRatio.getPixelSizeForLayoutSize(10); 
+var PADDING = (PixelRatio.get() >= 4) ? 3 : PixelRatio.get();
+var WIDTH = Dimensions.get('window').width;
 
 const BusinessStyles = StyleSheet.create({
 	loadingContainer: {
@@ -157,7 +163,7 @@ const BusinessStyles = StyleSheet.create({
 		paddingTop: PADDING*8.33,
     paddingBottom: PADDING*8.33,
     paddingLeft: PADDING*8.33,
-    paddingRight: PADDING*8.33,
+    paddingRight: PADDING*2,
     alignItems: 'center',
     backgroundColor: 'white',
     
@@ -173,7 +179,6 @@ const BusinessStyles = StyleSheet.create({
     }
 	},
 	listInnerContainer: {
-		flex: 1,
 		paddingLeft: PADDING*8,
 	},
 	header: {
@@ -192,8 +197,8 @@ const BusinessStyles = StyleSheet.create({
     height: PADDING*5.5,
   },
 	businessThumbnail: {
-		width: THUMBNAIL_SIZE,
-		height: THUMBNAIL_SIZE,
+		width: WIDTH*0.14,
+		height: WIDTH*0.14,
 	},
 	businessName: {
 		fontSize: INFO_TEXT,
@@ -208,8 +213,8 @@ const BusinessStyles = StyleSheet.create({
 		fontFamily: 'Gill Sans',
   },
   arrow: {
-    height: ARROW_SIZE,
-    width: ARROW_SIZE,
+    height: WIDTH*0.07,
+    width: WIDTH*0.07,
   },
 });
 
