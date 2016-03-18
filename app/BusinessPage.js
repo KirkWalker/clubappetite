@@ -34,7 +34,7 @@ class BusinessPage extends Component {
     if (DEBUG) {console.log("Received business_id "+this.props.business_info.id);}
     this.mounted = true;
     Users.getProfile(this);
-    Directory.getDirectoryData(this);
+    //Directory.getDirectoryData(this);
   }
 
   componentWillUnmount() {
@@ -78,15 +78,15 @@ class BusinessPage extends Component {
 
           <View style={PageStyles.contactContainer}>
             <View style={PageStyles.contactRow}>
-              <Image style={PageStyles.icon} source={require('../img/email-icon.png')}/>
+              <Image style={PageStyles.icon} source={require('../img/email-icon-sm.png')}/>
               <Text style={PageStyles.grayText}>{this.props.business_info.sponsor_email}</Text>
             </View>
             <View style={PageStyles.contactRow}>
-              <Image style={PageStyles.icon} source={require('../img/phone-icon.png')}/>
+              <Image style={PageStyles.icon} source={require('../img/phone-icon-sm.png')}/>
               <Text style={PageStyles.grayText}>{this.props.business_info.sponsor_tel}</Text>
             </View>
             <View style={PageStyles.contactRow}>
-              <Image style={PageStyles.icon} source={require('../img/website-icon.png')}/>
+              <Image style={PageStyles.icon} source={require('../img/website-icon-sm.png')}/>
               <Text style={PageStyles.grayText}>{this.props.business_info.sponsor_url}</Text>
             </View>
           </View>
@@ -115,14 +115,11 @@ const PageStyles = StyleSheet.create({
     // borderColor: 'green', borderWidth: 5,
   },
   logo: {
-    width: WIDTH*0.60,
-    height: HEIGHT *0.15,
-    alignItems: 'stretch',
     resizeMode: 'contain',
 // borderColor: 'green', borderWidth: 5,
   },
   addressContainer: {
-    flex: 45,
+    flex: 35,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'white',
@@ -140,7 +137,7 @@ const PageStyles = StyleSheet.create({
     // borderColor: 'red', borderWidth: 5,
   },
   contactContainer: {
-    flex: 150,
+    flex: 160,
     justifyContent: 'center',
     backgroundColor: 'white',
 
@@ -175,13 +172,13 @@ const PageStyles = StyleSheet.create({
     marginRight: 25,
   },
   greenText: {
-    fontSize: 21,
+    fontSize: 15,
     fontFamily: 'Gill Sans',
     color: 'rgb(027, 135, 136)',
     fontWeight: '500',
   },
   grayText: {
-    fontSize: 21,
+    fontSize: 15,
     fontFamily: 'Gill Sans',
     color: 'gray',
     fontWeight: '500',
