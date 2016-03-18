@@ -29,6 +29,67 @@ var DEBUG = false;
 
 module.exports = {
 
+    addPoints(_user_profile,_amount,_first_name,_last_name){
+
+        //DEBUG = true;
+
+        var token = _user_profile.token;
+        var current_points = _user_profile.user_points;
+        var name = _user_profile.name;
+
+        if(DEBUG) { console.log('name:', name); }
+        if(DEBUG) { console.log('_user_profile:', _user_profile); }
+
+        var new_points = Number(current_points) + (Number(_amount)*100);
+
+        if(new_points>0){
+            //http://restapi.clubappetite.com/api.php?controller=api&action=transaction&token=1xT7Q6Fb7wfX847fQvpUI6Scq3NWGzC8gTA&first_name=kirk&last_name=walker&amount=10
+            fetch(SERVER_URL + '?controller=api&action=transaction', {
+                method: 'POST',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  token: token,
+                  first_name: _first_name,
+                  last_name: _last_name,
+                  amount: _amount,
+                })
+            })
+            .then((response) => response.json())
+            .then((responseData) => {
+                if(responseData.result == 'error'){
+                    console.log('User Class ERROR:',responseData);
+                } else {
+
+                    if(DEBUG) { console.log('updatePoints: responseData=', responseData); }
+
+
+                    DB.users.update({name: name}, { user_points: new_points, first_name: _first_name, last_name:_last_name }, function(updated_table){
+                        if(DEBUG) { console.log('done adding points:', updated_table.users); }
+                    })
+
+                }
+
+
+
+
+            })
+            .catch(function(error) {
+                console.log('updateToken request failed', error);
+            })
+            .done();
+
+
+
+
+
+
+        }
+    },
+
+
     eraseUsers(){
 
         //async eraseUsers(){
@@ -262,19 +323,17 @@ module.exports = {
 
         if(username == '' || password == '' || email == '') {
             error_message = 'Please fill in all the form fields';
-        //} else if(email.indexOf("@") == -1 || email.indexOf(".") == -1) {
-            //error_message = 'Please enter a valid email';
-
+        } else if(email.indexOf("@") == -1 || email.indexOf(".") == -1) {
+            error_message = 'Please enter a valid email';
         } else if(loc == 'Please choose a location:' || loc == '') {
            error_message = 'Please choose a location';
         }
 
 
 
-        console.log('loc',loc);
-console.log('error_message:',error_message);
 
-error_message = 'die:'+ loc;
+
+
 
 
 

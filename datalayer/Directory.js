@@ -2,7 +2,7 @@ var { View } = require('react-native')
 
 var DB = require('./DB');
 
-var DEBUG = true;
+var DEBUG = false;
 var SERVER_URL = 'http://restapi.clubappetite.com/api.php';
 var _page_name = 'Directory';
 var DirectoryStore = {};

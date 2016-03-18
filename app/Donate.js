@@ -11,6 +11,7 @@ var {
   Dimensions,
   Image,
   TouchableHighlight,
+  InteractionManager,
 } = React;
 
 var styles = require('../styles');
@@ -32,10 +33,14 @@ class Donate extends Component {
   }
 
   componentDidMount() {
-    /*
-    successful result is an object: this.state.user_profile
-    */
-    Users.getProfile(this);
+    this.mounted = true;
+    InteractionManager.runAfterInteractions(() => {
+      Users.getProfile(this);
+    });
+  }
+
+  componentWillUnmount() {
+      this.mounted = false;
   }
 
   render() {
@@ -131,7 +136,6 @@ class Donate extends Component {
     );
   }
   gotoPayment() {
-  console.log('pushed');
     this.props.navigator.push({
       id: 'Payment',
       name: 'Payment Page',
