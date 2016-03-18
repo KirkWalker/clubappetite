@@ -129,9 +129,10 @@ class ButtonLogin extends Component {
 const buttonLoginStyles = StyleSheet.create({
   container: {
     flex: 1,
+    elevation:2,
     alignItems: 'center',
     justifyContent: 'center',
-    width: width*.85,
+    width: width*.80,
     height: height*.06,
     shadowColor: '#999999',
     shadowOpacity: .5,

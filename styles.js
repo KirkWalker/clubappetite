@@ -11,7 +11,9 @@ module.exports = StyleSheet.create({
     width: null,
     height: null,
     backgroundColor: 'rgba(0,0,0,0)',
-    marginTop:60,
+    marginTop:70,
+
+    alignItems: 'center',
   },
   imageContainer: {
       justifyContent: 'center',
@@ -55,14 +57,31 @@ module.exports = StyleSheet.create({
     justifyContent: 'center',
     padding:10,
   },
+
+
+  /*
+  Navbar styles
+  */
   navbar: {
     backgroundColor: '#1B898A',
-    height:60
+    height:height*.1,
+
   },
-  navbar_title: {
-    color: 'white',
-    margin: 10,
-    fontSize: 16
+  navbar_logocontainer: {
+      flex: 5,
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: width*.65,
+      marginBottom:5,
+  },
+  navbar_logo: {
+      width: 150,
+      height: 48,
+
+  },
+  navbar_button: {
+    flex: 1,
+    justifyContent: 'center',
   },
   mainPanel: {
       marginTop:35,
@@ -94,6 +113,13 @@ module.exports = StyleSheet.create({
     marginLeft: 10,
     color:'white',
   },
+  /********************/
+
+
+
+
+
+
   base: {
     width: 38,
     height: 38,
@@ -128,11 +154,6 @@ module.exports = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column'
-    // backgroundColor: '#F5FCFF',
-    // padding: 10,
-    // margin: 5,
-    // borderColor: "#cccccc",
-    // borderWidth: 1,
   },
   moduleButtons: {
     flexDirection:'row',
@@ -144,6 +165,7 @@ module.exports = StyleSheet.create({
     padding: 10,
   },
   inputContainer: {
+  elevation:2,
       shadowColor: '#999999',
       shadowOpacity: .8,
       shadowRadius: 2,
@@ -155,9 +177,9 @@ module.exports = StyleSheet.create({
   input: {
     // alignItems: 'stretch',
     padding: 10,
-    // flex: .5,
+    elevation:2,
     height: height*.06,
-    width: width*.85,
+    width: width*.80,
     // borderWidth: 10,
     // borderColor: '#424242',
     margin: 5,

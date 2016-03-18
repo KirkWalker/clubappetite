@@ -11,6 +11,7 @@ var {
   Dimensions,
   Image,
   TouchableHighlight,
+  InteractionManager,
 } = React;
 
 var styles = require('../styles');
@@ -32,10 +33,9 @@ class Donate extends Component {
   }
 
   componentDidMount() {
-    /*
-    successful result is an object: this.state.user_profile
-    */
-    Users.getProfile(this);
+    InteractionManager.runAfterInteractions(() => {
+      Users.getProfile(this);
+    });
   }
 
   render() {
