@@ -70,11 +70,11 @@ class Register extends Component {
               <Image style={registerStyles.background} source={require('../img/splash-bg-sm.png')} />
           </View>
 
-        <View style={registerStyles.container} marginTop={50}>
-          <Image source={require('../img/ClubAppetiteLogo.png')} style={registerStyles.logo}/>
+        <View style={registerStyles.container} marginTop={30}>
+          <Image source={require('../img/ClubAppetiteLogo.png')} style={registerStyles.logo} marginLeft={5} />
         </View>
 
-        <View style={registerStyles.container} marginTop={10}>
+        <View style={registerStyles.container} marginTop={40}>
 
 
             {(() => {
@@ -84,7 +84,7 @@ class Register extends Component {
                 }
             })()}
 
-          <View style={styles.module} marginTop={5}>
+          <View style={styles.module} marginTop={3}>
             <View style={styles.inputContainer}>
               <TextInput placeholder="USERNAME" placeholderTextColor='#1B898A' style={styles.input} onChangeText={(text) => this.setState({inputTxt: text})} value={this.state.inputTxt} />
             </View>
@@ -207,7 +207,7 @@ container: {
   alignItems: 'center'
 },
   logo: {
-    width: width*.75,
+    width: width*.7,
     height: height*.18,
     alignItems: 'stretch',
     resizeMode: 'contain'
@@ -228,7 +228,7 @@ moduleButtons: {
   },
    picker: {
        backgroundColor: '#efefef',
-       width: width*.85,
+       width: width*.80,
        borderWidth:1,
        borderColor:'#999999',
        height: height*.06,

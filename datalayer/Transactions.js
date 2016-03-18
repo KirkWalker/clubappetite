@@ -20,6 +20,7 @@ Transactions.verifyCCForm = function (details) {
     var inputCCV = details.inputCCV;
     var inputEXPM = details.inputEXPM;
     var inputEXPY = details.inputEXPY;
+    var checked = details.checked;
 
     var API_REQUEST = 'Transaction:';
 
@@ -28,6 +29,12 @@ Transactions.verifyCCForm = function (details) {
     if(inputFN == '' || inputLN == '' || inputCC == ''|| inputCCV == ''|| inputEXPM == ''|| inputEXPY == '') {
         error_message = 'Please fill in all the form fields';
         console.log('error_message:',error_message);
+    }
+
+    if(!checked){
+
+        error_message = 'You must agree to the terms and conditions to continue.';
+
     }
 
     if(error_message !=''){
@@ -40,12 +47,13 @@ Transactions.verifyCCForm = function (details) {
             ToastAndroid.show(error_message, ToastAndroid.SHORT);
         }
 
+        return false;
 
     } else {
 
          console.log(API_REQUEST+"data:",SERVER_URL + '?controller=api&action=transaction');
          if(DEBUG) { console.log(_page_name+' Post Completed',details); }
-
+         return true;
     }
 
 

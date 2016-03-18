@@ -33,9 +33,14 @@ class Donate extends Component {
   }
 
   componentDidMount() {
+    this.mounted = true;
     InteractionManager.runAfterInteractions(() => {
       Users.getProfile(this);
     });
+  }
+
+  componentWillUnmount() {
+      this.mounted = false;
   }
 
   render() {

@@ -21,7 +21,7 @@ var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
 var Button = require('../modules/ButtonLogin');
-
+var CheckBox = require('../modules/Checkbox');
 
 
 class Payment extends Component {
@@ -30,6 +30,7 @@ class Payment extends Component {
       super(props);
       this.state = {
           user_profile: [],
+          checked: false,
           inputFN: '',
           inputLN: '',
           inputCC: '',
@@ -45,9 +46,14 @@ class Payment extends Component {
   }
 
   componentDidMount() {
+    this.mounted = true;
     InteractionManager.runAfterInteractions(() => {
       Users.getProfile(this);
     });
+  }
+
+  componentWillUnmount() {
+      this.mounted = false;
   }
 
   render() {
@@ -106,8 +112,23 @@ class Payment extends Component {
                </View>
           </View>
           <View style={paymentStyles.modulerow} marginTop={30}>
+               <CheckBox
+                 label=''
+                 checked={this.state.checked}
+                 onChange={(checked) => this.setState({checked: checked})}
+               />
+               <View style={[styles.labelContainer,{flexDirection: 'row'}]}>
+                <TouchableOpacity onPress={this.gotoTerms.bind(this)} style={{flexDirection: 'row'}}>
+                    <Text style={styles.label}>I agree to the </Text>
+                    <Text style={[paymentStyles.bluetext,{paddingTop:2}]}>terms and conditions</Text>
+                </TouchableOpacity>
+               </View>
+          </View>
+          <View style={paymentStyles.modulerow} marginTop={30}>
             <Button buttonText="Continue" marginTop={30} onPress={this.doPost.bind(this)} />
           </View>
+
+
         </View>
       </View>
     );
@@ -120,26 +141,45 @@ class Payment extends Component {
       });
     }
 
+
+    gotoTerms() {
+      this.props.navigator.push({
+        id: 'Terms',
+        name: 'Terms Page',
+      });
+    }
+
+
     doPost() {
 
-      var details = {
+        var details = {
           inputFN: this.state.inputFN,
           inputLN: this.state.inputLN,
           inputCC: this.state.inputCC,
           inputCCV: this.state.inputCCV,
           inputEXPM: this.state.inputEXPM,
           inputEXPY: this.state.inputEXPY,
-      }
-
-
-      Transactions.verifyCCForm(details);
-
+          checked: this.state.checked,
+        }
 
 
 
+        if(Transactions.verifyCCForm(details)) {
+
+
+            var user_profile = this.state.user_profile;
+            var amount = (this.amount);
+
+            Users.addPoints(user_profile,amount,details.inputFN,details.inputLN);
+
+            this.props.navigator.push({
+              id: 'ThankYou',
+              name: 'Thank You Page',
+            });
+
+        }
 
     }
-
 
 }
 
@@ -159,7 +199,7 @@ var paymentStyles = StyleSheet.create({
   modulerow: {
     flexDirection: 'row',
     flex:2,
-
+    alignItems: 'center',
   },
   title: {
     fontSize: 16,
@@ -168,14 +208,16 @@ var paymentStyles = StyleSheet.create({
     marginLeft: 10,
   },
   text: {
-    fontSize: 11,
+    lineHeight:20,
     fontFamily: 'Gill Sans',
+    textAlignVertical:'center',
   },
-    bluetext: {
-      fontSize: 11,
-      fontFamily: 'Gill Sans',
-      color:'blue',
-    },
+  bluetext: {
+    lineHeight:20,
+    fontFamily: 'Gill Sans',
+    color:'blue',
+    textAlignVertical:'bottom',
+  },
   subtitle: {
     fontSize: 14,
     fontFamily: 'Gill Sans',
