@@ -81,7 +81,12 @@ class Cart extends Component {
           horizontal={true}
           pagingEnabled={true}
           style={[cartStyles.scrollView, cartStyles.horizontalScrollView]}>
-          {this.state.ProductArray.map((obj, i) => <Thumb key={i} obj={obj} onPress={(idx) => this.doThis(idx,this)} />)}
+          {this.state.ProductArray.map((obj, i) => <Thumb
+                                                      key={i}
+                                                      obj={obj}
+                                                      addProduct={(idx) => this.addProduct(idx,this)}
+                                                      delProduct={(idx) => this.delProduct(idx,this)}
+          />)}
         </ScrollView>
 
 
@@ -107,17 +112,40 @@ class Cart extends Component {
     );
   }
 
-  doThis(idx,_this){
+  addProduct(idx,_this){
 
     var ProductArray =_this.state.ProductArray;
     var current_qty = 0;
 
-    console.log('ProductArray: ',_this.state.ProductArray);
+    //console.log('ProductArray: ',_this.state.ProductArray);
 
     for(var i=0;i<ProductArray.length;i++){
         if(_this.state.ProductArray[i].id == idx){
             current_qty = ProductArray[i].user_qty;
             current_qty ++;
+            ProductArray[i].user_qty = current_qty;
+            console.log('Updating Product: ',_this.state.ProductArray[i].product_name + ' new qty=' + current_qty);
+        }
+    }
+
+    _this.setState({ProductArray : ProductArray});
+
+
+  }
+
+  delProduct(idx,_this){
+
+    var ProductArray =_this.state.ProductArray;
+    var current_qty = 0;
+
+    //console.log('ProductArray: ',_this.state.ProductArray);
+
+    for(var i=0;i<ProductArray.length;i++){
+        if(_this.state.ProductArray[i].id == idx){
+            current_qty = ProductArray[i].user_qty;
+            current_qty --;
+            if(current_qty < 0) { current_qty = 0; }
+
             ProductArray[i].user_qty = current_qty;
             console.log('Updating Product: ',_this.state.ProductArray[i].product_name + ' new qty=' + current_qty);
         }
@@ -144,11 +172,12 @@ var Thumb = React.createClass({
     return true;
   },
   add(){
-
     var id = this.props.obj.id;
-    this.props.onPress(id);
-
-
+    this.props.addProduct(id);
+  },
+  del(){
+    var id = this.props.obj.id;
+    this.props.delProduct(id);
   },
   render: function() {
 
@@ -161,7 +190,9 @@ var Thumb = React.createClass({
         <View style={[cartStyles.buttonContents]}>
 
 
-            <Text>-</Text>
+            <TouchableOpacity onPress={this.del} >
+              <Text>-</Text>
+            </TouchableOpacity>
 
             <Image
             style={cartStyles.img}
@@ -169,9 +200,7 @@ var Thumb = React.createClass({
             />
 
 
-            <TouchableOpacity
-                onPress={this.add}
-            >
+            <TouchableOpacity onPress={this.add} >
               <Text>+</Text>
             </TouchableOpacity>
 

@@ -63,7 +63,7 @@ module.exports = StyleSheet.create({
     */
     navbar: {
         backgroundColor: '#1B898A',
-        height:height*.1,
+        height:height*.12,
 
     },
     navbar_logocontainer: {

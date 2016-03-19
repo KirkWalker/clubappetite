@@ -348,6 +348,7 @@ class AMGSandbox extends Component {
         <ThankYou
           navigator={navigator}
           openDrawer={this.openDrawer}
+          points={route.points}
         />
       );
     }

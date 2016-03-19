@@ -175,6 +175,7 @@ class Payment extends Component {
             this.props.navigator.push({
               id: 'ThankYou',
               name: 'Thank You Page',
+              points: (amount*100),
             });
 
         }
