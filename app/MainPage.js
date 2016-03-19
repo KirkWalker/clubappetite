@@ -15,6 +15,7 @@ var {
 
 var styles = require('../styles');
 var Users = require('../datalayer/User');
+var Button = require('../modules/ButtonLogin');
 
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
 var {width,height} = Dimensions.get('window');
@@ -70,19 +71,7 @@ class MainPage extends Component {
     var Email = this.state.user_profile.email;
 
     return (
-    <View>
-
-        <Image style={[styles.imageContainer,{width: width}]} source={require('../img/ViewBG.png')} resizeMode="cover"></Image>
-
-        <TouchableHighlight style={styles.welcome, {backgroundColor: 'grey', padding: 10}}
-            onPress={this.gotoMessagesPage.bind(this)}>
-          <Text style={{backgroundColor: 'yellow', color: 'green'}}>Messages</Text>
-        </TouchableHighlight>
-
-        <TouchableHighlight style={styles.welcome, {backgroundColor: 'grey', padding: 10}}
-            onPress={this.gotoCartPage.bind(this)}>
-          <Text style={{backgroundColor: 'yellow', color: 'green'}}>Shopping Cart</Text>
-        </TouchableHighlight>
+    <View style={styles.container}>
 
         <Text style={styles.mainPanelTitle}>
             Welcome to Club Appetite
@@ -92,7 +81,12 @@ class MainPage extends Component {
            style={[styles.base, {borderRadius: 5 }]}
          />
         <Text>Hello {Username + '\n\n'}</Text>
-        <Text>Get ready for spam, we now have your email. {'\n\n'}Want proof? {Email}</Text>
+
+        <View style={styles.module} marginTop={10}>
+            <Button onPress={this.gotoCartPage.bind(this)} buttonText="Shopping Cart" marginTop={10} />
+        </View>
+
+
 
       </View>
 
