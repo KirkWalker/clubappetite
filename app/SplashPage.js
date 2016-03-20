@@ -8,6 +8,7 @@ var {
   StyleSheet,
   Text,
   InteractionManager,
+  Platform,
 } = React;
 
 
@@ -49,15 +50,21 @@ class SplashPage extends Component {
   render() {
 
     var text1 = "YOU'VE EARNED";
-    var hasPoints = false;
+    var hasPoints = true;
+    var points = 18480;
     if(this.state.user_profile.user_points != undefined){
       hasPoints = true;
+      points = this.state.user_profile.user_points;
     }
+
+
+
+
     return (
       <View>
 
         <View style={splashStyle.bgContainer}>
-            <Image style={splashStyle.background} source={require('../img/splash-bg-sm.png')} />
+            <Image style={splashStyle.background} resizeMode="cover" source={require('../img/splash-bg-sm.png')} />
         </View>
 
         <View style={splashStyle.container}>      
@@ -68,7 +75,7 @@ class SplashPage extends Component {
                       return(
                       <View style={splashStyle.pointcontainer}>
                         <Text style={splashStyle.pointText}>{text1}</Text>
-                        <Text style={splashStyle.pointTextBold}>1930</Text>
+                        <Text style={splashStyle.pointTextBold}>{points}</Text>
                         <Text style={splashStyle.pointText}>POINTS</Text>
                       </View>
                       );
@@ -85,34 +92,42 @@ class SplashPage extends Component {
   }
 }
 
+var topoffset = .57;
+
+if(Platform.OS === 'ios'){
+  topoffset = .59;
+}
+
 var splashStyle = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center'
   },
   hex: {
-    width: width*.9,
-    height: height*.80,
-    //resizeMode: 'contain',
+    width: width*.95,
+    height: height*.82,
+    alignItems: 'stretch',
   },
   pointcontainer :{
-    top: height*.567,
-    left: width*.475,
-    width:width*.4,
+    top: height*topoffset,
+    left: width*.519,
+    width:width*.395,
     alignItems: 'center',
-
+    justifyContent:'center',
   },
   pointText: {
-    fontSize: 12,
+    fontSize: 15,
     color: 'white',
     fontFamily: 'Gill Sans',
-    textAlignVertical:'center'
+    textAlignVertical:'center',
+    textAlign:'center',
   },
   pointTextBold: {
-    fontSize: 40,
+    fontSize: 50,
     color: 'white',
     fontFamily: 'Gill Sans',
-    textAlignVertical:'center'
+    textAlignVertical:'center',
+    textAlign:'auto',
   },
   bgContainer: {
     position: 'absolute'

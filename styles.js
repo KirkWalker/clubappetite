@@ -16,7 +16,7 @@ module.exports = StyleSheet.create({
         width: null,
         height: null,
         backgroundColor: 'rgba(0,0,0,0)',
-        paddingTop:70,
+        paddingTop:60,
         alignItems: 'center',
     },
     imageContainer: {
@@ -72,7 +72,6 @@ module.exports = StyleSheet.create({
         elevation:4,
         padding:0,
         margin:0,
-
         shadowColor: '#000000',
         shadowOpacity: .6,
         shadowRadius: 5,
@@ -89,6 +88,7 @@ module.exports = StyleSheet.create({
         padding:0,
         justifyContent: 'center',
         alignItems: 'center',
+        marginBottom:20,
     },
     navbar_menu: {
     marginTop:menuoffset,
@@ -145,11 +145,7 @@ module.exports = StyleSheet.create({
         width: 38,
         height: 38,
     },
-    webView: {
-        backgroundColor: 'rgba(255,255,255,0.8)',
-        height: 350,
-        width:350,
-    },
+
     picker: {
        backgroundColor: '#cccccc',
        width:200,

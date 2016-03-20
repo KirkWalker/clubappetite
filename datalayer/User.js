@@ -90,14 +90,14 @@ module.exports = {
     },
 
 
-    eraseUsers(){
+    //eraseUsers(){
 
-        //async eraseUsers(){
-        //var value = await AsyncStorage.removeItem('db_store');
-        //console.log('Asyc:',value);
+    async eraseUsers(){
+        var value = await AsyncStorage.removeItem('db_store');
+        console.log('Asyc:',value);
 
-        //var value = await AsyncStorage.getItem('db_store');
-        //console.log('Asyc:',value);
+        var value = await AsyncStorage.getItem('db_store');
+        console.log('Asyc:',value);
 
         /*
         This does not remove the data from the server.

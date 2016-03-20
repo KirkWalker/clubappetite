@@ -63,26 +63,35 @@ module.exports = {
                         console.log(_page_name + ' API ERROR:',responseData);
                     } else if(responseData.result == 'update'){
 
+
+                        var resArray = {
+                            name: _page_name,
+                            text: responseData.text,
+                            page_title: responseData.page_title,
+                            logo: responseData.logo,
+                            last_mod: responseData.current_mod
+                        }
+
                         if(action == 'update'){
-                            DB.infopage.update({name: _page_name }, {text: responseData.text, last_mod: responseData.current_mod}, function(updated_table){
-                                if(debug) { console.log(_page_name+' update succeeded',updated_table);}
-                                _this.setState({htmlText: responseData.text});
+                            DB.infopage.update({name: _page_name }, resArray, function(updated_table){
+
+                                if(debug) { console.log(_page_name+' update succeeded',updated_table.infopage);}
+                                _this.setState({htmlText: responseData.text, pageName:responseData.page_title, logo:responseData.logo });
                             });
                         } else {
-
-                            var resArray = {name: _page_name, text: responseData.text, last_mod: responseData.current_mod}
                             DB.infopage.add(resArray, function(updated_table){
                                 if(debug) { console.log(_page_name + ' add succeeded',updated_table);}
-                                if(debug) { console.log(_page_name + ' date:', responseData.current_mod);}
-                                _this.setState({htmlText: responseData.text});
+                                //if(debug) { console.log(_page_name + ' date:', responseData.current_mod);}
+                                _this.setState({htmlText: responseData.text, pageName:responseData.page_title, logo:responseData.logo });
                             });
                         }
 
                     } else if(responseData.result == 'nochanges'){
                          if(debug) { console.log(_page_name+' nochanges', responseData);}
-                        _this.setState({htmlText: initText.text});
+                         _this.setState({htmlText: initText.text, pageName:initText.page_title, logo:initText.logo});
                     } else {
                          console.log(_page_name+' responseData failed(update)', responseData);
+                         _this.setState({htmlText: initText.text, pageName:initText.page_title, logo:initText.logo});
                     }
 
                 })
