@@ -80,9 +80,9 @@ class Cart extends Component {
                   automaticallyAdjustContentInsets={false}
                   horizontal={true}
                   showsHorizontalScrollIndicator={false}
-                  contentInset={{top:0,left:80,bottom:0,right:80}}
-                  contentOffset={{x:-80}}
-                  pagingEnabled={true}
+                  contentInset={{top:0,left:70,bottom:0,right:65}}
+                  contentOffset={{x:-65}}
+                  pagingEnabled={false}
                   style={[cartStyles.scrollView, cartStyles.horizontalScrollView]}>
                   {this.state.ProductArray.map((obj, i) => <Thumb
                                                               key={i}
@@ -147,7 +147,7 @@ class Cart extends Component {
     var current_total = 0;
 
     for(var i=0;i<ProductArray.length;i++){
-        if(_this.state.ProductArray[i].id == idx){
+        if(ProductArray[i].id == idx){
             current_qty = ProductArray[i].user_qty;
             current_qty ++;
             ProductArray[i].user_qty = current_qty;
@@ -167,7 +167,7 @@ class Cart extends Component {
     var current_total = 0;
 
     for(var i=0;i<ProductArray.length;i++){
-        if(_this.state.ProductArray[i].id == idx){
+        if(ProductArray[i].id == idx){
             current_qty = ProductArray[i].user_qty;
             current_qty --;
             if(current_qty < 0) { current_qty = 0; }
