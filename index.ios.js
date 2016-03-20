@@ -36,7 +36,6 @@ var NoNavigatorPage = require('./app/NoNavigatorPage');
 var Drawer = require('react-native-drawer');
 var ControlPanel = require('./ControlPanel');
 
-var BannerAds = require('./datalayer/BannerAds');
 var Users = require('./datalayer/User');
 
 var styles = require('./styles');
@@ -231,7 +230,7 @@ class AMGSandbox extends Component {
         side={this.settings.rightSide ? 'right' : 'left'}
       >
         <Navigator
-          initialRoute={{id: 'Cart', name: 'Splash Page'}}
+          initialRoute={{id: 'SplashPage', name: 'Splash Page'}}
           renderScene={this.renderScene.bind(this)}
           configureScene={(route) => {
             if (route.sceneConfig) {
@@ -261,7 +260,7 @@ class AMGSandbox extends Component {
       return (
         <LoginPage
           navigator={navigator}
-          bannerads={BannerAds}/>
+        />
       );
     }
     /*
