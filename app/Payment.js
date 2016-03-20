@@ -91,7 +91,7 @@ class Payment extends Component {
 
     return (
 
-      <View style={styles.container}>
+      <View style={[styles.container,{paddingTop:20, marginTop:50}]}>
 
         <View style={paymentStyles.module} marginBottom={20} marginTop={10}>
 

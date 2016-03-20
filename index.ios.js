@@ -23,6 +23,7 @@ var Register = require('./app/Register');
 var Shop = require('./app/Shop');
 var Cart = require('./app/Cart');
 var Share = require('./app/Share');
+var ReferAFriend = require('./app/ReferAFriend');
 var Donate = require('./app/Donate');
 var Checkout = require('./app/Checkout');
 var ThankYou = require('./app/Thankyou');
@@ -230,7 +231,7 @@ class AMGSandbox extends Component {
         side={this.settings.rightSide ? 'right' : 'left'}
       >
         <Navigator
-          initialRoute={{id: 'SplashPage', name: 'Splash Page'}}
+          initialRoute={{id: 'Refer', name: 'Splash Page'}}
           renderScene={this.renderScene.bind(this)}
           configureScene={(route) => {
             if (route.sceneConfig) {
@@ -313,6 +314,14 @@ class AMGSandbox extends Component {
     if (routeId === 'Share') {
       return (
         <Share
+          navigator={navigator}
+          openDrawer={this.openDrawer}
+        />
+      );
+    }
+    if (routeId === 'Refer') {
+      return (
+        <ReferAFriend
           navigator={navigator}
           openDrawer={this.openDrawer}
         />
