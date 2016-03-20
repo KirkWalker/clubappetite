@@ -35,12 +35,13 @@ class Profile extends Component {
 
 
   componentDidMount() {
-    /*
-    successful result is an object: this.state.user_profile
-    */
+    this.mounted = true;
     Users.getProfile(this);
   }
 
+  componentWillUnmount() {
+    this.mounted = false;
+  }
 
   render() {
 
@@ -59,10 +60,14 @@ class Profile extends Component {
     );
   }
   renderScene(route, navigator) {
+
+    var displayName = (this.state.user_profile.first_name != '') ? this.state.user_profile.first_name + ' ' + this.state.user_profile.last_name : this.state.user_profile.name;
+
+
     return (
       <View style={profileStyles.container}>
         <Image source={require('../img/profile-title-container.png')} style={profileStyles.header} />
-        <Text style={profileStyles.name}>NAME LASTNAME</Text>
+        <Text style={profileStyles.name}>{ displayName }</Text>
         <View style={profileStyles.pointsContainer}>
           <Text style={profileStyles.title}>YOU'VE EARNED</Text>
           <Text style={profileStyles.number}>{this.state.user_profile.user_points}</Text>
@@ -95,7 +100,7 @@ const profileStyles = StyleSheet.create({
   name: {
     fontWeight: '500',
     fontFamily: 'Gill Sans',
-    fontSize: 15,
+    fontSize: 25,
     color: '#f0bb1a'
   },
   pointsContainer: {
