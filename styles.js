@@ -1,9 +1,14 @@
 var {
   StyleSheet, 
-  Dimensions} = require('react-native')
+  Dimensions,
+  Platform,
+  } = require('react-native')
 
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
+
+var headeroffset = Platform.OS === 'ios' ? -10 : 0;
+var menuoffset = Platform.OS === 'ios' ? 0 : 15;
 
 module.exports = StyleSheet.create({
     container: {
@@ -11,7 +16,7 @@ module.exports = StyleSheet.create({
         width: null,
         height: null,
         backgroundColor: 'rgba(0,0,0,0)',
-        marginTop:70,
+        paddingTop:70,
         alignItems: 'center',
     },
     imageContainer: {
@@ -63,24 +68,41 @@ module.exports = StyleSheet.create({
     */
     navbar: {
         backgroundColor: '#1B898A',
-        height:height*.1,
+        height:height*.11,
+        elevation:4,
+        padding:0,
+        margin:0,
+
+        shadowColor: '#000000',
+        shadowOpacity: .6,
+        shadowRadius: 5,
+        shadowOffset: {
+            height: 0,
+            width: 0
+        },
 
     },
     navbar_logocontainer: {
-        flex: 5,
+        width: width*.60,
+        height: height*.09,
+        marginTop:headeroffset,
+        padding:0,
         justifyContent: 'center',
         alignItems: 'center',
-        width: width*.65,
-        marginBottom:5,
+    },
+    navbar_menu: {
+    marginTop:menuoffset,
+      width: width*.1,
+      height: height*.06,
     },
     navbar_logo: {
-      width: 150,
-      height: 48,
-
+      width: width*.4,
+      height: height*.082,
     },
     navbar_button: {
-    flex: 1,
-    justifyContent: 'center',
+
+      marginLeft:10,
+      height: height*.3,
     },
     mainPanel: {
       marginTop:35,

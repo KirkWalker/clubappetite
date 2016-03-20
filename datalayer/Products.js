@@ -103,6 +103,18 @@ ProductsStore.fetchData = function (_this, token, current_mod, data) {
 
                 } else {
                     if(DEBUG) { console.log(_page_name+' data is up to date2 ',data[0].details); }
+
+
+                    var newArray = []; //insert a quantity variable
+                    var resultset = data[0].details;
+                    for(var key in resultset){
+                        newArray.push(resultset[key]);
+                    }
+
+
+
+
+
                     _this.setState({ProductArray: data[0].details});
                 }
 

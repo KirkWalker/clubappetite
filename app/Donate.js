@@ -214,27 +214,11 @@ var donateStyles = StyleSheet.create({
     fontSize: 14,
     fontFamily: 'Gill Sans',
   },
-  buttoncontainer: {
-    flex: 1,
-    marginRight:5,
-    marginLeft:5,
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: height*.05,
-    borderWidth:1,
-    borderColor:'#efefef'
-    //
-  },
   grey: {
     backgroundColor: '#efefef',
   },
   white: {
     backgroundColor: '#ffffff',
-  },
-  button: {
-    fontSize: 12,
-    fontFamily: 'Gill Sans',
-    alignSelf: 'center',
   },
 });
 

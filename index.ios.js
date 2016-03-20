@@ -24,6 +24,7 @@ var Shop = require('./app/Shop');
 var Cart = require('./app/Cart');
 var Share = require('./app/Share');
 var Donate = require('./app/Donate');
+var Checkout = require('./app/Checkout');
 var ThankYou = require('./app/Thankyou');
 var Payment = require('./app/Payment');
 var MainPage = require('./app/MainPage');
@@ -35,7 +36,6 @@ var NoNavigatorPage = require('./app/NoNavigatorPage');
 var Drawer = require('react-native-drawer');
 var ControlPanel = require('./ControlPanel');
 
-var BannerAds = require('./datalayer/BannerAds');
 var Users = require('./datalayer/User');
 
 var styles = require('./styles');
@@ -260,7 +260,7 @@ class AMGSandbox extends Component {
       return (
         <LoginPage
           navigator={navigator}
-          bannerads={BannerAds}/>
+        />
       );
     }
     /*
@@ -335,6 +335,15 @@ class AMGSandbox extends Component {
           />
         );
     }
+    if (routeId === 'Checkout') {
+        return (
+          <Checkout
+            navigator={navigator}
+            openDrawer={this.openDrawer}
+            details={route.details}
+          />
+        );
+    }
     if (routeId === 'Register') {
       return (
         <Register
@@ -348,6 +357,7 @@ class AMGSandbox extends Component {
         <ThankYou
           navigator={navigator}
           openDrawer={this.openDrawer}
+          points={route.points}
         />
       );
     }
