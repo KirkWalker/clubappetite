@@ -145,8 +145,15 @@ class Checkout extends Component {
   doCheckout() {
 
 
-    console.log('checkout');
 
+
+
+    console.log('checkout');
+    this.props.navigator.push({
+      id: 'Payment',
+      name: 'Payment Page',
+      details: {amount:this.state.cartTotal, ProductArray : this.state.ProductArray}
+    });
   }
 
 
@@ -278,22 +285,26 @@ var checkoutStyle = StyleSheet.create({
           fontSize:18,
           color:'white',
           fontWeight:'bold',
+          fontFamily: 'Gill Sans',
         },
     celltext1: {
       fontSize:16,
       color:'white',
       fontWeight:'bold',
+      fontFamily: 'Gill Sans',
     },
     celltext2: {
       fontSize:14,
       color:'white',
       fontWeight:'bold',
+      fontFamily: 'Gill Sans',
     },
     headertext: {
       fontSize:22,
       color:'white',
       fontWeight:'bold',
       backgroundColor: '#4A8A1D',
+      fontFamily: 'Gill Sans',
     },
 });
 

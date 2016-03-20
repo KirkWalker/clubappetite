@@ -16,7 +16,7 @@ module.exports = StyleSheet.create({
         width: null,
         height: null,
         backgroundColor: 'rgba(0,0,0,0)',
-        paddingTop:60,
+        paddingTop:70,
         alignItems: 'center',
     },
     imageContainer: {
@@ -97,7 +97,7 @@ module.exports = StyleSheet.create({
     },
     navbar_logo: {
       width: width*.4,
-      height: height*.08,
+      height: height*.082,
     },
     navbar_button: {
 

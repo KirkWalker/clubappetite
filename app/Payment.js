@@ -73,15 +73,33 @@ class Payment extends Component {
     );
   }
   renderScene(route, navigator) {
+
+    var pageTitle = '';
+
+
+    if(this.schedule != undefined) {
+
+        pageTitle = 'You have selected $' + this.amount + ' / ' + this.schedule;
+
+    } else {
+
+        pageTitle = 'Your total purchase amount is $' + this.amount
+
+    }
+
+
+
     return (
 
       <View style={styles.container}>
 
         <View style={paymentStyles.module} marginBottom={20} marginTop={10}>
+
           <View style={paymentStyles.modulerow}>
-              <Text style={paymentStyles.text}>You have selected ${this.amount} / {this.schedule}</Text>
-              <TouchableOpacity onPress={() => this.gotoDonate()}><Text style={paymentStyles.bluetext}> - change</Text></TouchableOpacity>
+              <Text style={paymentStyles.text}>{pageTitle}</Text>
+              <TouchableOpacity onPress={() => this.goBack()}><Text style={paymentStyles.bluetext}> - change</Text></TouchableOpacity>
           </View>
+
         </View>
         <View style={paymentStyles.moduletext} marginBottom={10}>
             <Text style={paymentStyles.title}>Please fill in your payment details</Text>
@@ -141,12 +159,32 @@ class Payment extends Component {
       });
     }
 
+    gotoCart() {
+      this.props.navigator.push({
+        id: 'Cart',
+        name: 'Shopping Cart',
+      });
+    }
 
     gotoTerms() {
       this.props.navigator.push({
         id: 'Terms',
         name: 'Terms Page',
       });
+    }
+
+    goBack() {
+
+        if(this.schedule != undefined) {
+
+            this.gotoDonate();
+
+        } else {
+
+            this.gotoCart();
+
+        }
+
     }
 
 

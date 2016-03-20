@@ -210,12 +210,16 @@ var Thumb = React.createClass({
   render: function() {
 
     //console.log(this.props.obj);
-
+    var points = Number(this.props.obj.product_price)*100;
     return (
       <View style={[cartStyles.button]}>
-        <Image source={require('../img/points-container.png')} style={cartStyles.points}>
-            <Text style={cartStyles.pointstext}>{Number(this.props.obj.product_price)*100}</Text>
-        </Image>
+
+
+         <Image source={require('../img/points-container.png')} style={cartStyles.ppp}>
+            <Text style={cartStyles.ppptext}>{points}</Text>
+         </Image>
+
+
 
 
         <View style={[cartStyles.buttonContents]}>
@@ -337,8 +341,7 @@ var cartStyles = StyleSheet.create({
   white: {
     backgroundColor: '#ffffff',
   },
-
-    button: {
+button: {
       width: width*.60,
       height: height*.43,
       margin: 7,
@@ -369,20 +372,7 @@ var cartStyles = StyleSheet.create({
       marginLeft: 15,
       marginRight:15,
     },
-    points: {
-        width: 50,
-        height: 90,
-        alignItems: 'stretch',
-        resizeMode: 'contain',
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingBottom:8,
-      },
-    pointstext: {
-      color:'white',
-      fontWeight:'bold',
-      backgroundColor: 'rgba(0,0,0,0)',
-    },
+
     qty: {
        backgroundColor: '#999999',
        width:width*.2,
@@ -396,6 +386,7 @@ var cartStyles = StyleSheet.create({
      qtytext: {
        color:'white',
        fontWeight:'bold',
+       fontFamily: 'Gill Sans',
      },
      circle: {
       borderRadius:50,
@@ -428,8 +419,24 @@ var cartStyles = StyleSheet.create({
     checkouttext: {
       color:'white',
       fontWeight:'bold',
+      fontFamily: 'Gill Sans',
     },
 
+    ppp: {
+        width: 50,
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingBottom:10,
+        marginBottom:5,
+    },
+    ppptext: {
+      color:'white',
+      fontWeight:'bold',
+      backgroundColor: 'rgba(0,0,0,0)',
+      fontFamily: 'Gill Sans',
+
+    },
 });
 
 
