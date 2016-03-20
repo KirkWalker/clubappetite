@@ -7,9 +7,18 @@ var {
   View,
   Text,
   Navigator,
+  Image,
+  Dimensions,
+  PixelRatio,
   TouchableOpacity,
 } = React;
 
+var {width, height} = Dimensions.get('window');
+var font = 20;
+
+if (PixelRatio.get() <= 2) {
+  font = 17;
+}
 
 var styles = require('../styles');
 var Users = require('../datalayer/User');
@@ -51,24 +60,16 @@ class Profile extends Component {
   }
   renderScene(route, navigator) {
     return (
-      <View style={styles.container}>
-        <TouchableOpacity
-            onPress={this.gotoNext.bind(this)}>
-          <Text>Slide Up Example</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-            onPress={this.gotoMessages.bind(this)}>
-          <Text>Messages</Text>
-        </TouchableOpacity>
-
+      <View style={profileStyles.container}>
+        <Image source={require('../img/profile-title-container.png')} style={profileStyles.header} />
+        <Text style={profileStyles.name}>NAME LASTNAME</Text>
+        <View style={profileStyles.pointsContainer}>
+          <Text style={profileStyles.title}>YOU'VE EARNED</Text>
+          <Text style={profileStyles.number}>{this.state.user_profile.user_points}</Text>
+          <Text style={profileStyles.title}>POINTS</Text>
+        </View>
       </View>
     );
-  }
-  gotoNext() {
-    this.props.navigator.push({
-      id: 'NoNavigatorPage',
-      sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
-    });
   }
 
     gotoMessages() {
@@ -77,8 +78,42 @@ class Profile extends Component {
         name:'Messages',
       });
     }
-
-
 }
 
+const profileStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    marginTop: 70,
+    backgroundColor: '#1d888a',
+  },
+  header: {
+    width: width,
+    height: height*.5,
+    resizeMode: 'contain'
+  },
+  name: {
+    fontWeight: '500',
+    fontFamily: 'Gill Sans',
+    fontSize: 15,
+    color: '#f0bb1a'
+  },
+  pointsContainer: {
+    marginTop: width*.1,
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  title: {
+    fontWeight: '500',
+    fontFamily: 'Gill Sans',
+    fontSize: 13,
+    color: '#fff'
+  },
+  number: {
+    fontWeight: '600',
+    fontSize: 44,
+    fontFamily: 'Gill Sans',
+    color: '#fff'
+  }
+});
 module.exports = Profile;
