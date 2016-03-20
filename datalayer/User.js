@@ -175,8 +175,9 @@ module.exports = {
                     We send them back to login again as something has gone wrong
                     */
                     if(DEBUG) { console.log('moving to login',results); }
-                    _this.props.navigator.push({id: 'LoginPage'});
-
+                    if(_this.nologin == undefined){
+                        _this.props.navigator.push({id: 'LoginPage'});
+                    }
 
                 } else {
 
