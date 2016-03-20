@@ -16,6 +16,7 @@ var {
 var styles = require('../styles');
 
 var Users = require('../datalayer/User');
+
 var MyProducts = require('../datalayer/Products');
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
 
@@ -27,7 +28,7 @@ class Cart extends Component {
 
   constructor(props) {
       super(props);
-      this.state = {user_profile: [], ProductArray: []};
+      this.state = {user_profile: [], ProductArray: [], cartTotal: 0};
   }
 
   componentDidMount() {
@@ -68,7 +69,7 @@ class Cart extends Component {
       <View style={styles.container}>
         <View style={[cartStyles.module, cartStyles.module1]}>
             <View style={cartStyles.modulerow}>
-                <Text style={cartStyles.title}>Needed Now</Text>
+                <Image source={require('../img/cartheader.png')} style={cartStyles.cartheader} />
             </View>
         </View>
         <View style={[cartStyles.module, cartStyles.module2]}>
@@ -97,11 +98,17 @@ class Cart extends Component {
         </View>
 
         <View style={[cartStyles.module, cartStyles.module3]}>
-           <View style={cartStyles.modulerow}>
+           <View style={cartStyles.moduleRow}>
 
 
+            <Text style={cartStyles.total}>Total = ${ this.state.cartTotal }</Text>
 
-
+            <TouchableOpacity
+              onPress={this.doCheckout.bind(this)}
+              style={cartStyles.checkout}
+              >
+              <Text style={cartStyles.checkouttext}>CHECKOUT</Text>
+            </TouchableOpacity>
 
 
 
@@ -112,24 +119,32 @@ class Cart extends Component {
     );
   }
 
+  doCheckout() {
+
+
+
+
+
+  }
+
+
   addProduct(idx,_this){
 
     var ProductArray =_this.state.ProductArray;
     var current_qty = 0;
-
-    //console.log('ProductArray: ',_this.state.ProductArray);
+    var current_total = 0;
 
     for(var i=0;i<ProductArray.length;i++){
         if(_this.state.ProductArray[i].id == idx){
             current_qty = ProductArray[i].user_qty;
             current_qty ++;
             ProductArray[i].user_qty = current_qty;
-            console.log('Updating Product: ',_this.state.ProductArray[i].product_name + ' new qty=' + current_qty);
         }
+        current_total += (ProductArray[i].user_qty * ProductArray[i].product_price)
     }
 
-    _this.setState({ProductArray : ProductArray});
-
+    current_total = current_total.toFixed(2)
+    _this.setState({ProductArray : ProductArray, cartTotal:current_total });
 
   }
 
@@ -137,8 +152,7 @@ class Cart extends Component {
 
     var ProductArray =_this.state.ProductArray;
     var current_qty = 0;
-
-    //console.log('ProductArray: ',_this.state.ProductArray);
+    var current_total = 0;
 
     for(var i=0;i<ProductArray.length;i++){
         if(_this.state.ProductArray[i].id == idx){
@@ -147,12 +161,13 @@ class Cart extends Component {
             if(current_qty < 0) { current_qty = 0; }
 
             ProductArray[i].user_qty = current_qty;
-            console.log('Updating Product: ',_this.state.ProductArray[i].product_name + ' new qty=' + current_qty);
         }
+        current_total += (ProductArray[i].user_qty * ProductArray[i].product_price)
     }
 
-    _this.setState({ProductArray : ProductArray});
-
+    current_total = current_total.toFixed(2)
+    if(current_total < 0) { current_total = 0; }
+    _this.setState({ProductArray : ProductArray, cartTotal:current_total});
 
   }
 
@@ -190,8 +205,8 @@ var Thumb = React.createClass({
         <View style={[cartStyles.buttonContents]}>
 
 
-            <TouchableOpacity onPress={this.del} >
-              <Text>-</Text>
+            <TouchableOpacity onPress={this.del} style={[cartStyles.circle]}>
+              <Text style={[cartStyles.circletext]}>-</Text>
             </TouchableOpacity>
 
             <Image
@@ -200,15 +215,15 @@ var Thumb = React.createClass({
             />
 
 
-            <TouchableOpacity onPress={this.add} >
-              <Text>+</Text>
+            <TouchableOpacity onPress={this.add} style={[cartStyles.circle]}>
+              <Text style={[cartStyles.circletext]}>+</Text>
             </TouchableOpacity>
 
         </View>
-
-        <Text>{this.props.obj.user_qty}</Text>
-
-        <Text>${this.props.obj.product_price}</Text>
+        <View style={cartStyles.qty}>
+          <Text style={cartStyles.qtytext}>{this.props.obj.user_qty}</Text>
+        </View>
+        <Text style={cartStyles.total}>${this.props.obj.product_price}</Text>
       </View>
     );
   }
@@ -218,9 +233,15 @@ var Thumb = React.createClass({
 
 
 var cartStyles = StyleSheet.create({
+  cartheader: {
+    width: width,
+
+    alignItems: 'stretch',
+    resizeMode: 'contain'
+  },
   module: {
     flexDirection: 'column',
-    width: width*.95,
+    width: width,
   },
   module1: {
     flex: 2,
@@ -229,14 +250,20 @@ var cartStyles = StyleSheet.create({
   },
   module2: {
     marginTop: 10,
-    padding: 5,
+
     flex: 6,
-    backgroundColor:'#efefef',
   },
   module3: {
     marginTop: 10,
     padding: 5,
     flex: 2,
+  },
+  moduleRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+
+
   },
   scrollView: {
 
@@ -244,7 +271,7 @@ var cartStyles = StyleSheet.create({
 
   },
   horizontalScrollView: {
-    height: height*.45,
+    height: height*.65,
   },
   title: {
       fontSize: 16,
@@ -280,7 +307,8 @@ var cartStyles = StyleSheet.create({
       height: height*.42,
       margin: 7,
       padding: 5,
-      alignItems: 'center',
+      justifyContent: 'center',
+            alignItems: 'center',
       backgroundColor: '#ffffff',
       borderRadius: 3,
       elevation:2,
@@ -305,7 +333,53 @@ var cartStyles = StyleSheet.create({
       height: 75,
       marginLeft: 25,
       marginRight:25,
-    }
+    },
+    qty: {
+       backgroundColor: '#999999',
+       width:width*.2,
+       paddingTop:5,
+       paddingBottom:5,
+       borderRadius:50,
+       justifyContent: 'center',
+       alignItems: 'center',
+     },
+     qtytext: {
+       color:'white',
+       fontWeight:'bold',
+     },
+     circle: {
+      borderRadius:100,
+      backgroundColor: '#999999',
+      width:width*.065,
+      paddingTop:2,
+      paddingBottom:2,
+      justifyContent: 'center',
+      alignItems: 'center',
+     },
+      circletext: {
+        color:'white',
+        fontWeight:'bold',
+      },
+    total: {
+      fontSize: 18,
+      fontFamily: 'Gill Sans',
+      color:'black',
+      fontWeight:'bold',
+    },
+    checkout: {
+      backgroundColor: '#4A8A1D',
+      marginLeft:20,
+      paddingLeft:15,
+      paddingRight:15,
+      paddingTop:5,
+      paddingBottom:5,
+      borderRadius:50,
+    },
+    checkouttext: {
+      color:'white',
+      fontWeight:'bold',
+    },
+
 });
 
 
