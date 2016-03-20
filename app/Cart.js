@@ -11,6 +11,9 @@ var {
   Dimensions,
   ScrollView,
   Image,
+  Platform,
+  AlertIOS,
+  ToastAndroid,
 } = React;
 
 var styles = require('../styles');
@@ -68,51 +71,49 @@ class Cart extends Component {
     return (
       <View style={styles.container}>
         <View style={[cartStyles.module, cartStyles.module1]}>
-            <View style={cartStyles.modulerow}>
-                <Image source={require('../img/cartheader.png')} style={cartStyles.cartheader} />
-            </View>
+             <Image source={require('../img/cartheader.png')} style={cartStyles.cartheader} />
         </View>
         <View style={[cartStyles.module, cartStyles.module2]}>
             <View style={cartStyles.modulerow}>
-
-
-        <ScrollView
-          ref={(scrollView) => { _scrollView = scrollView; }}
-          automaticallyAdjustContentInsets={false}
-          horizontal={true}
-          pagingEnabled={true}
-          style={[cartStyles.scrollView, cartStyles.horizontalScrollView]}>
-          {this.state.ProductArray.map((obj, i) => <Thumb
-                                                      key={i}
-                                                      obj={obj}
-                                                      addProduct={(idx) => this.addProduct(idx,this)}
-                                                      delProduct={(idx) => this.delProduct(idx,this)}
-          />)}
-        </ScrollView>
-
-
-
-
-
+                <ScrollView
+                  ref={(scrollView) => { _scrollView = scrollView; }}
+                  automaticallyAdjustContentInsets={false}
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}
+                  contentInset={{top:0,left:80,bottom:0,right:80}}
+                  contentOffset={{x:-80}}
+                  pagingEnabled={true}
+                  style={[cartStyles.scrollView, cartStyles.horizontalScrollView]}>
+                  {this.state.ProductArray.map((obj, i) => <Thumb
+                                                              key={i}
+                                                              obj={obj}
+                                                              addProduct={(idx) => this.addProduct(idx,this)}
+                                                              delProduct={(idx) => this.delProduct(idx,this)}
+                  />)}
+                </ScrollView>
             </View>
         </View>
 
         <View style={[cartStyles.module, cartStyles.module3]}>
            <View style={cartStyles.moduleRow}>
-
-
-            <Text style={cartStyles.total}>Total = ${ this.state.cartTotal }</Text>
-
-            <TouchableOpacity
-              onPress={this.doCheckout.bind(this)}
-              style={cartStyles.checkout}
-              >
-              <Text style={cartStyles.checkouttext}>CHECKOUT</Text>
-            </TouchableOpacity>
-
-
-
+            <View style={cartStyles.moduleCell1}>
+                <Text style={cartStyles.total}>Total = ${ this.state.cartTotal }</Text>
+            </View>
+            <View style={cartStyles.moduleCell2}>
+                <TouchableOpacity
+                  onPress={this.doCheckout.bind(this)}
+                  style={cartStyles.checkout}
+                  >
+                  <Text style={cartStyles.checkouttext}>CHECKOUT</Text>
+                </TouchableOpacity>
+            </View>
           </View>
+        </View>
+        <View style={[cartStyles.module, cartStyles.module4]}>
+
+            <Image source={{uri: 'https://upload.wikimedia.org/wikipedia/en/thumb/e/e2/Loblaws.svg/1280px-Loblaws.svg.png'}} style={[cartStyles.banner]} />
+
+
         </View>
       </View>
 
@@ -121,9 +122,20 @@ class Cart extends Component {
 
   doCheckout() {
 
+    if(this.state.cartTotal == 0){
+        if(Platform.OS === 'ios'){
+            AlertIOS.alert(
+             'Your cart is empty',
+             'Please choose a few items and try again.'
+            );
+        } else {
+            ToastAndroid.show('Your cart is empty', ToastAndroid.SHORT);
+        }
+    } else {
 
+        this.gotoCheckout();
 
-
+    }
 
   }
 
@@ -172,10 +184,11 @@ class Cart extends Component {
   }
 
 
-  gotoNext() {
+  gotoCheckout() {
     this.props.navigator.push({
-      id: 'NoNavigatorPage',
-      sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+      id: 'Checkout',
+      name: 'Checkout Page',
+      details: {ProductArray : this.state.ProductArray, cartTotal:this.state.cartTotal}
     });
   }
 }
@@ -200,7 +213,10 @@ var Thumb = React.createClass({
 
     return (
       <View style={[cartStyles.button]}>
-        <Text>{Number(this.props.obj.product_price)*100}</Text>
+        <Image source={require('../img/points-container.png')} style={cartStyles.points}>
+            <Text style={cartStyles.pointstext}>{Number(this.props.obj.product_price)*100}</Text>
+        </Image>
+
 
         <View style={[cartStyles.buttonContents]}>
 
@@ -244,25 +260,45 @@ var cartStyles = StyleSheet.create({
     width: width,
   },
   module1: {
-    flex: 2,
+    flex: 4,
     justifyContent: 'center',
     alignItems: 'center',
+
   },
   module2: {
     marginTop: 10,
 
-    flex: 6,
+    flex: 10,
   },
   module3: {
     marginTop: 10,
-    padding: 5,
-    flex: 2,
+    paddingBottom: 20,
+    flex: 1,
+  },
+   module4: {
+     flex: 3,
   },
   moduleRow: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-
+  },
+  moduleCell1: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    marginLeft:40,
+  },
+  moduleCell2: {
+     flex: 1,
+     justifyContent: 'center',
+     alignItems: 'flex-start',
+     marginLeft:10,
+  },
+  banner:{
+     flex:1,
+     alignItems: 'stretch',
+     resizeMode: 'contain',
 
   },
   scrollView: {
@@ -271,7 +307,7 @@ var cartStyles = StyleSheet.create({
 
   },
   horizontalScrollView: {
-    height: height*.65,
+    height: height*.47,
   },
   title: {
       fontSize: 16,
@@ -304,9 +340,8 @@ var cartStyles = StyleSheet.create({
 
     button: {
       width: width*.60,
-      height: height*.42,
+      height: height*.43,
       margin: 7,
-      padding: 5,
       justifyContent: 'center',
             alignItems: 'center',
       backgroundColor: '#ffffff',
@@ -322,17 +357,31 @@ var cartStyles = StyleSheet.create({
     },
     buttonContents: {
       flexDirection: 'row',
-      height: height*.25,
+      height: height*.16,
       justifyContent: 'center',
       alignItems: 'center',
-
+      marginBottom:20,
 
     },
     img: {
-      width: 75,
-      height: 75,
-      marginLeft: 25,
-      marginRight:25,
+      width:90,
+      height: 90,
+      marginLeft: 15,
+      marginRight:15,
+    },
+    points: {
+        width: 50,
+        height: 90,
+        alignItems: 'stretch',
+        resizeMode: 'contain',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingBottom:8,
+      },
+    pointstext: {
+      color:'white',
+      fontWeight:'bold',
+      backgroundColor: 'rgba(0,0,0,0)',
     },
     qty: {
        backgroundColor: '#999999',
@@ -342,17 +391,18 @@ var cartStyles = StyleSheet.create({
        borderRadius:50,
        justifyContent: 'center',
        alignItems: 'center',
+       marginBottom:5
      },
      qtytext: {
        color:'white',
        fontWeight:'bold',
      },
      circle: {
-      borderRadius:100,
+      borderRadius:50,
       backgroundColor: '#999999',
-      width:width*.065,
-      paddingTop:2,
-      paddingBottom:2,
+      width:width*.09,
+      paddingTop:5,
+      paddingBottom:5,
       justifyContent: 'center',
       alignItems: 'center',
      },
@@ -368,7 +418,7 @@ var cartStyles = StyleSheet.create({
     },
     checkout: {
       backgroundColor: '#4A8A1D',
-      marginLeft:20,
+
       paddingLeft:15,
       paddingRight:15,
       paddingTop:5,
