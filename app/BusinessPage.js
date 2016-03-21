@@ -71,7 +71,7 @@ class BusinessPage extends Component {
 
           <View style={PageStyles.addressContainer}>
             <Text style={PageStyles.greenText}>{this.props.business_info.sponsor_address}</Text>
-            <Text style={PageStyles.greenText}>Kelowna, BC    V1Z 5H9</Text>
+            <Text style={PageStyles.greenText}>{this.props.business_info.sponsor_city}    {this.props.business_info.sponsor_postal_code}</Text>
           </View>
 
           <View style={PageStyles.separator}/>
@@ -110,14 +110,16 @@ const PageStyles = StyleSheet.create({
   },
   logoContainer: {
     flex: 60,
-    paddingTop: 70,
+    paddingTop: 90,
     alignItems: 'center',
-    // borderColor: 'green', borderWidth: 5,
   },
   logo: {
+    width: WIDTH*0.60,
+    height: HEIGHT *0.15,
+    alignItems: 'stretch',
     resizeMode: 'contain',
-// borderColor: 'green', borderWidth: 5,
   },
+
   addressContainer: {
     flex: 35,
     alignItems: 'center',
@@ -134,7 +136,6 @@ const PageStyles = StyleSheet.create({
       height: 1,
       width: 1
     }
-    // borderColor: 'red', borderWidth: 5,
   },
   contactContainer: {
     flex: 160,
@@ -151,13 +152,11 @@ const PageStyles = StyleSheet.create({
       height: 1,
       width: 1
     }
-    // borderColor: 'blue', borderWidth:5,
   },
   separator: {
     flex: 10,
     height: 10,
     backgroundColor: '#f2f2f2',
-    // borderColor: 'orange', borderWidth:5,
   },
   contactRow: {
     flexDirection: 'row',
