@@ -68,8 +68,8 @@ class Messages extends Component {
 
   renderHeader() {
     return(
-      <View style={MessageStyles.header}>
-        <Text style={MessageStyles.headerText}>HEADER IMAGE HERE</Text>
+      <View>
+        <Image resizeMode="contain" source={require('../img/message-header.png')} style={MessageStyles.headerImage} />
       </View>
     );
   }
@@ -81,6 +81,7 @@ class Messages extends Component {
         onPress={() => this.gotoMessage(message)}
       >
         <Image
+          resizeMode="contain" 
           style={MessageStyles.messageThumbnail}
           source={require('../img/email-icon-sm.png')}
         />
@@ -89,6 +90,7 @@ class Messages extends Component {
           <Text numberOfLines={2} style={MessageStyles.messageSubject}>Subject line describing contents of message...</Text>
         </View>
         <Image
+          resizeMode="contain" 
           style={MessageStyles.arrow}
           source={require('../img/NavArrow.png')}
         />
@@ -126,11 +128,11 @@ class Messages extends Component {
     }
 
     return (
-<ListView
+      <ListView
         dataSource={this.state.dataSource}
         renderRow={this.renderMessage}
         renderHeader={this.renderHeader}
-        style={[{backgroundColor: '#F2F2F2'}, {paddingTop: 70}]}
+        style={[{backgroundColor: '#F2F2F2'}, {paddingTop: HEIGHT*0.11}]}
         renderSeparator={this.renderSeparator}
       />
     );
@@ -142,6 +144,7 @@ var TITLE_TEXT = (PixelRatio.get() <= 2) ? 19 : 25;
 var INFO_TEXT = (PixelRatio.get() <= 2) ? 14 : 15;
 var PADDING = (PixelRatio.get() >= 4) ? 3 : PixelRatio.get();
 var WIDTH = Dimensions.get('window').width;
+var HEIGHT = Dimensions.get('window').height;
 if (DEBUG) {console.log("PixelRatio: "+PixelRatio.get());}
 
 const MessageStyles = StyleSheet.create({
@@ -180,10 +183,10 @@ const MessageStyles = StyleSheet.create({
     flex: 1,
     paddingLeft: PADDING*8,
   },
-  header: {
-    alignItems: 'center',
-    paddingTop: PADDING*10,
-    paddingBottom: PADDING*10,
+  headerImage: {
+    width: WIDTH,
+    height: WIDTH*0.364,
+    alignItems: 'stretch',
   },
   headerText: {
     fontFamily: 'Gill Sans',
@@ -198,7 +201,6 @@ const MessageStyles = StyleSheet.create({
   messageThumbnail: {
     width: WIDTH*0.14,
     height: WIDTH*0.14,
-    resizeMode: 'contain',
   },
   messageTitle: {
     fontSize: INFO_TEXT,
@@ -215,7 +217,6 @@ const MessageStyles = StyleSheet.create({
   arrow: {
     height: WIDTH*0.07,
     width: WIDTH*0.07,
-    resizeMode: 'contain',
   },
 });
 
