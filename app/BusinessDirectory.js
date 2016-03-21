@@ -35,7 +35,7 @@ class BusinessDirectory extends Component {
     		rowHasChanged: (r1, r2) => r1 !== r2,
     	}),
     	loaded: false,
-    	user_profile: [],
+      user_profile: this.props.user_profile,
     };
   }
 
@@ -111,7 +111,6 @@ componentDidMount() {
 
   render() {
     var data = [];
-    data.push(Users.getImageUrl(this));
     data.push(this.props.openDrawer);
 
     return (

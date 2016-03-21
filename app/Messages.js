@@ -33,8 +33,8 @@ class Messages extends Component {
       dataSource: new ListView.DataSource({
         rowHasChanged: (r1, r2) => r1 !== r2,
       }),
-      user_profile: [],
       loaded: false,
+      user_profile: this.props.user_profile,
     };
   }
 
@@ -110,7 +110,6 @@ class Messages extends Component {
 
   render() {
     var data = [];
-    data.push(Users.getImageUrl(this));
     data.push(this.props.openDrawer);
 
     return (

@@ -27,7 +27,7 @@ class MessageDetail extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {user_profile: []}
+    this.state = {user_profile: this.props.user_profile}
 
     this.message_date = this.computeDate(this.props.message_info.last_mod);
   }
@@ -92,7 +92,6 @@ class MessageDetail extends Component {
 
   render() {
     var data = [];
-    data.push(Users.getImageUrl(this));
     data.push(this.props.openDrawer);
 
     return (

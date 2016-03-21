@@ -27,7 +27,7 @@ class BusinessPage extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {user_profile: []}
+    this.state = {user_profile: this.props.user_profile}
   }
 
   componentDidMount() {
@@ -43,7 +43,6 @@ class BusinessPage extends Component {
 
   render() {
     var data = [];
-    data.push(Users.getImageUrl(this));
     data.push(this.props.openDrawer);
 
     return (
