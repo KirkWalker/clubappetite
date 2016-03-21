@@ -31,6 +31,7 @@ var Payment = require('./app/Payment');
 var MainPage = require('./app/MainPage');
 var Messages = require('./app/Messages');
 var Profile = require('./app/Profile');
+var FacebookShare = require('./app/FacebookShare');
 var BusinessPage = require('./app/BusinessPage');
 var BusinessDirectory = require('./app/BusinessDirectory');
 var NoNavigatorPage = require('./app/NoNavigatorPage');
@@ -55,31 +56,10 @@ class AMGSandbox extends Component {
 
   constructor(props) {
       super(props);
-
-      this.settings = {
-          drawerType: 'overlay',
-          openDrawerOffset:100,
-          closedDrawerOffset:0,
-          panOpenMask: .1,
-          panCloseMask: .9,
-          relativeDrag: false,
-          panStartCompensation: true,
-          openDrawerThreshold: .25,
-          tweenHandlerOn: false,
-          tweenDuration: 350,
-          tweenEasing: 'linear',
-          disabled: false,
-          tweenHandlerPreset: null,
-          acceptDoubleTap: true,
-          acceptTap: false,
-          acceptPan: true,
-          rightSide: false,
-      }
-
       this.openDrawer = this.openDrawer.bind(this);
-      this.state = { user_profile: [] };
-
+      this.state = { user_profile: [], drawerDisabled: false };
   }
+
   gotoLogin() {
     this.drawer.close();
     this.navigatorObj.push({
@@ -188,48 +168,8 @@ class AMGSandbox extends Component {
     gotoShoppingCart is a function in this class that we expose to our control panel module here
     */
 
-    var controlPanel = <ControlPanel
-        closeDrawer={() => {this.drawer.close()}}
-        gotoProfile={() => {this.gotoProfile()}}
-        gotoMessage={() => {this.gotoMessage()}}
-        gotoHome={() => {this.gotoHome()}}
-        gotoFaq={() => {this.gotoFaq()}}
-        gotoTerms={() => {this.gotoTerms()}}
-        gotoFoodBank={() => {this.gotoFoodBank()}}
-        handleLogout={() => {this.handleLogout()}}
-        gotoShop={() => {this.gotoShop()}}
-        gotoDirectory={() => {this.gotoDirectory()}}
-        gotoDonate={() => {this.gotoDonate()}}
-        gotoShare={() => {this.gotoShare()}}
-
-    />
-
-
     return (
-      <Drawer
-        ref={c => this.drawer = c}
-        type={this.settings.drawerType}
-        animation={this.settings.animation}
-        openDrawerOffset={this.settings.openDrawerOffset}
-        closedDrawerOffset={this.settings.closedDrawerOffset}
-        panOpenMask={this.settings.panOpenMask}
-        panCloseMask={this.settings.panCloseMask}
-        relativeDrag={this.settings.relativeDrag}
-        panStartCompensation={this.settings.panStartCompensation}
-        openDrawerThreshold={this.settings.openDrawerThreshold}
-        content={controlPanel}
-        styles={drawerStyles}
-        disabled={this.settings.disabled}
-        tweenHandler={this.tweenHandler}
-        tweenDuration={this.settings.tweenDuration}
-        tweenEasing={this.settings.tweenEasing}
-        acceptDoubleTap={this.settings.acceptDoubleTap}
-        acceptTap={this.settings.acceptTap}
-        acceptPan={this.settings.acceptPan}
-        changeVal={this.settings.changeVal}
-        negotiatePan={false}
-        side={this.settings.rightSide ? 'right' : 'left'}
-      >
+
         <Navigator
           initialRoute={{id: 'SplashPage', name: 'Splash Page'}}
           renderScene={this.renderScene.bind(this)}
@@ -237,12 +177,40 @@ class AMGSandbox extends Component {
             if (route.sceneConfig) {
               return route.sceneConfig;
             }
-            return Navigator.SceneConfigs.FloatFromRight;
+
+            console.log('routeID:',route.id);
+
+            if (route.id == 'LoginPage') {
+                return Navigator.SceneConfigs.HorizontalSwipeJump;
+            } else {
+                return Navigator.SceneConfigs.FloatFromRight;
+            }
+
           }} />
-      </Drawer>
+
     );
   }
   renderScene(route, navigator) {
+
+
+    var controlPanel = <ControlPanel
+      closeDrawer={() => {this.drawer.close()}}
+      gotoProfile={() => {this.gotoProfile()}}
+      gotoMessage={() => {this.gotoMessage()}}
+      gotoHome={() => {this.gotoHome()}}
+      gotoFaq={() => {this.gotoFaq()}}
+      gotoTerms={() => {this.gotoTerms()}}
+      gotoFoodBank={() => {this.gotoFoodBank()}}
+      handleLogout={() => {this.handleLogout()}}
+      gotoShop={() => {this.gotoShop()}}
+      gotoDirectory={() => {this.gotoDirectory()}}
+      gotoDonate={() => {this.gotoDonate()}}
+      gotoShare={() => {this.gotoShare()}}
+
+    />
+
+
+
     //used by methods that control navigation later
     this.navigatorObj = navigator;
     var _this=this;
@@ -257,7 +225,8 @@ class AMGSandbox extends Component {
     }
     if (routeId === 'LoginPage') {
 
-      //this.drawer.disabled = true;
+
+      //this.setState({drawerDisabled:true});
       return (
         <LoginPage
           navigator={navigator}
@@ -272,85 +241,271 @@ class AMGSandbox extends Component {
     */
     if (routeId === 'MainPage') {
       return (
+
+      <Drawer
+        ref={c => this.drawer = c}
+        content={controlPanel}
+        styles={drawerStyles}
+        negotiatePan={false}
+        tweenHandlerOn={true}
+        tweenHandler={this.tweenHandler}
+        tweenDuration={350}
+        tweenEasing={'linear'}
+        panOpenMask={.1}
+        drawerType={'overlay'}
+        openDrawerOffset={100}
+        closedDrawerOffset={0}
+        acceptPan={false}
+        >
         <MainPage
             navigator={navigator}
             data={route.data}
             openDrawer={this.openDrawer}
         />
+      </Drawer>
+
       );
     }
     if (routeId === 'Profile') {
       return (
+      <Drawer
+              ref={c => this.drawer = c}
+              content={controlPanel}
+              styles={drawerStyles}
+              negotiatePan={false}
+              tweenHandlerOn={true}
+              tweenHandler={this.tweenHandler}
+              tweenDuration={350}
+              tweenEasing={'linear'}
+              panOpenMask={.1}
+              drawerType={'overlay'}
+              openDrawerOffset={100}
+              closedDrawerOffset={0}
+              acceptPan={false}
+              >
         <Profile
           navigator={navigator}
           openDrawer={this.openDrawer}
         />
+      </Drawer>
+      );
+    }
+    if (routeId === 'FacebookShare') {
+      return (
+      <Drawer
+              ref={c => this.drawer = c}
+              content={controlPanel}
+              styles={drawerStyles}
+              negotiatePan={false}
+              tweenHandlerOn={true}
+              tweenHandler={this.tweenHandler}
+              tweenDuration={350}
+              tweenEasing={'linear'}
+              panOpenMask={.1}
+              drawerType={'overlay'}
+              openDrawerOffset={100}
+              closedDrawerOffset={0}
+              acceptPan={false}
+              >
+        <FacebookShare
+          navigator={navigator}
+          openDrawer={this.openDrawer}
+        />
+      </Drawer>
       );
     }
     if (routeId === 'Messages') {
       return (
+      <Drawer
+              ref={c => this.drawer = c}
+              content={controlPanel}
+              styles={drawerStyles}
+              negotiatePan={false}
+              tweenHandlerOn={true}
+              tweenHandler={this.tweenHandler}
+              tweenDuration={350}
+              tweenEasing={'linear'}
+              panOpenMask={.1}
+              drawerType={'overlay'}
+              openDrawerOffset={100}
+              closedDrawerOffset={0}
+              acceptPan={false}
+              >
         <Messages
           navigator={navigator}
           openDrawer={this.openDrawer}
         />
+      </Drawer>
       );
     }
     if (routeId === 'Shop') {
       return (
+      <Drawer
+              ref={c => this.drawer = c}
+              content={controlPanel}
+              styles={drawerStyles}
+              negotiatePan={false}
+              tweenHandlerOn={true}
+              tweenHandler={this.tweenHandler}
+              tweenDuration={350}
+              tweenEasing={'linear'}
+              panOpenMask={.1}
+              drawerType={'overlay'}
+              openDrawerOffset={100}
+              closedDrawerOffset={0}
+              acceptPan={false}
+              >
         <Shop
           navigator={navigator}
           openDrawer={this.openDrawer}
         />
+      </Drawer>
       );
     }
     if (routeId === 'Cart') {
       return (
+      <Drawer
+              ref={c => this.drawer = c}
+              content={controlPanel}
+              styles={drawerStyles}
+              negotiatePan={false}
+              tweenHandlerOn={true}
+              tweenHandler={this.tweenHandler}
+              tweenDuration={350}
+              tweenEasing={'linear'}
+              panOpenMask={.1}
+              drawerType={'overlay'}
+              openDrawerOffset={100}
+              closedDrawerOffset={0}
+              acceptPan={false}
+              >
         <Cart
           navigator={navigator}
           openDrawer={this.openDrawer}
         />
+      </Drawer>
       );
     }
     if (routeId === 'Share') {
       return (
+      <Drawer
+              ref={c => this.drawer = c}
+              content={controlPanel}
+              styles={drawerStyles}
+              negotiatePan={false}
+              tweenHandlerOn={true}
+              tweenHandler={this.tweenHandler}
+              tweenDuration={350}
+              tweenEasing={'linear'}
+              panOpenMask={.1}
+              drawerType={'overlay'}
+              openDrawerOffset={100}
+              closedDrawerOffset={0}
+              acceptPan={false}
+              >
         <Share
           navigator={navigator}
           openDrawer={this.openDrawer}
         />
+      </Drawer>
       );
     }
     if (routeId === 'Refer') {
       return (
+      <Drawer
+              ref={c => this.drawer = c}
+              content={controlPanel}
+              styles={drawerStyles}
+              negotiatePan={false}
+              tweenHandlerOn={true}
+              tweenHandler={this.tweenHandler}
+              tweenDuration={350}
+              tweenEasing={'linear'}
+              panOpenMask={.1}
+              drawerType={'overlay'}
+              openDrawerOffset={100}
+              closedDrawerOffset={0}
+              acceptPan={false}
+              >
         <ReferAFriend
           navigator={navigator}
           openDrawer={this.openDrawer}
         />
+      </Drawer>
       );
     }
     if (routeId === 'Donate') {
       return (
+      <Drawer
+              ref={c => this.drawer = c}
+              content={controlPanel}
+              styles={drawerStyles}
+              negotiatePan={false}
+              tweenHandlerOn={true}
+              tweenHandler={this.tweenHandler}
+              tweenDuration={350}
+              tweenEasing={'linear'}
+              panOpenMask={.1}
+              drawerType={'overlay'}
+              openDrawerOffset={100}
+              closedDrawerOffset={0}
+              acceptPan={false}
+              >
         <Donate
           navigator={navigator}
           openDrawer={this.openDrawer}
         />
+      </Drawer>
       );
     }
     if (routeId === 'Payment') {
         return (
+        <Drawer
+                ref={c => this.drawer = c}
+                content={controlPanel}
+                styles={drawerStyles}
+                negotiatePan={false}
+                tweenHandlerOn={true}
+                tweenHandler={this.tweenHandler}
+                tweenDuration={350}
+                tweenEasing={'linear'}
+                panOpenMask={.1}
+                drawerType={'overlay'}
+                openDrawerOffset={100}
+                closedDrawerOffset={0}
+                acceptPan={false}
+                >
           <Payment
             navigator={navigator}
             openDrawer={this.openDrawer}
             details={route.details}
           />
+        </Drawer>
         );
     }
     if (routeId === 'Checkout') {
         return (
+        <Drawer
+                ref={c => this.drawer = c}
+                content={controlPanel}
+                styles={drawerStyles}
+                negotiatePan={false}
+                tweenHandlerOn={true}
+                tweenHandler={this.tweenHandler}
+                tweenDuration={350}
+                tweenEasing={'linear'}
+                panOpenMask={.1}
+                drawerType={'overlay'}
+                openDrawerOffset={100}
+                closedDrawerOffset={0}
+                acceptPan={false}
+                >
           <Checkout
             navigator={navigator}
             openDrawer={this.openDrawer}
             details={route.details}
           />
+        </Drawer>
         );
     }
     if (routeId === 'Register') {
@@ -363,11 +518,27 @@ class AMGSandbox extends Component {
     }
     if (routeId === 'ThankYou') {
       return (
+      <Drawer
+              ref={c => this.drawer = c}
+              content={controlPanel}
+              styles={drawerStyles}
+              negotiatePan={false}
+              tweenHandlerOn={true}
+              tweenHandler={this.tweenHandler}
+              tweenDuration={350}
+              tweenEasing={'linear'}
+              panOpenMask={.1}
+              drawerType={'overlay'}
+              openDrawerOffset={100}
+              closedDrawerOffset={0}
+              acceptPan={false}
+              >
         <ThankYou
           navigator={navigator}
           openDrawer={this.openDrawer}
           points={route.points}
         />
+      </Drawer>
       );
     }
     /*
@@ -375,32 +546,80 @@ class AMGSandbox extends Component {
     */
     if (routeId === 'Terms') {
       return (
+      <Drawer
+              ref={c => this.drawer = c}
+              content={controlPanel}
+              styles={drawerStyles}
+              negotiatePan={false}
+              tweenHandlerOn={true}
+              tweenHandler={this.tweenHandler}
+              tweenDuration={350}
+              tweenEasing={'linear'}
+              panOpenMask={.1}
+              drawerType={'overlay'}
+              openDrawerOffset={100}
+              closedDrawerOffset={0}
+              acceptPan={false}
+              >
         <InfoPage
           navigator={navigator}
           openDrawer={this.openDrawer}
           pageName="Terms And Conditions"
           id={routeId}
         />
+      </Drawer>
       );
     }
     if (routeId === 'Faq') {
       return (
+      <Drawer
+              ref={c => this.drawer = c}
+              content={controlPanel}
+              styles={drawerStyles}
+              negotiatePan={false}
+              tweenHandlerOn={true}
+              tweenHandler={this.tweenHandler}
+              tweenDuration={350}
+              tweenEasing={'linear'}
+              panOpenMask={.1}
+              drawerType={'overlay'}
+              openDrawerOffset={100}
+              closedDrawerOffset={0}
+              acceptPan={false}
+              >
         <InfoPage
           navigator={navigator}
           openDrawer={this.openDrawer}
           pageName="Frequenty asked questions"
           id={routeId}
         />
+      </Drawer>
       );
     }
     if (routeId === 'FoodBank') {
       return (
+      <Drawer
+              ref={c => this.drawer = c}
+              content={controlPanel}
+              styles={drawerStyles}
+              negotiatePan={false}
+              tweenHandlerOn={true}
+              tweenHandler={this.tweenHandler}
+              tweenDuration={350}
+              tweenEasing={'linear'}
+              panOpenMask={.1}
+              drawerType={'overlay'}
+              openDrawerOffset={100}
+              closedDrawerOffset={0}
+              acceptPan={false}
+              >
         <InfoPage
           navigator={navigator}
           openDrawer={this.openDrawer}
           pageName="My Food Bank"
           id={routeId}
         />
+      </Drawer>
       );
     }
     if (routeId === 'NoNavigatorPage') {
@@ -411,22 +630,54 @@ class AMGSandbox extends Component {
     }
     if (routeId === 'BusinessDirectory') {
       return (
+      <Drawer
+              ref={c => this.drawer = c}
+              content={controlPanel}
+              styles={drawerStyles}
+              negotiatePan={false}
+              tweenHandlerOn={true}
+              tweenHandler={this.tweenHandler}
+              tweenDuration={350}
+              tweenEasing={'linear'}
+              panOpenMask={.1}
+              drawerType={'overlay'}
+              openDrawerOffset={100}
+              closedDrawerOffset={0}
+              acceptPan={false}
+              >
         <BusinessDirectory
           navigator={navigator}
           openDrawer={this.openDrawer}
           pageName="Business Directory"
           id={routeId}
         />
+      </Drawer>
       );
     }
     if (routeId === 'BusinessPage') {
       return (
+      <Drawer
+              ref={c => this.drawer = c}
+              content={controlPanel}
+              styles={drawerStyles}
+              negotiatePan={false}
+              tweenHandlerOn={true}
+              tweenHandler={this.tweenHandler}
+              tweenDuration={350}
+              tweenEasing={'linear'}
+              panOpenMask={.1}
+              drawerType={'overlay'}
+              openDrawerOffset={100}
+              closedDrawerOffset={0}
+              acceptPan={false}
+      >
         <BusinessPage
           navigator={navigator}
           openDrawer={this.openDrawer}
           pageName="Business Page"
           business_info={route.business_info}
         />
+      </Drawer>
       );
     }
     return this.noRoute(navigator); /* <-- if the route isn't found, it defaults to this method. */

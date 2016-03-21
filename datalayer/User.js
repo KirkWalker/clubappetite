@@ -25,7 +25,7 @@ var {
 var DB = require('./DB.js');
 
 var SERVER_URL = 'http://restapi.clubappetite.com/api.php';
-var DEBUG = false;
+var DEBUG = true;
 
 module.exports = {
 
@@ -127,14 +127,9 @@ module.exports = {
     },
     //eraseUsers(){
 
-    async eraseUsers(){
-        var value = await AsyncStorage.removeItem('db_store');
-        console.log('Asyc:',value);
-
-        var value = await AsyncStorage.getItem('db_store');
-        console.log('Asyc:',value);
-
-        /*
+    eraseUsers(){
+        var value = AsyncStorage.removeItem('db_store');
+      /*
         This does not remove the data from the server.
         Login will sync the server with new data if needed
         */
@@ -147,6 +142,9 @@ module.exports = {
             }
 
         });
+
+
+
 
 
     },
@@ -289,10 +287,11 @@ module.exports = {
                     })
                     .catch(function(error) {
                         console.log('updateToken request failed', error);
+                        _this.setState({user_profile:data});
                     })
                     .done();
 
-                    _this.setState({user_profile:data});
+
                 }
 
             })

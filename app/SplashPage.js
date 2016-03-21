@@ -23,7 +23,6 @@ class SplashPage extends Component {
   constructor(props) {
       super(props);
       this.state = {user_profile: [], amount: 0, schedule: ''};
-
   }
 
   componentDidMount() {
@@ -31,14 +30,6 @@ class SplashPage extends Component {
     InteractionManager.runAfterInteractions(() => {
       this.nologin = true;
       Users.getProfile(this);
-
-      var navigator = this.props.navigator;
-      setTimeout(() => {
-        navigator.replace({
-          id: 'MainPage',
-        });
-      }, 3000);
-
     });
   }
 
@@ -46,8 +37,22 @@ class SplashPage extends Component {
       this.mounted = false;
   }
 
-
   render() {
+
+
+    var pageName = 'MainPage';
+    if(this.state.user_profile.userid === undefined){
+        pageName = 'LoginPage';
+    }
+
+    console.log('this.state.user_profile=',this.state.user_profile);
+    var navigator = this.props.navigator;
+    setTimeout(() => {
+      navigator.replace({
+        id: pageName,
+      });
+    }, 1000);
+
 
     var text1 = "YOU'VE EARNED";
     var hasPoints = false;
@@ -56,9 +61,6 @@ class SplashPage extends Component {
       hasPoints = true;
       points = this.state.user_profile.user_points;
     }
-
-
-
 
     return (
       <View>

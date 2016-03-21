@@ -108,6 +108,12 @@ class Share extends Component {
     });
   }
 
+  gotoFacebook() {
+    this.props.navigator.push({
+      id: 'FacebookShare',
+      name: 'Facebook Share Page',
+    });
+  }
 
 }
 
