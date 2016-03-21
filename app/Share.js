@@ -67,15 +67,16 @@ class Share extends Component {
                 <Image source={require('../img/share-linkedin.png')} style={shareStyles.icons}/>
                 <Image source={require('../img/share-twitter.png')} style={shareStyles.icons}/>
               </View>
-
-              <View style={shareStyles.optionsContainer}>
-                <Image source={require('../img/3-hex.png')} style={shareStyles.hexes}/>
-                <View style={shareStyles.textContainer}>
-                  <Text style={shareStyles.title}>Tell People</Text>
-                  <Text style={shareStyles.description}>100 points for each share</Text>
+              <TouchableOpacity onPress={this.gotoRefer.bind(this)} >
+                <View style={shareStyles.optionsContainer}>
+                  <Image source={require('../img/3-hex.png')} style={shareStyles.hexes}/>
+                  <View style={shareStyles.textContainer}>
+                    <Text style={shareStyles.title}>Tell People</Text>
+                    <Text style={shareStyles.description}>100 points for each share</Text>
+                  </View>
+                  <Image source={require('../img/arrow.png')} style={shareStyles.arrow}/>
                 </View>
-                <Image source={require('../img/arrow.png')} style={shareStyles.arrow}/>
-              </View>
+              </TouchableOpacity>
               <TouchableOpacity onPress={this.gotoRefer.bind(this)} >
                 <View style={shareStyles.optionsContainer}>
                   <Image source={require('../img/3-hex.png')} style={shareStyles.hexes}/>
@@ -88,7 +89,11 @@ class Share extends Component {
               </TouchableOpacity>
 
               <View style={shareStyles.banner}>
-                <Text>Ad here</Text>
+                <Image
+                      source={{uri: 'https://upload.wikimedia.org/wikipedia/en/thumb/e/e2/Loblaws.svg/1280px-Loblaws.svg.png'}}
+                      style={[shareStyles.bannerad]}
+                      resizeMode="cover"
+                 />
               </View>
 
             </View>
@@ -177,11 +182,23 @@ const shareStyles = StyleSheet.create({
     resizeMode: 'contain'
   },
   banner: {
-    flex: 0.5,
+    marginTop:55,
     alignSelf: "stretch",
-    borderColor: "#fff",
-    borderWidth: 1,
+    backgroundColor: "#fff",
+    elevation:2,
+    shadowColor: '#999999',
+    shadowOpacity: .8,
+    shadowRadius: 2,
+    shadowOffset: {
+        height: 1,
+        width: 1
+    },
   },
+      bannerad:{
+         width:width,
+         height:height*.15,
+         alignItems: 'stretch',
+      },
 });
 
 

@@ -203,7 +203,7 @@ var checkoutStyle = StyleSheet.create({
     flex: 2,
     backgroundColor: '#4A8A1D',
     justifyContent: 'center',
-        alignItems: 'center',
+    alignItems: 'center',
   },
   module2: {
     flex: 4,

@@ -29,6 +29,52 @@ var DEBUG = false;
 
 module.exports = {
 
+    getReferalCode(_this){
+
+        DEBUG = false;
+
+        var _user_profile = _this.state.user_profile;
+        var token = _user_profile.token;
+        var name = _user_profile.name;
+
+        if(DEBUG) { console.log('token:', token); }
+
+        //http://restapi.clubappetite.com/api.php?controller=api&action=getreferralcode&token=
+        fetch(SERVER_URL + '?controller=api&action=getreferralcode', {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              token: token,
+            })
+        })
+        .then((response) => response.json())
+        .then((responseData) => {
+            if(responseData.result == 'error'){
+                console.log('User Class getreferralcode ERROR:',responseData);
+            } else {
+
+                if(DEBUG) { console.log('getreferralcode: responseData=', responseData); }
+                DB.users.update({name: name}, { refer_code: responseData.details.refer_code }, function(updated_table){
+                    if(DEBUG) { console.log('done updating code:', updated_table.users); }
+
+                    _user_profile.refer_code = responseData.details.refer_code;
+                    _this.setState({user_profile: _user_profile});
+
+                })
+
+            }
+        })
+        .catch(function(error) {
+            console.log('getreferralcode request failed', error);
+        })
+        .done();
+
+
+    },
+
     addPoints(_user_profile,_amount,_first_name,_last_name){
 
         //DEBUG = true;
@@ -71,25 +117,14 @@ module.exports = {
                     })
 
                 }
-
-
-
-
             })
             .catch(function(error) {
                 console.log('updateToken request failed', error);
             })
             .done();
 
-
-
-
-
-
         }
     },
-
-
     //eraseUsers(){
 
     async eraseUsers(){

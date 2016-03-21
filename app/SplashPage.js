@@ -50,8 +50,8 @@ class SplashPage extends Component {
   render() {
 
     var text1 = "YOU'VE EARNED";
-    var hasPoints = true;
-    var points = 18480;
+    var hasPoints = false;
+    var points = 0;
     if(this.state.user_profile.user_points != undefined){
       hasPoints = true;
       points = this.state.user_profile.user_points;
