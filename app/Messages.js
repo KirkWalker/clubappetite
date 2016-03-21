@@ -51,10 +51,11 @@ class Messages extends Component {
   }
 
   gotoMessage(message) {
-    if(DEBUG) {console.log("Moving to message");}
+    if(DEBUG) {console.log("Pushing message id " + message.id + " to MessageDetail");}
     this.props.navigator.push({
       id: 'MessageDetail',
       name: 'Message Detail',
+      message_info: message,
     });
   }
 
@@ -86,8 +87,8 @@ class Messages extends Component {
           source={require('../img/email-icon-sm.png')}
         />
         <View style={MessageStyles.listInnerContainer}>
-          <Text numberOfLines={1} style={MessageStyles.messageTitle}>Message Title Here</Text>
-          <Text numberOfLines={2} style={MessageStyles.messageSubject}>Subject line describing contents of message...</Text>
+          <Text numberOfLines={1} style={MessageStyles.messageTitle}>{message.message_title}</Text>
+          <Text numberOfLines={2} style={MessageStyles.messageSubject}>{message.message_content}</Text>
         </View>
         <Image
           resizeMode="contain" 
