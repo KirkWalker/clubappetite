@@ -21,7 +21,7 @@ if (DEBUG) {console.log("BusinessDirectory DEBUG flag set\n---------------------
 var styles = require('../styles');
 
 var Directory = require('../datalayer/Directory.js');
-var Users = require('../datalayer/User');
+
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
 
 /* BusinessDirectory Component */
@@ -35,14 +35,13 @@ class BusinessDirectory extends Component {
     		rowHasChanged: (r1, r2) => r1 !== r2,
     	}),
     	loaded: false,
-    	user_profile: [],
+    	user_profile: this.props.user_profile,
     };
   }
 
 componentDidMount() {
   this.mounted = true;
   InteractionManager.runAfterInteractions(() => {
-    Users.getProfile(this);
       Directory.getDirectoryData(this);
   });
  }
@@ -109,7 +108,6 @@ componentDidMount() {
 
   render() {
     var data = [];
-    data.push(Users.getImageUrl(this));
     data.push(this.props.openDrawer);
 
     return (

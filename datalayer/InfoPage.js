@@ -9,7 +9,7 @@ module.exports = {
 
     getPageData(_this, _page_name) {
 
-        if (_this.mounted === true){ //very important, keep this from firing multiple times.
+        //if (_this.mounted === true){ //very important, keep this from firing multiple times.
 
             DB.infopage.get({name: _page_name}, function(result){
 
@@ -34,6 +34,7 @@ module.exports = {
                 Updated with live pull from server
                 http://restapi.clubappetite.com/api.php?controller=api&action=infopage&name=faq
                 */
+                URL += '&token=' + token + '&last_mod=' + current_mod;
 
                 //if(debug) { console.log("Data in state(_this.state):",_this.state);}
                 if(debug) { console.log("API URL:",URL);}
@@ -46,15 +47,15 @@ module.exports = {
 
 
                 fetch(URL, {
-                    method: 'POST',
+                    method: 'GET',
                     headers: {
                       'Accept': 'application/json',
                       'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({
-                       token: token,
-                       last_mod: current_mod
-                    })
+                    //body: JSON.stringify({
+                       //token: token,
+                       //last_mod: current_mod
+                   // })
                 })
                 .then((response) => response.json())
                 .then((responseData) => {
@@ -94,6 +95,8 @@ module.exports = {
                          _this.setState({htmlText: initText.text, pageName:initText.page_title, logo:initText.logo});
                     }
 
+
+
                 })
                 .catch(function(error) {
                     console.log(_page_name+' unknown failure(update):', error);
@@ -102,7 +105,7 @@ module.exports = {
 
 
             })
-        }
+        //}
 
     },
 

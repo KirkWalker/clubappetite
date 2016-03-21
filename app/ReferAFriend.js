@@ -15,7 +15,6 @@ var {
 
 var styles = require('../styles');
 
-var Users = require('../datalayer/User');
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
 
 var width = Dimensions.get('window').width;
@@ -26,26 +25,14 @@ class ReferAFriend extends Component {
 
   constructor(props) {
       super(props);
-      this.state = {user_profile: []};
+      this.state = {user_profile: this.props.user_profile};
 
-  }
-
-  componentDidMount() {
-    this.mounted = true;
-    InteractionManager.runAfterInteractions(() => {
-      Users.getProfile(this);
-    });
-  }
-
-  componentWillUnmount() {
-      this.mounted = false;
   }
 
 
   render() {
 
     var data = [];
-    data.push(Users.getImageUrl(this));
     data.push(this.props.openDrawer);
 
     return (

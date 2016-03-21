@@ -31,18 +31,18 @@ class Cart extends Component {
 
   constructor(props) {
       super(props);
-      this.state = {user_profile: [], ProductArray: [], cartTotal: 0};
+      this.state = {user_profile: this.props.user_profile, ProductArray: [], cartTotal: 0};
   }
 
   componentDidMount() {
       this.mounted = true;
-      Users.getProfile(this);
       MyProducts.getProductData(this);
   }
 
   componentWillUnmount() {
     this.mounted = false;
   }
+
   render() {
 
     if(this.state.ProductArray.length > 0 && this.mounted){
@@ -50,7 +50,6 @@ class Cart extends Component {
     }
 
     var data = [];
-    data.push(Users.getImageUrl(this));
     data.push(this.props.openDrawer);
 
     return (

@@ -27,7 +27,6 @@ class Shop extends Component {
 
   componentDidMount() {
       this.mounted = true;
-      Users.getProfile(this);
       MyDirectory.getDirectoryData(this);
   }
 
@@ -41,7 +40,6 @@ class Shop extends Component {
     }
 
     var data = [];
-    data.push(Users.getImageUrl(this));
     data.push(this.props.openDrawer);
 
     return (

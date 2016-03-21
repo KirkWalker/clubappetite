@@ -28,25 +28,12 @@ class Donate extends Component {
 
   constructor(props) {
       super(props);
-      this.state = {user_profile: [], amount: 0, schedule: ''};
-
-  }
-
-  componentDidMount() {
-    this.mounted = true;
-    InteractionManager.runAfterInteractions(() => {
-      Users.getProfile(this);
-    });
-  }
-
-  componentWillUnmount() {
-      this.mounted = false;
+      this.state = {user_profile: this.props.user_profile, amount: 0, schedule: ''};
   }
 
   render() {
 
     var data = [];
-    data.push(Users.getImageUrl(this));
     data.push(this.props.openDrawer);
 
     return (

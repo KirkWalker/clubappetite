@@ -60,6 +60,28 @@ class AMGSandbox extends Component {
       this.state = { user_profile: [], drawerDisabled: false };
   }
 
+  componentDidMount() {
+
+      /*
+      This method sets the state variables for the user profile
+      It will add a new user on first login or retrieve current info
+      If not logged in it will redirect to login page
+
+      successful result is an object: this.state.user_profile
+      */
+
+      this.mounted = true;
+      Users.getProfile(this);
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
+
+
+
+
   gotoLogin() {
     this.drawer.close();
     this.navigatorObj.push({
@@ -260,6 +282,7 @@ class AMGSandbox extends Component {
         <MainPage
             navigator={navigator}
             data={route.data}
+            user_profile={this.state.user_profile}
             openDrawer={this.openDrawer}
         />
       </Drawer>
@@ -286,6 +309,7 @@ class AMGSandbox extends Component {
         <Profile
           navigator={navigator}
           openDrawer={this.openDrawer}
+          user_profile={this.state.user_profile}
         />
       </Drawer>
       );
@@ -310,6 +334,7 @@ class AMGSandbox extends Component {
         <FacebookShare
           navigator={navigator}
           openDrawer={this.openDrawer}
+          user_profile={this.state.user_profile}
         />
       </Drawer>
       );
@@ -334,6 +359,7 @@ class AMGSandbox extends Component {
         <Messages
           navigator={navigator}
           openDrawer={this.openDrawer}
+          user_profile={this.state.user_profile}
         />
       </Drawer>
       );
@@ -358,6 +384,7 @@ class AMGSandbox extends Component {
         <Shop
           navigator={navigator}
           openDrawer={this.openDrawer}
+          user_profile={this.state.user_profile}
         />
       </Drawer>
       );
@@ -382,6 +409,7 @@ class AMGSandbox extends Component {
         <Cart
           navigator={navigator}
           openDrawer={this.openDrawer}
+          user_profile={this.state.user_profile}
         />
       </Drawer>
       );
@@ -406,6 +434,7 @@ class AMGSandbox extends Component {
         <Share
           navigator={navigator}
           openDrawer={this.openDrawer}
+          user_profile={this.state.user_profile}
         />
       </Drawer>
       );
@@ -430,6 +459,7 @@ class AMGSandbox extends Component {
         <ReferAFriend
           navigator={navigator}
           openDrawer={this.openDrawer}
+          user_profile={this.state.user_profile}
         />
       </Drawer>
       );
@@ -454,6 +484,7 @@ class AMGSandbox extends Component {
         <Donate
           navigator={navigator}
           openDrawer={this.openDrawer}
+          user_profile={this.state.user_profile}
         />
       </Drawer>
       );
@@ -479,6 +510,7 @@ class AMGSandbox extends Component {
             navigator={navigator}
             openDrawer={this.openDrawer}
             details={route.details}
+            user_profile={this.state.user_profile}
           />
         </Drawer>
         );
@@ -504,6 +536,7 @@ class AMGSandbox extends Component {
             navigator={navigator}
             openDrawer={this.openDrawer}
             details={route.details}
+            user_profile={this.state.user_profile}
           />
         </Drawer>
         );
@@ -537,6 +570,7 @@ class AMGSandbox extends Component {
           navigator={navigator}
           openDrawer={this.openDrawer}
           points={route.points}
+          user_profile={this.state.user_profile}
         />
       </Drawer>
       );
@@ -566,6 +600,7 @@ class AMGSandbox extends Component {
           openDrawer={this.openDrawer}
           pageName="Terms And Conditions"
           id={routeId}
+          user_profile={this.state.user_profile}
         />
       </Drawer>
       );
@@ -591,6 +626,7 @@ class AMGSandbox extends Component {
           navigator={navigator}
           openDrawer={this.openDrawer}
           pageName="Frequenty asked questions"
+          user_profile={this.state.user_profile}
           id={routeId}
         />
       </Drawer>
@@ -617,6 +653,7 @@ class AMGSandbox extends Component {
           navigator={navigator}
           openDrawer={this.openDrawer}
           pageName="My Food Bank"
+          user_profile={this.state.user_profile}
           id={routeId}
         />
       </Drawer>
@@ -649,6 +686,7 @@ class AMGSandbox extends Component {
           navigator={navigator}
           openDrawer={this.openDrawer}
           pageName="Business Directory"
+          user_profile={this.state.user_profile}
           id={routeId}
         />
       </Drawer>
@@ -675,6 +713,7 @@ class AMGSandbox extends Component {
           navigator={navigator}
           openDrawer={this.openDrawer}
           pageName="Business Page"
+          user_profile={this.state.user_profile}
           business_info={route.business_info}
         />
       </Drawer>

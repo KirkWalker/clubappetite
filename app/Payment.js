@@ -29,7 +29,7 @@ class Payment extends Component {
   constructor(props) {
       super(props);
       this.state = {
-          user_profile: [],
+          user_profile: this.props.user_profile,
           checked: false,
           inputFN: '',
           inputLN: '',
@@ -45,21 +45,11 @@ class Payment extends Component {
 
   }
 
-  componentDidMount() {
-    this.mounted = true;
-    InteractionManager.runAfterInteractions(() => {
-      Users.getProfile(this);
-    });
-  }
 
-  componentWillUnmount() {
-      this.mounted = false;
-  }
 
   render() {
 
     var data = [];
-    data.push(Users.getImageUrl(this));
     data.push(this.props.openDrawer);
 
     return (

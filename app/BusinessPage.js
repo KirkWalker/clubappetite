@@ -18,7 +18,6 @@ if (DEBUG) {console.log("BusinessPAGE DEBUG flag set\n---------------------");}
 
 var styles = require('../styles');
 
-var Users = require('../datalayer/User');
 var Directory = require('../datalayer/Directory.js');
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
 
@@ -27,13 +26,13 @@ class BusinessPage extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {user_profile: []}
+    this.state = {user_profile: this.props.user_profile}
   }
 
   componentDidMount() {
     if (DEBUG) {console.log("Received business_id "+this.props.business_info.id);}
     this.mounted = true;
-    Users.getProfile(this);
+    ;
     //Directory.getDirectoryData(this);
   }
 
@@ -43,7 +42,6 @@ class BusinessPage extends Component {
 
   render() {
     var data = [];
-    data.push(Users.getImageUrl(this));
     data.push(this.props.openDrawer);
 
     return (

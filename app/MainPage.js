@@ -14,7 +14,7 @@ var {
 } = React;
 
 var styles = require('../styles');
-var Users = require('../datalayer/User');
+
 var Button = require('../modules/ButtonLogin');
 
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
@@ -25,34 +25,18 @@ class MainPage extends Component {
 
   constructor(props) {
         super(props);
-        this.state = {user_profile: []};
+        this.state = {user_profile: this.props.user_profile};
         //result = props.bannerads.getAdData(this);
 
   }
 
-  componentDidMount() {
 
-      /*
-      This method sets the state variables for the user profile
-      It will add a new user on first login or retrieve current info
-      If not logged in it will redirect to login page
 
-      successful result is an object: this.state.user_profile
-      */
-
-      this.mounted = true;
-      Users.getProfile(this);
-  }
-
-  componentWillUnmount() {
-    this.mounted = false;
-  }
-
-    render() {
+  render() {
 
     var data = [];
-    data.push(Users.getImageUrl(this));
     data.push(this.props.openDrawer);
+
     return (
       <Navigator
           renderScene={this.renderScene.bind(this)}
@@ -66,7 +50,6 @@ class MainPage extends Component {
   renderScene(route, navigator) {
 
     var _this = this;
-    var ImageURL = Users.getImageUrl(_this);
     var Username = this.state.user_profile.name;
     var Email = this.state.user_profile.email;
 
@@ -76,10 +59,6 @@ class MainPage extends Component {
         <Text style={styles.mainPanelTitle}>
             Welcome to Club Appetite
           </Text>
-          <Image
-           source={{uri: ImageURL}}
-           style={[styles.base, {borderRadius: 5 }]}
-         />
         <Text>Hello {Username + '\n\n'}</Text>
 
         <View style={styles.module} marginTop={10}>

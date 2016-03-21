@@ -42,13 +42,14 @@ class InfoPage extends Component {
 
   constructor(props) {
       super(props);
-        this.state = {user_profile: [],
+        this.state = {user_profile: this.props.user_profile,
         htmlText: '',
         pageName: '',
         logo: '',
         count: 0,
         dataObj: [],
       };
+
   }
 
   componentDidMount() {
@@ -58,22 +59,18 @@ class InfoPage extends Component {
     /*
     successful result is an object: this.state.user_profile
     */
-    InteractionManager.runAfterInteractions(() => {
-      Users.getProfile(this);
+    //InteractionManager.runAfterInteractions(() => {
+      //Users.getProfile(this);
       InfoPageData.getPageData(_this,this.props.id.toLowerCase());
-    });
+    //});
   }
 
-  componentWillUnmount() {
-      this.mounted = false;
-  }
 
 
 
   render() {
 
     var data = [];
-    data.push(Users.getImageUrl(this));
     data.push(this.props.openDrawer);
 
     return (
@@ -89,7 +86,7 @@ class InfoPage extends Component {
   renderScene(route, navigator) {
 
     //console.log('state');
-    console.log('state:',this.state.logo);
+    console.log('renderScene state:',this.state);
     var src = this.state.logo;
 
     return (

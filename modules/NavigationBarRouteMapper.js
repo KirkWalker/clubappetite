@@ -21,7 +21,7 @@ module.exports = props =>({
 
   LeftButton(route, navigator, index, navState) {
     return (
-      <TouchableOpacity style={styles.navbar_button} onPress={() => props[1]()}>
+      <TouchableOpacity style={styles.navbar_button} onPress={() => props[0]()}>
           <Image style={styles.navbar_menu} source={require('../img/MenuButton.png')} />
       </TouchableOpacity>
     );

@@ -25,7 +25,7 @@ var {
 var DB = require('./DB.js');
 
 var SERVER_URL = 'http://restapi.clubappetite.com/api.php';
-var DEBUG = true;
+var DEBUG = false;
 
 module.exports = {
 

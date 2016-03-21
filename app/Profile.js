@@ -21,32 +21,21 @@ if (PixelRatio.get() <= 2) {
 }
 
 var styles = require('../styles');
-var Users = require('../datalayer/User');
 
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
 
 class Profile extends Component {
 
 
-    constructor(props) {
-        super(props);
-        this.state = {user_profile: []};
-    }
-
-
-  componentDidMount() {
-    this.mounted = true;
-    Users.getProfile(this);
+  constructor(props) {
+      super(props);
+      this.state = {user_profile: this.props.user_profile};
   }
 
-  componentWillUnmount() {
-    this.mounted = false;
-  }
 
   render() {
 
     var data = [];
-    data.push(Users.getImageUrl(this));
     data.push(this.props.openDrawer);
 
     return (

@@ -20,13 +20,12 @@ class Messages extends Component {
 
   constructor(props) {
       super(props);
-      this.state = {user_profile: [], MessageArray: []};
+      this.state = {user_profile: this.props.user_profile, MessageArray: []};
       this.mounted = false;
   }
 
   componentDidMount() {
       this.mounted = true;
-      Users.getProfile(this);
       MyMessages.getMessageData(this);
   }
 
