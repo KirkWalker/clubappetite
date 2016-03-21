@@ -66,6 +66,7 @@ class BusinessPage extends Component {
             <Image
               source={{uri: this.props.business_info.sponsor_img2}}
               style={PageStyles.logo}
+              resizeMode="contain"
             />
           </View>
 
@@ -78,15 +79,15 @@ class BusinessPage extends Component {
 
           <View style={PageStyles.contactContainer}>
             <View style={PageStyles.contactRow}>
-              <Image style={PageStyles.icon} source={require('../img/email-icon-sm.png')}/>
+              <Image style={PageStyles.icon} resizeMode="contain" source={require('../img/email-icon-sm.png')}/>
               <Text style={PageStyles.grayText}>{this.props.business_info.sponsor_email}</Text>
             </View>
             <View style={PageStyles.contactRow}>
-              <Image style={PageStyles.icon} source={require('../img/phone-icon-sm.png')}/>
+              <Image style={PageStyles.icon} resizeMode="contain" source={require('../img/phone-icon-sm.png')}/>
               <Text style={PageStyles.grayText}>{this.props.business_info.sponsor_tel}</Text>
             </View>
             <View style={PageStyles.contactRow}>
-              <Image style={PageStyles.icon} source={require('../img/website-icon-sm.png')}/>
+              <Image style={PageStyles.icon} resizeMode="contain" source={require('../img/website-icon-sm.png')}/>
               <Text style={PageStyles.grayText}>{this.props.business_info.sponsor_url}</Text>
             </View>
           </View>
@@ -117,7 +118,6 @@ const PageStyles = StyleSheet.create({
     width: WIDTH*0.60,
     height: HEIGHT *0.15,
     alignItems: 'stretch',
-    resizeMode: 'contain',
   },
 
   addressContainer: {
@@ -167,7 +167,6 @@ const PageStyles = StyleSheet.create({
   icon: {
     width: WIDTH*0.15,
     height: WIDTH*0.15,
-    resizeMode: 'contain',
     marginRight: 25,
   },
   greenText: {
