@@ -353,6 +353,7 @@ module.exports = {
         var password = _this.state.inputPass;
         var email = _this.state.inputEmail;
         var loc = _this.state.location;
+        var referralCode = _this.state.referralCode;
         var sublocality = _this.state.sublocalitiesIds[_this.state.locationIndex];
         var API_REQUEST = 'HandleRegister:';
         var error_message = '';
@@ -364,14 +365,6 @@ module.exports = {
         } else if(loc == 'Please choose a location:' || loc == '') {
            error_message = 'Please choose a location';
         }
-
-
-
-
-
-
-
-
 
         if(error_message !=''){
             if(Platform.OS === 'ios'){
@@ -401,6 +394,7 @@ module.exports = {
                   password: password,
                   email: email,
                   sublocality: sublocality,
+                  referralCode: referralCode,
                 })
             })
             .then((response) => response.json())
