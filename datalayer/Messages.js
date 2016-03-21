@@ -10,9 +10,10 @@ var MessagesStore = {};
 
 MessagesStore.getMessageData = function (_this) {
 
-        var self = this;
+    var self = this;
+    var current_mod = '1900-01-01 12:00:00';
 
-        var current_mod = '1900-01-01 12:00:00';
+    if (_this.mounted === true){ //very important, keep this from firing multiple times.
 
         /*
         Check to see if the datalayer has latest bersion of sponsors
@@ -50,6 +51,8 @@ MessagesStore.getMessageData = function (_this) {
 
         });
 
+    }
+
 };
 
 MessagesStore.fetchData = function (_this, token, current_mod, data) {
@@ -58,7 +61,6 @@ MessagesStore.fetchData = function (_this, token, current_mod, data) {
     if(DEBUG) { console.log(_page_name+' fetchData:', URL); }
 
     if (_this.mounted === true){ //very important, keep this from firing multiple times.
-
         fetch(URL, {
             method: 'POST',
             headers: {
@@ -86,7 +88,10 @@ MessagesStore.fetchData = function (_this, token, current_mod, data) {
                                console.log(result);
                                console.log(_page_name+' Setting state:',responseData.details);
                             }
-                           _this.setState({MessageArray: responseData.details});
+                           _this.setState({
+                                dataSource: _this.state.dataSource.cloneWithRows(responseData.details),
+                                loaded: true,
+                            });
                         });
                     } else {
                         DB.messages.update({max_mod: current_mod}, { details: responseData.details, max_mod: responseData.max_mod }, function(updated_table){
@@ -95,14 +100,23 @@ MessagesStore.fetchData = function (_this, token, current_mod, data) {
                                console.log(updated_table.messages);
                                console.log(_page_name+' Setting state:',responseData.details);
                             }
-                            _this.setState({MessageArray: responseData.details});
-                        });
 
+                            _this.setState({
+                                dataSource: _this.state.dataSource.cloneWithRows(responseData.details),
+                                loaded: true,
+                            });
+                        });
                     }
 
                 } else {
                     if(DEBUG) { console.log(_page_name+' data is up to date2 ',data[0].details); }
-                    _this.setState({MessageArray: data[0].details});
+                    
+                    if(_this.state.dataSource != undefined){
+                        _this.setState({
+                            dataSource: _this.state.dataSource.cloneWithRows(data[0].details),
+                            loaded: true,
+                        });
+                    }
                 }
 
             } else {

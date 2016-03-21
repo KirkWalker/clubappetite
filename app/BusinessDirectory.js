@@ -85,14 +85,16 @@ componentDidMount() {
 				<Image
 					style={BusinessStyles.businessThumbnail}
 					source={{uri: business.sponsor_img}}
+          resizeMode="contain"
 				/>
 				<View style={BusinessStyles.listInnerContainer}>
-					<Text style={BusinessStyles.businessName}>{business.sponsor_name}</Text>
-					<Text style={BusinessStyles.businessDescription}>e-mail: {business.sponsor_email}</Text>
+					<Text numberOfLines={1} style={BusinessStyles.businessName}>{business.sponsor_name}</Text>
+					<Text numberOfLines={2} style={BusinessStyles.businessDescription}>e-mail: {business.sponsor_email}</Text>
 				</View>
         <Image
           style={BusinessStyles.arrow}
           source={require('../img/NavArrow.png')}
+          resizeMode="contain"
         />
   		</TouchableOpacity>
   	);
@@ -201,7 +203,6 @@ const BusinessStyles = StyleSheet.create({
 	businessThumbnail: {
 		width: WIDTH*0.14,
 		height: WIDTH*0.14,
-    resizeMode: 'contain',
 	},
 	businessName: {
 		fontSize: INFO_TEXT,
@@ -218,7 +219,6 @@ const BusinessStyles = StyleSheet.create({
   arrow: {
     height: WIDTH*0.07,
     width: WIDTH*0.07,
-    resizeMode: 'contain',
   },
 });
 
