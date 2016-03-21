@@ -64,27 +64,28 @@ class BusinessPage extends Component {
             <Image
               source={{uri: this.props.business_info.sponsor_img2}}
               style={PageStyles.logo}
+              resizeMode="contain"
             />
           </View>
 
           <View style={PageStyles.addressContainer}>
             <Text style={PageStyles.greenText}>{this.props.business_info.sponsor_address}</Text>
-            <Text style={PageStyles.greenText}>Kelowna, BC    V1Z 5H9</Text>
+            <Text style={PageStyles.greenText}>{this.props.business_info.sponsor_city}    {this.props.business_info.sponsor_postal_code}</Text>
           </View>
 
           <View style={PageStyles.separator}/>
 
           <View style={PageStyles.contactContainer}>
             <View style={PageStyles.contactRow}>
-              <Image style={PageStyles.icon} source={require('../img/email-icon-sm.png')}/>
+              <Image style={PageStyles.icon} resizeMode="contain" source={require('../img/email-icon-sm.png')}/>
               <Text style={PageStyles.grayText}>{this.props.business_info.sponsor_email}</Text>
             </View>
             <View style={PageStyles.contactRow}>
-              <Image style={PageStyles.icon} source={require('../img/phone-icon-sm.png')}/>
+              <Image style={PageStyles.icon} resizeMode="contain" source={require('../img/phone-icon-sm.png')}/>
               <Text style={PageStyles.grayText}>{this.props.business_info.sponsor_tel}</Text>
             </View>
             <View style={PageStyles.contactRow}>
-              <Image style={PageStyles.icon} source={require('../img/website-icon-sm.png')}/>
+              <Image style={PageStyles.icon} resizeMode="contain" source={require('../img/website-icon-sm.png')}/>
               <Text style={PageStyles.grayText}>{this.props.business_info.sponsor_url}</Text>
             </View>
           </View>
@@ -108,14 +109,15 @@ const PageStyles = StyleSheet.create({
   },
   logoContainer: {
     flex: 60,
-    paddingTop: 70,
+    paddingTop: 90,
     alignItems: 'center',
-    // borderColor: 'green', borderWidth: 5,
   },
   logo: {
-    resizeMode: 'contain',
-// borderColor: 'green', borderWidth: 5,
+    width: WIDTH*0.60,
+    height: HEIGHT *0.15,
+    alignItems: 'stretch',
   },
+
   addressContainer: {
     flex: 35,
     alignItems: 'center',
@@ -132,7 +134,6 @@ const PageStyles = StyleSheet.create({
       height: 1,
       width: 1
     }
-    // borderColor: 'red', borderWidth: 5,
   },
   contactContainer: {
     flex: 160,
@@ -149,13 +150,11 @@ const PageStyles = StyleSheet.create({
       height: 1,
       width: 1
     }
-    // borderColor: 'blue', borderWidth:5,
   },
   separator: {
     flex: 10,
     height: 10,
     backgroundColor: '#f2f2f2',
-    // borderColor: 'orange', borderWidth:5,
   },
   contactRow: {
     flexDirection: 'row',
@@ -166,7 +165,6 @@ const PageStyles = StyleSheet.create({
   icon: {
     width: WIDTH*0.15,
     height: WIDTH*0.15,
-    resizeMode: 'contain',
     marginRight: 25,
   },
   greenText: {

@@ -32,6 +32,7 @@ var MainPage = require('./app/MainPage');
 var Messages = require('./app/Messages');
 var Profile = require('./app/Profile');
 var FacebookShare = require('./app/FacebookShare');
+var MessageDetail = require('./app/MessageDetail');
 var BusinessPage = require('./app/BusinessPage');
 var BusinessDirectory = require('./app/BusinessDirectory');
 var NoNavigatorPage = require('./app/NoNavigatorPage');
@@ -715,6 +716,33 @@ class AMGSandbox extends Component {
           pageName="Business Page"
           user_profile={this.state.user_profile}
           business_info={route.business_info}
+        />
+      </Drawer>
+      );
+    }
+    if (routeId === 'MessageDetail') {
+      return (
+      <Drawer
+              ref={c => this.drawer = c}
+              content={controlPanel}
+              styles={drawerStyles}
+              negotiatePan={false}
+              tweenHandlerOn={true}
+              tweenHandler={this.tweenHandler}
+              tweenDuration={350}
+              tweenEasing={'linear'}
+              panOpenMask={.1}
+              drawerType={'overlay'}
+              openDrawerOffset={100}
+              closedDrawerOffset={0}
+              acceptPan={false}
+      >
+        <MessageDetail
+          navigator={navigator}
+          openDrawer={this.openDrawer}
+          pageName="Message Detail"
+          user_profile={this.state.user_profile}
+          message_info={route.message_info}
         />
       </Drawer>
       );
