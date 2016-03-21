@@ -9,6 +9,9 @@ var {
     Modal,
     Dimensions,
     TextInput,
+    Platform,
+    ToastAndroid,
+    AlertIOS,
 } = React;
 
 var width = Dimensions.get('window').width;
@@ -61,7 +64,7 @@ var Component = React.createClass({
 
                     </View>
 
-                      <View style={styles.module} marginTop={10}>
+                      <View style={styles.module} marginTop={40}>
                         <CheckButton
                             buttonText="USE CODE"
                             color="#009999"
@@ -98,11 +101,7 @@ var Component = React.createClass({
         console.log('checking code');
 
         var DEBUG = true;
-        var token =  this.state.user_profile.token;
-
-
-        if(DEBUG) { console.log('token:', token); }
-
+        var SERVER_URL = 'http://restapi.clubappetite.com/api.php';
         //http://restapi.clubappetite.com/api.php?controller=api&action=checkreferralcode&token=
         fetch(SERVER_URL + '?controller=api&action=checkreferralcode', {
             method: 'POST',
@@ -111,13 +110,24 @@ var Component = React.createClass({
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              token: token,
+              code: this.state.inputCode,
             })
         })
         .then((response) => response.json())
         .then((responseData) => {
             if(responseData.result == 'error'){
                 console.log('User Class getreferralcode ERROR:',responseData);
+
+                if(Platform.OS === 'ios'){
+                    AlertIOS.alert(
+                     'Code is not valid',
+                     'Please check it and try again.'
+                    );
+                } else {
+                    ToastAndroid.show('Code is not valid, Please check it and try again.', ToastAndroid.SHORT);
+                }
+
+
             } else {
 
                 if(this.props.onSubmit) this.props.onSubmit(this.state.inputCode);

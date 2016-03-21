@@ -182,6 +182,7 @@ module.exports = StyleSheet.create({
         padding: 10,
     },
     inputContainer: {
+        margin:5,
         padding:0,
         elevation:2,
         shadowColor: '#999999',
@@ -199,7 +200,6 @@ module.exports = StyleSheet.create({
         width: width*.80,
         // borderWidth: 10,
         // borderColor: '#424242',
-        margin: 5,
         backgroundColor: '#f2f2f2',
     },
     checkboxcontainer: {
