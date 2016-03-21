@@ -182,6 +182,7 @@ module.exports = StyleSheet.create({
         padding: 10,
     },
     inputContainer: {
+        padding:0,
         elevation:2,
         shadowColor: '#999999',
         shadowOpacity: .8,
@@ -194,7 +195,6 @@ module.exports = StyleSheet.create({
     input: {
         // alignItems: 'stretch',
         padding: 10,
-        elevation:2,
         height: height*.06,
         width: width*.80,
         // borderWidth: 10,

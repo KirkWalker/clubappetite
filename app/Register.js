@@ -1,4 +1,4 @@
-'use strict';
+
 
 var React = require('react-native');
 var {
@@ -15,7 +15,8 @@ var {
   TouchableOpacity,
   ToastAndroid,
   TextInput,
-  InteractionManager
+  InteractionManager,
+  Modal
 } = React;
 
 var styles = require('../styles');
@@ -23,6 +24,8 @@ var Users = require('../datalayer/User');
 var SubLocalities = require('../datalayer/Sublocalities');
 var SignupButton = require('../modules/ButtonLogin');
 var CancelButton = require('../modules/ButtonLogin');
+var ReferralCode = require('../modules/ReferralCode');
+
 
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
@@ -47,20 +50,32 @@ class Register extends Component {
           sublocalitiesIds: [],
           locationIndex: 0,
           selectedOption: 'not chosen',
+          referralCode: '',
       };
       this.navigatorObj = props.navigator;
   }
 
 
+  componentDidMount() {
+    this.mounted = true;
+    InteractionManager.runAfterInteractions(() => {
+      SubLocalities.getSubLocalities(this);
+    });
+
+    //this.redeemCode = this.redeemCode.bind(this);
+  }
+
+  componentWillUnmount() {
+      this.mounted = false;
+  }
+
+
+
   render() {
 
     var start = ['Please choose a location:'];
-    let end = this.state.sublocalities;
-    let data = start.concat(end);
-
-    console.log('current state location:',this.state.location);
-    console.log('current state locationIndex:',this.state.locationIndex);
-    console.log('current state data:',data);
+    var end = this.state.sublocalities;
+    var data = start.concat(end);
 
     return (
 
@@ -106,6 +121,13 @@ class Register extends Component {
           <View style={styles.module} marginTop={10}>
             <CancelButton onPress={this.gotoLogin.bind(this)} buttonText="CANCEL" marginTop={10} color="#efefef" textcolor="#999999" />
           </View>
+          {(() => {
+
+               return this.redeemCodeModal();
+
+          })()}
+
+
 
         </View>
 
@@ -116,6 +138,70 @@ class Register extends Component {
       </View>
     );
   }
+
+
+  redeemCodeModal() {
+
+        console.log('redeem');
+        var linktext = 'Got a Referral code?';
+        var color = 'blue';
+        if(this.state.referralCode != ''){
+            linktext = 'Refferal Code:' + this.state.referralCode;
+            color = 'red';
+        }
+
+        return(
+
+
+          <View style={styles.module} marginTop={20}>
+            <Text
+                style={{color:color}}
+                onPress={()=>{
+                    this.refs.refer_modal.show();
+                    this.refs.refer_modal.setCode(this.state.referralCode);
+                }}>
+                {linktext}
+            </Text>
+            <ReferralCode
+                ref={'refer_modal'}
+                onSubmit={(option)=>{
+                    this.setState({referralCode: option});
+              }}
+            />
+          </View>
+
+        )
+
+  }
+
+
+
+    iosPicker(data) {
+        return(
+        <View>
+            <Text>Current Location: {this.state.selectedOption}</Text>
+            <Text
+                style={{color:'blue'}}
+                onPress={()=>{
+                    this.refs.picker.setoptions(data);
+                    this.refs.picker.show();
+                }}>
+                Click here to select your location
+            </Text>
+
+            <FMPicker ref={'picker'} options={data}
+                onSubmit={(option)=>{
+                    if(option == 'Please choose a location:') {
+                        this.setState({selectedOption: 'not chosen'})
+                    }else {
+                        this.setState({selectedOption: option, location: option})
+                    }
+                }}
+            />
+        </View>
+    )}
+
+
 
 
 
@@ -140,45 +226,6 @@ class Register extends Component {
 
     );}
 
-
-
-
-    iosPicker(data) {
-
-        return(
-
-
-        <View>
-            <Text>Current Location: {this.state.selectedOption}</Text>
-            <Text
-                style={{color:'blue'}}
-                onPress={()=>{
-                    this.refs.picker.setoptions(data);
-                    this.refs.picker.show();
-                }}>
-                Click here to select your location
-            </Text>
-
-            <FMPicker ref={'picker'} options={data}
-                onSubmit={(option)=>{
-                    if(option == 'Please choose a location:') {
-                        this.setState({selectedOption: 'not chosen'})
-                    }else {
-                        //locationIndex: locationIndex, location: data[locationIndex]
-                        this.setState({selectedOption: option, location: option})
-                    }
-                }}
-            />
-        </View>
-
-    )}
-
-
-    componentDidMount() {
-      InteractionManager.runAfterInteractions(() => {
-        SubLocalities.getSubLocalities(this);
-      });
-    }
 
     gotoLogin() {
       this.props.navigator.push({
@@ -235,6 +282,23 @@ moduleButtons: {
        color: "#1B898A",
        elevation:2,
    },
+       basicContainer:{
+           flex: 1,
+           justifyContent: 'center',
+           alignItems: 'center',
+       },
+       modalContainer:{
+           position:'absolute',
+           bottom:0,
+           right:0,
+           left:0,
+           width:width,
+           height:height,
+           justifyContent: 'center',
+           alignItems: 'center',
+           padding:0,
+           backgroundColor: '#F5FCFF',
+       },
 });
 
 module.exports = Register;
