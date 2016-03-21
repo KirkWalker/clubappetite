@@ -84,7 +84,7 @@ class Messages extends Component {
         <Image
           resizeMode="contain" 
           style={MessageStyles.messageThumbnail}
-          source={require('../img/email-icon-sm.png')}
+          source={require('../img/email-icon.png')}
         />
         <View style={MessageStyles.listInnerContainer}>
           <Text numberOfLines={1} style={MessageStyles.messageTitle}>{message.message_title}</Text>
@@ -157,7 +157,7 @@ const MessageStyles = StyleSheet.create({
   },
   loadingText: {
     fontFamily: 'Gill Sans',
-    color: 'gray',
+    color: 'rgb(163, 163, 163)',
     fontSize: TITLE_TEXT,
   },
   listContainer: {
@@ -189,12 +189,6 @@ const MessageStyles = StyleSheet.create({
     height: WIDTH*0.364,
     alignItems: 'stretch',
   },
-  headerText: {
-    fontFamily: 'Gill Sans',
-    color: 'rgb(027, 135, 136)',
-    fontSize: TITLE_TEXT,
-    fontWeight: '400',
-  },
   separator: {
     backgroundColor: '#f2f2f2',
     height: PADDING*5.5,
@@ -206,14 +200,14 @@ const MessageStyles = StyleSheet.create({
   messageTitle: {
     fontSize: INFO_TEXT,
     fontWeight: '500',
-    color: 'gray',
     fontFamily: 'Gill Sans',
+    color: 'rgb(163, 163, 163)',
   },
   messageSubject: {
     fontSize: INFO_TEXT,
     fontWeight: '300',
-    color: 'gray',
     fontFamily: 'Gill Sans',
+    color: 'rgb(163, 163, 163)',
   },
   arrow: {
     height: WIDTH*0.07,

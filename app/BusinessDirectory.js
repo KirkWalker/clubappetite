@@ -158,7 +158,7 @@ const BusinessStyles = StyleSheet.create({
 	},
   loadingText: {
     fontFamily: 'Gill Sans',
-    color: 'gray',
+    color: 'rgb(163, 163, 163)',
     fontSize: TITLE_TEXT,
   },
 	listContainer: {
@@ -207,13 +207,13 @@ const BusinessStyles = StyleSheet.create({
 	businessName: {
 		fontSize: INFO_TEXT,
 		fontWeight: '500',
-		color: 'gray',
+    color: 'rgb(163, 163, 163)',
 		fontFamily: 'Gill Sans',
 	},
 	businessDescription: {
 		fontSize: INFO_TEXT,
     fontWeight: '300',
-    color: 'gray',
+    color: 'rgb(163, 163, 163)',
 		fontFamily: 'Gill Sans',
   },
   arrow: {

@@ -31,6 +31,7 @@ var Payment = require('./app/Payment');
 var MainPage = require('./app/MainPage');
 var Messages = require('./app/Messages');
 var Profile = require('./app/Profile');
+var MessageDetail = require('./app/MessageDetail');
 var BusinessPage = require('./app/BusinessPage');
 var BusinessDirectory = require('./app/BusinessDirectory');
 var NoNavigatorPage = require('./app/NoNavigatorPage');
@@ -231,7 +232,7 @@ class AMGSandbox extends Component {
         side={this.settings.rightSide ? 'right' : 'left'}
       >
         <Navigator
-          initialRoute={{id: 'SplashPage', name: 'Splash Page'}}
+          initialRoute={{id: 'Messages', name: 'Splash Page'}}
           renderScene={this.renderScene.bind(this)}
           configureScene={(route) => {
             if (route.sceneConfig) {
@@ -426,6 +427,16 @@ class AMGSandbox extends Component {
           openDrawer={this.openDrawer}
           pageName="Business Page"
           business_info={route.business_info}
+        />
+      );
+    }
+    if (routeId === 'MessageDetail') {
+      return (
+        <MessageDetail
+          navigator={navigator}
+          openDrawer={this.openDrawer}
+          pageName="Message Detail"
+          message_info={route.message_info}
         />
       );
     }
