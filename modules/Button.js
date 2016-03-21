@@ -27,13 +27,14 @@
  * color: (OPTIONAL)
  *  The color of the default button. Leaving blank will set the button
  *  to dark green. Accepted values: "gray", "blue", "yellow", "green",
- *  and "default" for dark green.
+ *  "lightGray" and "default" for dark green.
+ *  "lightGray" and "blue" are buttons for the Facebook share page.
  *  No effect if style is set to image.
  *
  * -- EXAMPLE USAGE: --
  * <Button
  *   buttonText="CONTACT US"
- *   color="yellow"
+ *   buttonColor="yellow"
  *   onPress={() => {
  *     this.props.navigator.pop();
  *   }}
@@ -67,8 +68,8 @@ import React, {
 
 /* Button Component */
 class Button extends Component {
-	constructor(props){
-		super(props);
+  constructor(props){
+    super(props);
 
     this.buttonStyle = (this.props.buttonStyle) ? this.props.buttonStyle : "default";
     this.imageHeight = (this.props.height) ? this.props.height : 80;
@@ -76,10 +77,16 @@ class Button extends Component {
     this.color = '';
     this.textColor = '';
     switch(this.props.buttonColor){
-      case "gray": {
+      case "lightGray": {
         this.color = 'rgb(242, 242, 242)';
         this.underlayColor = 'rgba(242, 242, 242, 0.5)';
         this.textColor = "gray";
+        break;
+      }
+      case "gray": {
+        this.color = 'rgb(188, 188, 188)';
+        this.underlayColor = 'rgba(188, 188, 188, 0.5)';
+        this.textColor = "white";
         break;
       }
       case "blue": {
@@ -108,29 +115,19 @@ class Button extends Component {
         break;
       }
     }
-    console.log(this.props.buttonColor);
-    console.log(this.color);
-	}
+  }
 
-	render(){
+  render(){
     if(this.buttonStyle === "default"){
       return(
         <TouchableHighlight
-<<<<<<< HEAD
           underlayColor={this.underlayColor}
-          style={[styles.defaultButton,
+          style={[buttonStyles.defaultButton,
             {backgroundColor: this.color}
           ]}
           onPress={this.props.onPress}
         >
-          <Text style={[styles.buttonText, {color: this.textColor}]}>{this.props.buttonText}</Text>
-=======
-          underlayColor="#004d4d"
-          style={buttonStyles.defaultButton}
-          onPress={this.props.onPress}
-        >
-          <Text style={buttonStyles.buttonText}>{this.props.buttonText}</Text>
->>>>>>> feature-login-style
+          <Text style={[buttonStyles.buttonText, {color: this.textColor}]}>{this.props.buttonText}</Text>
         </TouchableHighlight>
       )
     }
@@ -162,7 +159,7 @@ class Button extends Component {
         </TouchableOpacity>
       )
     }
-	}
+  }
 }
 
 const buttonStyles = StyleSheet.create({
@@ -171,7 +168,6 @@ const buttonStyles = StyleSheet.create({
     overflow: 'hidden',
   },
   buttonText: {
-<<<<<<< HEAD
     fontSize: 18,
     fontWeight: '500',
     paddingTop: 8,
@@ -179,16 +175,6 @@ const buttonStyles = StyleSheet.create({
     paddingRight: 12,
     paddingLeft: 12,
     fontFamily: 'Gill Sans',
-=======
-    fontSize: 15,
-    fontFamily: 'Gill Sans',
-    color: 'white',
-    paddingTop: 5,
-    paddingBottom: 5,
-    alignSelf: 'center',
-    paddingRight: 10,
-    paddingLeft: 10,
->>>>>>> feature-login-style
   },
   buttonImage: {
     resizeMode: 'contain',
