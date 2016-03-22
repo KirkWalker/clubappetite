@@ -45,7 +45,7 @@ class SplashPage extends Component {
         pageName = 'LoginPage';
     }
 
-    console.log('this.state.user_profile=',this.state.user_profile);
+    //console.log('this.state.user_profile=',this.state.user_profile);
     var navigator = this.props.navigator;
     setTimeout(() => {
       navigator.replace({

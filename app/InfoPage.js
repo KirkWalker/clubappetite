@@ -59,8 +59,9 @@ class InfoPage extends Component {
     /*
     successful result is an object: this.state.user_profile
     */
+    Users.getProfile(this);
     InteractionManager.runAfterInteractions(() => {
-      Users.getProfile(this);
+
       InfoPageData.getPageData(_this,this.props.id.toLowerCase());
     });
   }
@@ -89,13 +90,16 @@ class InfoPage extends Component {
   renderScene(route, navigator) {
 
     //console.log('state');
-    console.log('renderScene state:',this.state);
-    var src = this.state.logo;
+    //console.log('renderScene state:',this.state);
+    var src = require('../img/logo.png');
+    if(this.state.logo != ''){
+      src = {uri:this.state.logo}
+    }
 
     return (
       <View style={InfoStyles.container}>
 
-          <Image style={InfoStyles.logo} source={{uri:src}} resizeMode={Image.resizeMode.contain} />
+          <Image style={InfoStyles.logo} source={src} resizeMode={Image.resizeMode.contain} />
 
           <View style={InfoStyles.touchableContainer}>
             <View style={InfoStyles.textContainer}>
