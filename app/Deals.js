@@ -19,7 +19,7 @@ if (PixelRatio.get() <= 2) {
   font = 18;
 }
 
-class Shop extends Component {
+class Deals extends Component {
   render() {
     return (
       <View style={shopStyles.container}>
@@ -225,4 +225,4 @@ const shopStyles = StyleSheet.create({
 
 });
 
-module.exports = Shop2;
+module.exports = Deals;
