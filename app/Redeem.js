@@ -1,18 +1,27 @@
 
 import React, {
-  AppRegistry,
   Component,
   StyleSheet,
   Text,
-  ScrollView,
-  Dimensions,
   Image,
+  Dimensions,
   PixelRatio,
+  TextInput,
+  TouchableOpacity,
+  ScrollView,
+  Navigator,
   View
 } from 'react-native';
 
 var {width, height} = Dimensions.get('window');
 var font = 22;
+
+var Users = require('../datalayer/User');
+var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
+var styles = require('../styles');
+
+
+
 // var Button = require('../modules/Button');
 
 if (PixelRatio.get() <= 2) {
@@ -20,7 +29,53 @@ if (PixelRatio.get() <= 2) {
 }
 
 class Redeem extends Component {
+
+  constructor(props) {
+        super(props);
+        this.state = {user_profile: []};
+        //result = props.bannerads.getAdData(this);
+
+  }
+
+  componentDidMount() {
+
+        /*
+        This method sets the state variables for the user profile
+        It will add a new user on first login or retrieve current info
+        If not logged in it will redirect to login page
+
+        successful result is an object: this.state.user_profile
+        */
+
+        this.mounted = true;
+        Users.getProfile(this);
+  }
+
+  componentWillUnmount() {
+      this.mounted = false;
+  }
+
+
   render() {
+
+      var data = [];
+      data.push(this.props.openDrawer);
+
+      return (
+        <Navigator
+            renderScene={this.renderScene.bind(this)}
+            navigator={this.props.navigator}
+            navigationBar={
+              <Navigator.NavigationBar style={styles.navbar}
+                  routeMapper={NavigationBarRouteMapper(data)} />
+            } />
+      );
+  }
+
+
+
+
+  renderScene(route, navigator) {
     return (
       <View style={redeemStyles.container}>
         <Image source={require('../img/shop-gallery/sample-image-3.png')} style={redeemStyles.header} />

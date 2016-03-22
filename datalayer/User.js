@@ -283,16 +283,15 @@ module.exports = {
 
                         }
 
-
-
-
                     })
                     .catch(function(error) {
-                        console.log('updateToken request failed', error);
+                        //server or network is offline. Use local data store instead.
+                        console.log('User class: Network request failed', error);
+                        _this.setState({user_profile:data});
                     })
                     .done();
 
-                    _this.setState({user_profile:data});
+
                 }
 
             })

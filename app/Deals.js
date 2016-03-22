@@ -9,8 +9,14 @@ import React, {
   TextInput,
   TouchableOpacity,
   ScrollView,
+  Navigator,
   View
 } from 'react-native';
+
+
+var Users = require('../datalayer/User');
+var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
+var styles = require('../styles');
 
 var {width, height} = Dimensions.get('window');
 var font = 22;
@@ -20,7 +26,54 @@ if (PixelRatio.get() <= 2) {
 }
 
 class Deals extends Component {
+
+
+  constructor(props) {
+        super(props);
+        this.state = {user_profile: []};
+        //result = props.bannerads.getAdData(this);
+
+  }
+
+  componentDidMount() {
+
+        /*
+        This method sets the state variables for the user profile
+        It will add a new user on first login or retrieve current info
+        If not logged in it will redirect to login page
+
+        successful result is an object: this.state.user_profile
+        */
+
+        this.mounted = true;
+        Users.getProfile(this);
+  }
+
+  componentWillUnmount() {
+      this.mounted = false;
+  }
+
+
   render() {
+
+      var data = [];
+      data.push(this.props.openDrawer);
+
+      return (
+        <Navigator
+            renderScene={this.renderScene.bind(this)}
+            navigator={this.props.navigator}
+            navigationBar={
+              <Navigator.NavigationBar style={styles.navbar}
+                  routeMapper={NavigationBarRouteMapper(data)} />
+            } />
+      );
+  }
+
+
+
+
+  renderScene(route, navigator) {
     return (
       <View style={shopStyles.container}>
         
@@ -44,12 +97,14 @@ class Deals extends Component {
 
             <View style={shopStyles.imageContainerRow}>
               <View style={shopStyles.dealContainer}>
+              <TouchableOpacity onPress={this.gotoRedeem.bind(this)}>
                 <Image source={require('../img/shop-gallery/sample-image-1.png')} style={shopStyles.dealImage}>
                   <Image source={require('../img/shop-points-container.png')} style={shopStyles.pointsContainer}>
                     <Text style={shopStyles.points}>500</Text>
                   </Image>
                   <Text style={shopStyles.dealTitle}>Deal Title</Text>
                 </Image>
+              </TouchableOpacity>
               </View>
               <View style={shopStyles.dealContainer}>
                 <Image source={require('../img/shop-gallery/sample-image-2.png')} style={shopStyles.dealImage}>
@@ -124,6 +179,16 @@ class Deals extends Component {
       </View>
     );
   }
+
+
+    gotoRedeem() {
+        this.props.navigator.push({
+          id: 'Redeem',
+          name: 'Redeem Page',
+        });
+    }
+
+
 }
 
 const shopStyles = StyleSheet.create({

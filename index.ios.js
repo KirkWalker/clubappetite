@@ -21,6 +21,8 @@ var LoginPage = require('./app/LoginPage');
 var InfoPage = require('./app/InfoPage');
 var Register = require('./app/Register');
 var Shop = require('./app/Shop');
+var Deals = require('./app/Deals');
+var Redeem = require('./app/Redeem');
 var Cart = require('./app/Cart');
 var Share = require('./app/Share');
 var ReferAFriend = require('./app/ReferAFriend');
@@ -314,6 +316,22 @@ class AMGSandbox extends Component {
           openDrawer={this.openDrawer}
         />
       );
+    }
+    if (routeId === 'Deals') {
+       return (
+         <Deals
+           navigator={navigator}
+           openDrawer={this.openDrawer}
+         />
+       );
+    }
+    if (routeId === 'Redeem') {
+       return (
+         <Redeem
+           navigator={navigator}
+           openDrawer={this.openDrawer}
+         />
+       );
     }
     if (routeId === 'Cart') {
       return (

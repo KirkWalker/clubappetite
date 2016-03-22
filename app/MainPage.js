@@ -47,6 +47,7 @@ class MainPage extends Component {
 
   componentWillUnmount() {
       this.mounted = false;
+      this.setState({user_profile: []})
   }
 
   render() {
@@ -82,6 +83,9 @@ class MainPage extends Component {
             <Button onPress={this.gotoCartPage.bind(this)} buttonText="Shopping Cart" marginTop={10} />
         </View>
 
+        <View style={styles.module} marginTop={10}>
+            <Button onPress={this.gotoDealsPage.bind(this)} buttonText="Sponsor Offers" marginTop={10} />
+        </View>
 
 
       </View>
@@ -98,6 +102,12 @@ class MainPage extends Component {
       this.props.navigator.push({
         id: 'Cart',
         name: 'Shopping Cart',
+      });
+  }
+  gotoDealsPage() {
+      this.props.navigator.push({
+        id: 'Deals',
+        name: 'Deals Page',
       });
   }
 
