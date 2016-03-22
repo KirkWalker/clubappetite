@@ -2,7 +2,7 @@ var { View } = require('react-native')
 
 var DB = require('./DB');
 
-var DEBUG = false;
+var DEBUG = true;
 var SERVER_URL = 'http://restapi.clubappetite.com/api.php';
 var _page_name = 'Products';
 var ProductsStore = {};
@@ -11,8 +11,16 @@ var ProductsStore = {};
 ProductsStore.getProductData = function (_this) {
 
         var self = this;
-
+        var token = _this.state.user_profile.token;
         var current_mod = '1900-01-01 12:00:00';
+
+        if(token == undefined){
+            console.log('Product page token error:', token);
+        } else {
+
+            if(DEBUG) { console.log('Product page token:', token); }
+
+        }
 
         /*
         Check to see if the datalayer has latest bersion of sponsors
@@ -21,7 +29,7 @@ ProductsStore.getProductData = function (_this) {
         */
         DB.products.get_all(function(results){
 
-            var token = _this.state.user_profile.token;
+
 
             if(results.totalrows == 0){ // no data in local datalayer
 
