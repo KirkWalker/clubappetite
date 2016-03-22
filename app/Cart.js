@@ -33,12 +33,10 @@ class Cart extends Component {
       super(props);
       this.state = {user_profile: [], ProductArray: [], cartTotal: 0};
   }
-    componentWillMount() {
-        Users.getProfile(this);
-    }
+
   componentDidMount() {
       this.mounted = true;
-
+      Users.getProfile(this);
       MyProducts.getProductData(this);
   }
 

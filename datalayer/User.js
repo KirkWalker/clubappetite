@@ -198,7 +198,7 @@ module.exports = {
         */
 
 
-        //if (_this.mounted === true){ //very important, keep this from firing multiple times.
+        if (_this.mounted === true){ //very important, keep this from firing multiple times.
 
 
             DB.users.get_all(function(results){
@@ -295,7 +295,7 @@ module.exports = {
                 }
 
             })
-        //}
+        }
 
     },
 
