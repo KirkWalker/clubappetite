@@ -23,13 +23,13 @@ class Redeem extends Component {
   render() {
     return (
       <View style={redeemStyles.container}>
-        <Image source={require('./shop-gallery/sample-image-3.png')} style={redeemStyles.header} />
+        <Image source={require('../img/shop-gallery/sample-image-3.png')} style={redeemStyles.header} />
         
         <View style={redeemStyles.contentContainer}>
           <Text style={redeemStyles.title}>Item Title Here</Text>
           <Text style={redeemStyles.description}>One Line Description</Text>
           <Text style={redeemStyles.points}>100 Points</Text>
-          <Image source={require('./redeem-button.png')} style={redeemStyles.button} />
+          <Image source={require('../img/redeem-button.png')} style={redeemStyles.button} />
           <ScrollView>
             <Text style={redeemStyles.description}>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
 Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
