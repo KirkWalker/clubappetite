@@ -182,6 +182,8 @@ module.exports = StyleSheet.create({
         padding: 10,
     },
     inputContainer: {
+
+        backgroundColor: "#eeeeee",
         margin:5,
         padding:0,
         elevation:2,
@@ -192,14 +194,12 @@ module.exports = StyleSheet.create({
             height: 1,
             width: 1
         },
+        
     },
     input: {
-        // alignItems: 'stretch',
         padding: 10,
         height: height*.06,
         width: width*.80,
-        // borderWidth: 10,
-        // borderColor: '#424242',
         backgroundColor: '#f2f2f2',
     },
     checkboxcontainer: {

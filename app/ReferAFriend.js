@@ -153,6 +153,7 @@ const ReferStyles = StyleSheet.create({
         height:height*.7,
     },
     module:{
+        backgroundColor: 'white',
         elevation:2,
         shadowColor: '#999999',
         shadowOpacity: .8,

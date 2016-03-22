@@ -125,14 +125,10 @@ module.exports = {
 
         }
     },
-    //eraseUsers(){
 
-    async eraseUsers(){
-        var value = await AsyncStorage.removeItem('db_store');
-        console.log('Asyc:',value);
 
-        var value = await AsyncStorage.getItem('db_store');
-        console.log('Asyc:',value);
+    eraseUsers(){
+        var value = AsyncStorage.removeItem('db_store');
 
         /*
         This does not remove the data from the server.
@@ -190,6 +186,9 @@ module.exports = {
         return nk[0];
     },
     getProfile(_this){
+
+
+        var self = this;
 
         /*
         Check to see if this user is already logged in once with Facebook
@@ -258,6 +257,11 @@ module.exports = {
 
                         if(responseData.result == 'error'){
                             console.log('User Class ERROR:',responseData);
+
+                            self.eraseUsers();
+                            _this.props.navigator.push({id: 'LoginPage'});
+
+
                         } else {
 
                             if(DEBUG) { console.log('updateToken: responseData=', responseData); }

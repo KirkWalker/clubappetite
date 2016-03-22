@@ -165,6 +165,7 @@ var styles = StyleSheet.create({
        height:height,
    },
    module:{
+       backgroundColor: "#eeeeee",
        elevation:2,
        shadowColor: '#999999',
        shadowOpacity: .8,
