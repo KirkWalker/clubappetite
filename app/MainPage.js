@@ -11,6 +11,7 @@ var {
   Image,
   TouchableHighlight,
   TouchableOpacity,
+  InteractionManager,
 } = React;
 
 var styles = require('../styles');
@@ -42,12 +43,13 @@ class MainPage extends Component {
         */
 
         this.mounted = true;
-        Users.getProfile(this);
+        InteractionManager.runAfterInteractions(() => {
+            Users.getProfile(this);
+        });
   }
 
   componentWillUnmount() {
       this.mounted = false;
-      this.setState({user_profile: []})
   }
 
   render() {

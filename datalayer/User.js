@@ -198,7 +198,7 @@ module.exports = {
         */
 
 
-        //if (_this.mounted === true){ //very important, keep this from firing multiple times.
+        if (_this.mounted === true){ //very important, keep this from firing multiple times.
 
 
             DB.users.get_all(function(results){
@@ -283,10 +283,12 @@ module.exports = {
 
                         }
 
+
+
+
                     })
                     .catch(function(error) {
-                        //server or network is offline. Use local data store instead.
-                        console.log('User class: Network request failed', error);
+                        console.log('updateToken request failed', error);
                         _this.setState({user_profile:data});
                     })
                     .done();
@@ -295,7 +297,7 @@ module.exports = {
                 }
 
             })
-        //}
+        }
 
     },
 

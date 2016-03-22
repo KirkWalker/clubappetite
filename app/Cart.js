@@ -14,6 +14,7 @@ var {
   Platform,
   AlertIOS,
   ToastAndroid,
+  InteractionManager,
 } = React;
 
 var styles = require('../styles');
@@ -33,13 +34,13 @@ class Cart extends Component {
       super(props);
       this.state = {user_profile: [], ProductArray: [], cartTotal: 0};
   }
-    componentWillMount() {
-        Users.getProfile(this);
-    }
+
   componentDidMount() {
       this.mounted = true;
-
-      MyProducts.getProductData(this);
+      Users.getProfile(this);
+      InteractionManager.runAfterInteractions(() => {
+          MyProducts.getProductData(this);
+      });
   }
 
   componentWillUnmount() {

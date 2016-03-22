@@ -40,8 +40,8 @@ class Messages extends Component {
 
   componentDidMount() {
     this.mounted = true;
+    Users.getProfile(this);
     InteractionManager.runAfterInteractions(() => {
-      Users.getProfile(this);
       MyMessages.getMessageData(this);
     });
   }

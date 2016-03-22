@@ -42,8 +42,8 @@ class BusinessDirectory extends Component {
 
 componentDidMount() {
   this.mounted = true;
+  Users.getProfile(this);
   InteractionManager.runAfterInteractions(() => {
-      Users.getProfile(this);
       Directory.getDirectoryData(this);
   });
  }
