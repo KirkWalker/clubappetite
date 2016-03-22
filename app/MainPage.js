@@ -16,6 +16,7 @@ var {
 var styles = require('../styles');
 
 var Button = require('../modules/ButtonLogin');
+var Users = require('../datalayer/User');
 
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
 var {width,height} = Dimensions.get('window');
@@ -25,12 +26,28 @@ class MainPage extends Component {
 
   constructor(props) {
         super(props);
-        this.state = {user_profile: this.props.user_profile};
+        this.state = {user_profile: []};
         //result = props.bannerads.getAdData(this);
 
   }
 
+  componentDidMount() {
 
+        /*
+        This method sets the state variables for the user profile
+        It will add a new user on first login or retrieve current info
+        If not logged in it will redirect to login page
+
+        successful result is an object: this.state.user_profile
+        */
+
+        this.mounted = true;
+        Users.getProfile(this);
+  }
+
+  componentWillUnmount() {
+      this.mounted = false;
+  }
 
   render() {
 

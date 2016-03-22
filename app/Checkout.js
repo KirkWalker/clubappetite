@@ -33,13 +33,16 @@ class Checkout extends Component {
 
   constructor(props) {
       super(props);
-      this.state = {user_profile: this.props.user_profile, ProductArray: [], cartTotal: this.props.details.cartTotal};
+      this.state = {user_profile: [], ProductArray: [], cartTotal: this.props.details.cartTotal};
 
   }
 
   componentDidMount() {
     this.mounted = true;
     InteractionManager.runAfterInteractions(() => {
+
+        Users.getProfile(this);
+
         //strip out any products not being purchased
         var ProductArray =[];
         for(var i=0;i<this.props.details.ProductArray.length;i++){

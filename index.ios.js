@@ -24,15 +24,15 @@ var Shop = require('./app/Shop');
 var Cart = require('./app/Cart');
 var Share = require('./app/Share');
 var ReferAFriend = require('./app/ReferAFriend');
+var FacebookShare = require('./app/FacebookShare');
 var Donate = require('./app/Donate');
 var Checkout = require('./app/Checkout');
 var ThankYou = require('./app/Thankyou');
 var Payment = require('./app/Payment');
 var MainPage = require('./app/MainPage');
 var Messages = require('./app/Messages');
+var MessageDetail  = require('./app/MessageDetail');
 var Profile = require('./app/Profile');
-var FacebookShare = require('./app/FacebookShare');
-var MessageDetail = require('./app/MessageDetail');
 var BusinessPage = require('./app/BusinessPage');
 var BusinessDirectory = require('./app/BusinessDirectory');
 var NoNavigatorPage = require('./app/NoNavigatorPage');
@@ -57,32 +57,31 @@ class AMGSandbox extends Component {
 
   constructor(props) {
       super(props);
+
+      this.settings = {
+          drawerType: 'overlay',
+          openDrawerOffset:100,
+          closedDrawerOffset:0,
+          panOpenMask: .1,
+          panCloseMask: .9,
+          relativeDrag: false,
+          panStartCompensation: true,
+          openDrawerThreshold: .25,
+          tweenHandlerOn: false,
+          tweenDuration: 350,
+          tweenEasing: 'linear',
+          disabled: false,
+          tweenHandlerPreset: null,
+          acceptDoubleTap: true,
+          acceptTap: false,
+          acceptPan: true,
+          rightSide: false,
+      }
+
       this.openDrawer = this.openDrawer.bind(this);
-      this.state = { user_profile: [], drawerDisabled: false };
+      this.state = { user_profile: [] };
+
   }
-
-  componentDidMount() {
-
-      /*
-      This method sets the state variables for the user profile
-      It will add a new user on first login or retrieve current info
-      If not logged in it will redirect to login page
-
-      successful result is an object: this.state.user_profile
-      */
-
-      this.mounted = true;
-      Users.getProfile(this);
-  }
-
-  componentWillUnmount() {
-    this.mounted = false;
-  }
-
-
-
-
-
   gotoLogin() {
     this.drawer.close();
     this.navigatorObj.push({
@@ -191,8 +190,48 @@ class AMGSandbox extends Component {
     gotoShoppingCart is a function in this class that we expose to our control panel module here
     */
 
-    return (
+    var controlPanel = <ControlPanel
+        closeDrawer={() => {this.drawer.close()}}
+        gotoProfile={() => {this.gotoProfile()}}
+        gotoMessage={() => {this.gotoMessage()}}
+        gotoHome={() => {this.gotoHome()}}
+        gotoFaq={() => {this.gotoFaq()}}
+        gotoTerms={() => {this.gotoTerms()}}
+        gotoFoodBank={() => {this.gotoFoodBank()}}
+        handleLogout={() => {this.handleLogout()}}
+        gotoShop={() => {this.gotoShop()}}
+        gotoDirectory={() => {this.gotoDirectory()}}
+        gotoDonate={() => {this.gotoDonate()}}
+        gotoShare={() => {this.gotoShare()}}
 
+    />
+
+
+    return (
+      <Drawer
+        ref={c => this.drawer = c}
+        type={this.settings.drawerType}
+        animation={this.settings.animation}
+        openDrawerOffset={this.settings.openDrawerOffset}
+        closedDrawerOffset={this.settings.closedDrawerOffset}
+        panOpenMask={this.settings.panOpenMask}
+        panCloseMask={this.settings.panCloseMask}
+        relativeDrag={this.settings.relativeDrag}
+        panStartCompensation={this.settings.panStartCompensation}
+        openDrawerThreshold={this.settings.openDrawerThreshold}
+        content={controlPanel}
+        styles={drawerStyles}
+        disabled={this.settings.disabled}
+        tweenHandler={this.tweenHandler}
+        tweenDuration={this.settings.tweenDuration}
+        tweenEasing={this.settings.tweenEasing}
+        acceptDoubleTap={this.settings.acceptDoubleTap}
+        acceptTap={this.settings.acceptTap}
+        acceptPan={this.settings.acceptPan}
+        changeVal={this.settings.changeVal}
+        negotiatePan={false}
+        side={this.settings.rightSide ? 'right' : 'left'}
+      >
         <Navigator
           initialRoute={{id: 'SplashPage', name: 'Splash Page'}}
           renderScene={this.renderScene.bind(this)}
@@ -200,40 +239,12 @@ class AMGSandbox extends Component {
             if (route.sceneConfig) {
               return route.sceneConfig;
             }
-
-            console.log('routeID:',route.id);
-
-            if (route.id == 'LoginPage') {
-                return Navigator.SceneConfigs.HorizontalSwipeJump;
-            } else {
-                return Navigator.SceneConfigs.FloatFromRight;
-            }
-
+            return Navigator.SceneConfigs.FloatFromRight;
           }} />
-
+      </Drawer>
     );
   }
   renderScene(route, navigator) {
-
-
-    var controlPanel = <ControlPanel
-      closeDrawer={() => {this.drawer.close()}}
-      gotoProfile={() => {this.gotoProfile()}}
-      gotoMessage={() => {this.gotoMessage()}}
-      gotoHome={() => {this.gotoHome()}}
-      gotoFaq={() => {this.gotoFaq()}}
-      gotoTerms={() => {this.gotoTerms()}}
-      gotoFoodBank={() => {this.gotoFoodBank()}}
-      handleLogout={() => {this.handleLogout()}}
-      gotoShop={() => {this.gotoShop()}}
-      gotoDirectory={() => {this.gotoDirectory()}}
-      gotoDonate={() => {this.gotoDonate()}}
-      gotoShare={() => {this.gotoShare()}}
-
-    />
-
-
-
     //used by methods that control navigation later
     this.navigatorObj = navigator;
     var _this=this;
@@ -248,8 +259,7 @@ class AMGSandbox extends Component {
     }
     if (routeId === 'LoginPage') {
 
-
-      //this.setState({drawerDisabled:true});
+      //this.drawer.disabled = true;
       return (
         <LoginPage
           navigator={navigator}
@@ -264,282 +274,103 @@ class AMGSandbox extends Component {
     */
     if (routeId === 'MainPage') {
       return (
-
-      <Drawer
-        ref={c => this.drawer = c}
-        content={controlPanel}
-        styles={drawerStyles}
-        negotiatePan={false}
-        tweenHandlerOn={true}
-        tweenHandler={this.tweenHandler}
-        tweenDuration={350}
-        tweenEasing={'linear'}
-        panOpenMask={.1}
-        drawerType={'overlay'}
-        openDrawerOffset={100}
-        closedDrawerOffset={0}
-        acceptPan={false}
-        >
         <MainPage
             navigator={navigator}
             data={route.data}
-            user_profile={this.state.user_profile}
             openDrawer={this.openDrawer}
         />
-      </Drawer>
-
       );
     }
     if (routeId === 'Profile') {
       return (
-      <Drawer
-              ref={c => this.drawer = c}
-              content={controlPanel}
-              styles={drawerStyles}
-              negotiatePan={false}
-              tweenHandlerOn={true}
-              tweenHandler={this.tweenHandler}
-              tweenDuration={350}
-              tweenEasing={'linear'}
-              panOpenMask={.1}
-              drawerType={'overlay'}
-              openDrawerOffset={100}
-              closedDrawerOffset={0}
-              acceptPan={false}
-              >
         <Profile
           navigator={navigator}
           openDrawer={this.openDrawer}
-          user_profile={this.state.user_profile}
         />
-      </Drawer>
-      );
-    }
-    if (routeId === 'FacebookShare') {
-      return (
-      <Drawer
-              ref={c => this.drawer = c}
-              content={controlPanel}
-              styles={drawerStyles}
-              negotiatePan={false}
-              tweenHandlerOn={true}
-              tweenHandler={this.tweenHandler}
-              tweenDuration={350}
-              tweenEasing={'linear'}
-              panOpenMask={.1}
-              drawerType={'overlay'}
-              openDrawerOffset={100}
-              closedDrawerOffset={0}
-              acceptPan={false}
-              >
-        <FacebookShare
-          navigator={navigator}
-          openDrawer={this.openDrawer}
-          user_profile={this.state.user_profile}
-        />
-      </Drawer>
       );
     }
     if (routeId === 'Messages') {
       return (
-      <Drawer
-              ref={c => this.drawer = c}
-              content={controlPanel}
-              styles={drawerStyles}
-              negotiatePan={false}
-              tweenHandlerOn={true}
-              tweenHandler={this.tweenHandler}
-              tweenDuration={350}
-              tweenEasing={'linear'}
-              panOpenMask={.1}
-              drawerType={'overlay'}
-              openDrawerOffset={100}
-              closedDrawerOffset={0}
-              acceptPan={false}
-              >
         <Messages
           navigator={navigator}
           openDrawer={this.openDrawer}
-          user_profile={this.state.user_profile}
         />
-      </Drawer>
+      );
+    }
+    if (routeId === 'MessageDetail') {
+      return (
+        <MessageDetail
+          navigator={navigator}
+          openDrawer={this.openDrawer}
+          pageName="Message Detail"
+          message_info={route.message_info}
+        />
       );
     }
     if (routeId === 'Shop') {
       return (
-      <Drawer
-              ref={c => this.drawer = c}
-              content={controlPanel}
-              styles={drawerStyles}
-              negotiatePan={false}
-              tweenHandlerOn={true}
-              tweenHandler={this.tweenHandler}
-              tweenDuration={350}
-              tweenEasing={'linear'}
-              panOpenMask={.1}
-              drawerType={'overlay'}
-              openDrawerOffset={100}
-              closedDrawerOffset={0}
-              acceptPan={false}
-              >
         <Shop
           navigator={navigator}
           openDrawer={this.openDrawer}
-          user_profile={this.state.user_profile}
         />
-      </Drawer>
       );
     }
     if (routeId === 'Cart') {
       return (
-      <Drawer
-              ref={c => this.drawer = c}
-              content={controlPanel}
-              styles={drawerStyles}
-              negotiatePan={false}
-              tweenHandlerOn={true}
-              tweenHandler={this.tweenHandler}
-              tweenDuration={350}
-              tweenEasing={'linear'}
-              panOpenMask={.1}
-              drawerType={'overlay'}
-              openDrawerOffset={100}
-              closedDrawerOffset={0}
-              acceptPan={false}
-              >
         <Cart
           navigator={navigator}
           openDrawer={this.openDrawer}
-          user_profile={this.state.user_profile}
         />
-      </Drawer>
       );
     }
     if (routeId === 'Share') {
       return (
-      <Drawer
-              ref={c => this.drawer = c}
-              content={controlPanel}
-              styles={drawerStyles}
-              negotiatePan={false}
-              tweenHandlerOn={true}
-              tweenHandler={this.tweenHandler}
-              tweenDuration={350}
-              tweenEasing={'linear'}
-              panOpenMask={.1}
-              drawerType={'overlay'}
-              openDrawerOffset={100}
-              closedDrawerOffset={0}
-              acceptPan={false}
-              >
         <Share
           navigator={navigator}
           openDrawer={this.openDrawer}
-          user_profile={this.state.user_profile}
         />
-      </Drawer>
+      );
+    }
+    if (routeId === 'FacebookShare') {
+      return (
+        <FacebookShare
+          navigator={navigator}
+          openDrawer={this.openDrawer}
+        />
       );
     }
     if (routeId === 'Refer') {
       return (
-      <Drawer
-              ref={c => this.drawer = c}
-              content={controlPanel}
-              styles={drawerStyles}
-              negotiatePan={false}
-              tweenHandlerOn={true}
-              tweenHandler={this.tweenHandler}
-              tweenDuration={350}
-              tweenEasing={'linear'}
-              panOpenMask={.1}
-              drawerType={'overlay'}
-              openDrawerOffset={100}
-              closedDrawerOffset={0}
-              acceptPan={false}
-              >
         <ReferAFriend
           navigator={navigator}
           openDrawer={this.openDrawer}
-          user_profile={this.state.user_profile}
         />
-      </Drawer>
       );
     }
     if (routeId === 'Donate') {
       return (
-      <Drawer
-              ref={c => this.drawer = c}
-              content={controlPanel}
-              styles={drawerStyles}
-              negotiatePan={false}
-              tweenHandlerOn={true}
-              tweenHandler={this.tweenHandler}
-              tweenDuration={350}
-              tweenEasing={'linear'}
-              panOpenMask={.1}
-              drawerType={'overlay'}
-              openDrawerOffset={100}
-              closedDrawerOffset={0}
-              acceptPan={false}
-              >
         <Donate
           navigator={navigator}
           openDrawer={this.openDrawer}
-          user_profile={this.state.user_profile}
         />
-      </Drawer>
       );
     }
     if (routeId === 'Payment') {
         return (
-        <Drawer
-                ref={c => this.drawer = c}
-                content={controlPanel}
-                styles={drawerStyles}
-                negotiatePan={false}
-                tweenHandlerOn={true}
-                tweenHandler={this.tweenHandler}
-                tweenDuration={350}
-                tweenEasing={'linear'}
-                panOpenMask={.1}
-                drawerType={'overlay'}
-                openDrawerOffset={100}
-                closedDrawerOffset={0}
-                acceptPan={false}
-                >
           <Payment
             navigator={navigator}
             openDrawer={this.openDrawer}
             details={route.details}
-            user_profile={this.state.user_profile}
           />
-        </Drawer>
         );
     }
     if (routeId === 'Checkout') {
         return (
-        <Drawer
-                ref={c => this.drawer = c}
-                content={controlPanel}
-                styles={drawerStyles}
-                negotiatePan={false}
-                tweenHandlerOn={true}
-                tweenHandler={this.tweenHandler}
-                tweenDuration={350}
-                tweenEasing={'linear'}
-                panOpenMask={.1}
-                drawerType={'overlay'}
-                openDrawerOffset={100}
-                closedDrawerOffset={0}
-                acceptPan={false}
-                >
           <Checkout
             navigator={navigator}
             openDrawer={this.openDrawer}
             details={route.details}
-            user_profile={this.state.user_profile}
           />
-        </Drawer>
         );
     }
     if (routeId === 'Register') {
@@ -552,28 +383,11 @@ class AMGSandbox extends Component {
     }
     if (routeId === 'ThankYou') {
       return (
-      <Drawer
-              ref={c => this.drawer = c}
-              content={controlPanel}
-              styles={drawerStyles}
-              negotiatePan={false}
-              tweenHandlerOn={true}
-              tweenHandler={this.tweenHandler}
-              tweenDuration={350}
-              tweenEasing={'linear'}
-              panOpenMask={.1}
-              drawerType={'overlay'}
-              openDrawerOffset={100}
-              closedDrawerOffset={0}
-              acceptPan={false}
-              >
         <ThankYou
           navigator={navigator}
           openDrawer={this.openDrawer}
           points={route.points}
-          user_profile={this.state.user_profile}
         />
-      </Drawer>
       );
     }
     /*
@@ -581,83 +395,32 @@ class AMGSandbox extends Component {
     */
     if (routeId === 'Terms') {
       return (
-      <Drawer
-              ref={c => this.drawer = c}
-              content={controlPanel}
-              styles={drawerStyles}
-              negotiatePan={false}
-              tweenHandlerOn={true}
-              tweenHandler={this.tweenHandler}
-              tweenDuration={350}
-              tweenEasing={'linear'}
-              panOpenMask={.1}
-              drawerType={'overlay'}
-              openDrawerOffset={100}
-              closedDrawerOffset={0}
-              acceptPan={false}
-              >
         <InfoPage
           navigator={navigator}
           openDrawer={this.openDrawer}
           pageName="Terms And Conditions"
           id={routeId}
-          user_profile={this.state.user_profile}
         />
-      </Drawer>
       );
     }
     if (routeId === 'Faq') {
       return (
-      <Drawer
-              ref={c => this.drawer = c}
-              content={controlPanel}
-              styles={drawerStyles}
-              negotiatePan={false}
-              tweenHandlerOn={true}
-              tweenHandler={this.tweenHandler}
-              tweenDuration={350}
-              tweenEasing={'linear'}
-              panOpenMask={.1}
-              drawerType={'overlay'}
-              openDrawerOffset={100}
-              closedDrawerOffset={0}
-              acceptPan={false}
-              >
         <InfoPage
           navigator={navigator}
           openDrawer={this.openDrawer}
           pageName="Frequenty asked questions"
-          user_profile={this.state.user_profile}
           id={routeId}
         />
-      </Drawer>
       );
     }
     if (routeId === 'FoodBank') {
       return (
-      <Drawer
-              ref={c => this.drawer = c}
-              content={controlPanel}
-              styles={drawerStyles}
-              negotiatePan={false}
-              tweenHandlerOn={true}
-              tweenHandler={this.tweenHandler}
-              tweenDuration={350}
-              tweenEasing={'linear'}
-              panOpenMask={.1}
-              drawerType={'overlay'}
-              openDrawerOffset={100}
-              closedDrawerOffset={0}
-              acceptPan={false}
-              >
         <InfoPage
           navigator={navigator}
           openDrawer={this.openDrawer}
           pageName="My Food Bank"
-          user_profile={this.state.user_profile}
           id={routeId}
         />
-      </Drawer>
       );
     }
     if (routeId === 'NoNavigatorPage') {
@@ -668,83 +431,22 @@ class AMGSandbox extends Component {
     }
     if (routeId === 'BusinessDirectory') {
       return (
-      <Drawer
-              ref={c => this.drawer = c}
-              content={controlPanel}
-              styles={drawerStyles}
-              negotiatePan={false}
-              tweenHandlerOn={true}
-              tweenHandler={this.tweenHandler}
-              tweenDuration={350}
-              tweenEasing={'linear'}
-              panOpenMask={.1}
-              drawerType={'overlay'}
-              openDrawerOffset={100}
-              closedDrawerOffset={0}
-              acceptPan={false}
-              >
         <BusinessDirectory
           navigator={navigator}
           openDrawer={this.openDrawer}
           pageName="Business Directory"
-          user_profile={this.state.user_profile}
           id={routeId}
         />
-      </Drawer>
       );
     }
     if (routeId === 'BusinessPage') {
       return (
-      <Drawer
-              ref={c => this.drawer = c}
-              content={controlPanel}
-              styles={drawerStyles}
-              negotiatePan={false}
-              tweenHandlerOn={true}
-              tweenHandler={this.tweenHandler}
-              tweenDuration={350}
-              tweenEasing={'linear'}
-              panOpenMask={.1}
-              drawerType={'overlay'}
-              openDrawerOffset={100}
-              closedDrawerOffset={0}
-              acceptPan={false}
-      >
         <BusinessPage
           navigator={navigator}
           openDrawer={this.openDrawer}
           pageName="Business Page"
-          user_profile={this.state.user_profile}
           business_info={route.business_info}
         />
-      </Drawer>
-      );
-    }
-    if (routeId === 'MessageDetail') {
-      return (
-      <Drawer
-              ref={c => this.drawer = c}
-              content={controlPanel}
-              styles={drawerStyles}
-              negotiatePan={false}
-              tweenHandlerOn={true}
-              tweenHandler={this.tweenHandler}
-              tweenDuration={350}
-              tweenEasing={'linear'}
-              panOpenMask={.1}
-              drawerType={'overlay'}
-              openDrawerOffset={100}
-              closedDrawerOffset={0}
-              acceptPan={false}
-      >
-        <MessageDetail
-          navigator={navigator}
-          openDrawer={this.openDrawer}
-          pageName="Message Detail"
-          user_profile={this.state.user_profile}
-          message_info={route.message_info}
-        />
-      </Drawer>
       );
     }
     return this.noRoute(navigator); /* <-- if the route isn't found, it defaults to this method. */

@@ -29,7 +29,7 @@ class Payment extends Component {
   constructor(props) {
       super(props);
       this.state = {
-          user_profile: this.props.user_profile,
+          user_profile: [],
           checked: false,
           inputFN: '',
           inputLN: '',
@@ -45,7 +45,23 @@ class Payment extends Component {
 
   }
 
+  componentDidMount() {
 
+        /*
+        This method sets the state variables for the user profile
+        It will add a new user on first login or retrieve current info
+        If not logged in it will redirect to login page
+
+        successful result is an object: this.state.user_profile
+        */
+
+        this.mounted = true;
+        Users.getProfile(this);
+  }
+
+  componentWillUnmount() {
+      this.mounted = false;
+  }
 
   render() {
 
@@ -62,6 +78,10 @@ class Payment extends Component {
           } />
     );
   }
+
+
+
+
   renderScene(route, navigator) {
 
     var pageTitle = '';

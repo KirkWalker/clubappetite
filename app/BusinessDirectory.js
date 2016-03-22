@@ -17,6 +17,7 @@ import React, {
 
 var DEBUG = true;
 if (DEBUG) {console.log("BusinessDirectory DEBUG flag set\n---------------------");}
+var Users = require('../datalayer/User');
 
 var styles = require('../styles');
 
@@ -35,19 +36,20 @@ class BusinessDirectory extends Component {
     		rowHasChanged: (r1, r2) => r1 !== r2,
     	}),
     	loaded: false,
-    	user_profile: this.props.user_profile,
+    	user_profile: [],
     };
   }
 
 componentDidMount() {
   this.mounted = true;
   InteractionManager.runAfterInteractions(() => {
+      Users.getProfile(this);
       Directory.getDirectoryData(this);
   });
  }
 
   componentWillUnmount() {
-    this.mounted = false;
+      this.mounted = false;
   }
 
   gotoDetails(business) {

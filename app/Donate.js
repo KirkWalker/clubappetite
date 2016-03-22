@@ -28,8 +28,27 @@ class Donate extends Component {
 
   constructor(props) {
       super(props);
-      this.state = {user_profile: this.props.user_profile, amount: 0, schedule: ''};
+      this.state = {user_profile: [], amount: 0, schedule: ''};
   }
+
+  componentDidMount() {
+
+        /*
+        This method sets the state variables for the user profile
+        It will add a new user on first login or retrieve current info
+        If not logged in it will redirect to login page
+
+        successful result is an object: this.state.user_profile
+        */
+
+        this.mounted = true;
+        Users.getProfile(this);
+  }
+
+  componentWillUnmount() {
+      this.mounted = false;
+  }
+
 
   render() {
 

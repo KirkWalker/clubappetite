@@ -27,7 +27,8 @@ class Shop extends Component {
 
   componentDidMount() {
       this.mounted = true;
-      MyDirectory.getDirectoryData(this);
+      Users.getProfile(this);
+      //MyDirectory.getDirectoryData(this);
   }
 
   componentWillUnmount() {

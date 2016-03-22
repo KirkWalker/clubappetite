@@ -34,7 +34,7 @@ class Messages extends Component {
         rowHasChanged: (r1, r2) => r1 !== r2,
       }),
       loaded: false,
-      user_profile: this.props.user_profile,
+      user_profile: [],
     };
   }
 

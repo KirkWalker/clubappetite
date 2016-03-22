@@ -16,6 +16,7 @@ var {
 var styles = require('../styles');
 
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
+var Users = require('../datalayer/User');
 
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
@@ -25,9 +26,28 @@ class ReferAFriend extends Component {
 
   constructor(props) {
       super(props);
-      this.state = {user_profile: this.props.user_profile};
+      this.state = {user_profile: []};
 
   }
+
+  componentDidMount() {
+
+        /*
+        This method sets the state variables for the user profile
+        It will add a new user on first login or retrieve current info
+        If not logged in it will redirect to login page
+
+        successful result is an object: this.state.user_profile
+        */
+
+        this.mounted = true;
+        Users.getProfile(this);
+  }
+
+  componentWillUnmount() {
+      this.mounted = false;
+  }
+
 
 
   render() {

@@ -16,7 +16,7 @@ var {
 
 var styles = require('../styles');
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
-
+var Users = require('../datalayer/User');
 
 var font = 20;
 if (PixelRatio.get() <= 2) {
@@ -30,9 +30,17 @@ class ThankYou extends Component {
 
   constructor(props) {
       super(props);
-      this.state = {user_profile: this.props.user_profile};
+      this.state = {user_profile: []};
   }
 
+  componentDidMount() {
+      this.mounted = true;
+      Users.getProfile(this);
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
+  }
 
   render() {
 

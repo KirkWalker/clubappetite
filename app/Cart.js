@@ -31,11 +31,12 @@ class Cart extends Component {
 
   constructor(props) {
       super(props);
-      this.state = {user_profile: this.props.user_profile, ProductArray: [], cartTotal: 0};
+      this.state = {user_profile: [], ProductArray: [], cartTotal: 0};
   }
 
   componentDidMount() {
       this.mounted = true;
+      Users.getProfile(this);
       MyProducts.getProductData(this);
   }
 

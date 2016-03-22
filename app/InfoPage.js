@@ -42,7 +42,7 @@ class InfoPage extends Component {
 
   constructor(props) {
       super(props);
-        this.state = {user_profile: this.props.user_profile,
+        this.state = {user_profile: [],
         htmlText: '',
         pageName: '',
         logo: '',
@@ -59,12 +59,15 @@ class InfoPage extends Component {
     /*
     successful result is an object: this.state.user_profile
     */
-    //InteractionManager.runAfterInteractions(() => {
-      //Users.getProfile(this);
+    InteractionManager.runAfterInteractions(() => {
+      Users.getProfile(this);
       InfoPageData.getPageData(_this,this.props.id.toLowerCase());
-    //});
+    });
   }
 
+  componentWillUnmount() {
+      this.mounted = false;
+  }
 
 
 
