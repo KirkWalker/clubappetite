@@ -10,11 +10,13 @@ import React, {
   TouchableOpacity,
   ScrollView,
   Navigator,
-  View
+  View,
+  InteractionManager,
 } from 'react-native';
 
 
 var Users = require('../datalayer/User');
+var MyDeals = require('../datalayer/Deals');
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
 var styles = require('../styles');
 
@@ -27,26 +29,25 @@ if (PixelRatio.get() <= 2) {
 
 class Deals extends Component {
 
-
   constructor(props) {
         super(props);
-        this.state = {user_profile: []};
-        //result = props.bannerads.getAdData(this);
-
+        this.state = {user_profile: [], DealArray: []};
   }
 
+  /*
+  This method sets the state variables for the user profile
+  It will add a new user on first login or retrieve current info
+  If not logged in it will redirect to login page
+
+  successful result is an object: this.state.user_profile
+  */
   componentDidMount() {
-
-        /*
-        This method sets the state variables for the user profile
-        It will add a new user on first login or retrieve current info
-        If not logged in it will redirect to login page
-
-        successful result is an object: this.state.user_profile
-        */
-
-        this.mounted = true;
-        Users.getProfile(this);
+    this.mounted = true;
+    Users.getProfile(this);
+    this.gotoRedeem = this.gotoRedeem.bind(this);
+    InteractionManager.runAfterInteractions(() => {
+      MyDeals.getDealData(this);
+    });
   }
 
   componentWillUnmount() {
@@ -70,9 +71,6 @@ class Deals extends Component {
       );
   }
 
-
-
-
   renderScene(route, navigator) {
     return (
       <View style={shopStyles.container}>
@@ -88,91 +86,19 @@ class Deals extends Component {
             <View style={shopStyles.textContainer}>
               <Text style={shopStyles.text}>Business Directory</Text>
             </View>
-            <Image source={require('../img/arrow.png')} style={shopStyles.arrow} />
+            <Image source={require('../img/NavArrow.png')} style={shopStyles.arrow} />
           </View>
         </TouchableOpacity>
 
         <ScrollView>
-          <View style={shopStyles.imageContainerColumn}>
-
-            <View style={shopStyles.imageContainerRow}>
-              <View style={shopStyles.dealContainer}>
-              <TouchableOpacity onPress={this.gotoRedeem.bind(this)}>
-                <Image source={require('../img/shop-gallery/sample-image-1.png')} style={shopStyles.dealImage}>
-                  <Image source={require('../img/shop-points-container.png')} style={shopStyles.pointsContainer}>
-                    <Text style={shopStyles.points}>500</Text>
-                  </Image>
-                  <Text style={shopStyles.dealTitle}>Deal Title</Text>
-                </Image>
-              </TouchableOpacity>
-              </View>
-              <View style={shopStyles.dealContainer}>
-                <Image source={require('../img/shop-gallery/sample-image-2.png')} style={shopStyles.dealImage}>
-                  <Image source={require('../img/shop-points-container.png')} style={shopStyles.pointsContainer}>
-                    <Text style={shopStyles.points}>500</Text>
-                  </Image>
-                  <Text style={shopStyles.dealTitle}>Deal Title</Text>
-                </Image>
-              </View>
-            </View>
-
-            <View style={shopStyles.imageContainerRow}>
-              <View style={shopStyles.dealContainer}>
-                <Image source={require('../img/shop-gallery/sample-image-3.png')} style={shopStyles.dealImage}>
-                  <Image source={require('../img/shop-points-container.png')} style={shopStyles.pointsContainer}>
-                    <Text style={shopStyles.points}>500</Text>
-                  </Image>
-                  <Text style={shopStyles.dealTitle}>Deal Title</Text>
-                </Image>
-              </View>
-              <View style={shopStyles.dealContainer}>
-                <Image source={require('../img/shop-gallery/sample-image-4.png')} style={shopStyles.dealImage}>
-                  <Image source={require('../img/shop-points-container.png')} style={shopStyles.pointsContainer}>
-                    <Text style={shopStyles.points}>500</Text>
-                  </Image>
-                  <Text style={shopStyles.dealTitle}>Deal Title</Text>
-                </Image>
-              </View>
-            </View>
-
-            <View style={shopStyles.imageContainerRow}>
-              <View style={shopStyles.dealContainer}>
-                <Image source={require('../img/shop-gallery/sample-image-5.png')} style={shopStyles.dealImage}>
-                  <Image source={require('../img/shop-points-container.png')} style={shopStyles.pointsContainer}>
-                    <Text style={shopStyles.points}>500</Text>
-                  </Image>
-                  <Text style={shopStyles.dealTitle}>Deal Title</Text>
-                </Image>
-              </View>
-              <View style={shopStyles.dealContainer}>
-                <Image source={require('../img/shop-gallery/sample-image-1.png')} style={shopStyles.dealImage}>
-                  <Image source={require('../img/shop-points-container.png')} style={shopStyles.pointsContainer}>
-                    <Text style={shopStyles.points}>500</Text>
-                  </Image>
-                  <Text style={shopStyles.dealTitle}>Deal Title</Text>
-                </Image>
-              </View>
-            </View>
-
-            <View style={shopStyles.imageContainerRow}>
-              <View style={shopStyles.dealContainer}>
-                <Image source={require('../img/shop-gallery/sample-image-2.png')} style={shopStyles.dealImage}>
-                  <Image source={require('../img/shop-points-container.png')} style={shopStyles.pointsContainer}>
-                    <Text style={shopStyles.points}>500</Text>
-                  </Image>
-                  <Text style={shopStyles.dealTitle}>Deal Title</Text>
-                </Image>
-              </View>
-              <View style={shopStyles.dealContainer}>
-                <Image source={require('../img/shop-gallery/sample-image-3.png')} style={shopStyles.dealImage}>
-                  <Image source={require('../img/shop-points-container.png')} style={shopStyles.pointsContainer}>
-                    <Text style={shopStyles.points}>500</Text>
-                  </Image>
-                  <Text style={shopStyles.dealTitle}>Deal Title</Text>
-                </Image>
-              </View>
-            </View>
-
+          <View style={shopStyles.imageContainer}>
+            {this.state.DealArray.map((deal) => 
+              <DealItem
+                key={deal.id}
+                item={deal}
+                onPress={this.gotoRedeem}
+              />
+            )}
           </View>
         </ScrollView>
 
@@ -180,15 +106,29 @@ class Deals extends Component {
     );
   }
 
+  gotoRedeem() {
+      this.props.navigator.push({
+        id: 'Redeem',
+        name: 'Redeem Page',
+      });
+  }
+}
 
-    gotoRedeem() {
-        this.props.navigator.push({
-          id: 'Redeem',
-          name: 'Redeem Page',
-        });
-    }
-
-
+class DealItem extends Component {
+  render() {
+    return(
+      <View style={shopStyles.dealContainer}>
+      <TouchableOpacity onPress={this.props.onPress}>
+        <Image source={{uri: this.props.item.deal_image}} style={shopStyles.dealImage}>
+          <Image source={require('../img/shop-points-container.png')} style={shopStyles.pointsContainer}>
+            <Text style={shopStyles.points}>{this.props.item.deal_price}</Text>
+          </Image>
+          <Text style={shopStyles.dealTitle}>{this.props.item.deal_title}</Text>
+        </Image>
+      </TouchableOpacity>
+      </View>
+    );
+  }
 }
 
 const shopStyles = StyleSheet.create({
@@ -252,8 +192,10 @@ const shopStyles = StyleSheet.create({
     height: width*.08,
     width: width*.08,
   },
-  imageContainerColumn:{
-    flexDirection: 'column'
+  imageContainer:{
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    width: width,
   },
   pointsContainer: {
     height: width*.12,
