@@ -76,7 +76,7 @@ class FacebookShare extends Component {
 
   render() {
 
-//console.log('FBLoginManager',FBLoginManager);
+      //console.log('FBLoginManager user',this.state.user);
 
       var data = [];
       data.push(this.props.openDrawer);
@@ -158,7 +158,12 @@ class FacebookShare extends Component {
 
       FBLoginManager.loginWithPermissions(permissions,function(error, data){
         if (!error) {
-          _this.setState({ user : data});
+
+
+
+            Users.updateProfile(data,_this);
+
+
           //_this.props.onLogin && _this.props.onLogin();
         } else {
           console.log(error, data);
@@ -194,13 +199,17 @@ class FacebookShare extends Component {
 
 var ShareForm = React.createClass({
 
-
+  getInitialState: function(){
+    return {
+      info: null,
+    };
+   },
    shouldComponentUpdate: function(nextProps, nextState) {
      return true;
    },
    render: function() {
 
-
+    var info = this.state.info;
     var user = this.props.user;
 
     return (
@@ -212,8 +221,21 @@ var ShareForm = React.createClass({
       </View>
       <View style={[shareStyles.formmodule2]}>
 
-        { user && <Photo user={user} /> }
-        { user && <Info user={user} /> }
+
+
+
+
+             <View style={shareStyles.bottomBump}>
+               <Text>{ info && this.props.user.userId }</Text>
+               <Text>{ info && info.name }</Text>
+               <Text>{ info && info.email }</Text>
+               <Text>{ info && info.first_name } { info && info.last_name }</Text>
+               <Text>{ info && info.gender }</Text>
+               <Text>{ info && info.link }</Text>
+               <Text>{ info && info.locale }</Text>
+               <Text>{ info && info.picture.data.url }</Text>
+             </View>
+
 
       </View>
       <View style={[shareStyles.formmodule3]}>
@@ -276,106 +298,6 @@ var FacebookLoginButton = React.createClass({
 
 
 
-var Photo = React.createClass({
-  propTypes: {
-    user: React.PropTypes.object.isRequired,
-  },
-
-  getInitialState: function(){
-    return {
-      photo: null,
-    };
-  },
-
-  componentWillMount: function(){
-    var _this = this;
-    var user = this.props.user;
-    var api = `https://graph.facebook.com/v2.3/${user.userId}/picture?width=${FB_PHOTO_WIDTH}&redirect=false&access_token=${user.token}`;
-
-    fetch(api)
-      .then((response) => response.json())
-      .then((responseData) => {
-        _this.setState({
-          photo : {
-            url : responseData.data.url,
-            height: responseData.data.height,
-            width: responseData.data.width,
-          },
-        });
-      })
-      .done();
-  },
-
-  render: function(){
-    if(this.state.photo == null) return this.renderLoading();
-
-    var photo = this.state.photo;
-
-    return (
-      <View style={shareStyles.bottomBump}>
-
-        <Image
-          style={photo &&
-            {
-              height: photo.height,
-              width: photo.width,
-            }
-          }
-          source={{uri: photo && photo.url}}
-        />
-      </View>
-    );
-  },
-  renderLoading: function(){
-    return (
-      <View>
-        <Text>Loading...</Text>
-      </View>
-    );
-  }
-});
-
-var Info = React.createClass({
-  propTypes: {
-    user: React.PropTypes.object.isRequired,
-  },
-
-  getInitialState: function(){
-    return {
-      info: null,
-    };
-  },
-
-  componentWillMount: function(){
-    var _this = this;
-    var user = this.props.user;
-    var api = `https://graph.facebook.com/v2.3/${user.userId}?fields=name,email&access_token=${user.token}`;
-
-    fetch(api)
-      .then((response) => response.json())
-      .then((responseData) => {
-        _this.setState({
-          info : {
-            name : responseData.name,
-            email: responseData.email,
-          },
-        });
-      })
-      .done();
-  },
-
-  render: function(){
-    var info = this.state.info;
-
-    return (
-      <View style={shareStyles.bottomBump}>
-        <Text>{ info && this.props.user.userId }</Text>
-        <Text>{ info && info.name }</Text>
-        <Text>{ info && info.email }</Text>
-      </View>
-    );
-  }
-});
 
 
 const shareStyles = StyleSheet.create({
