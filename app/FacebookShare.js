@@ -28,7 +28,7 @@ var height = Dimensions.get('window').height;
 
 var FBLogin = require('react-native-facebook-login');
 var FBLoginManager = require('NativeModules').FBLoginManager;
-
+var FB_PHOTO_WIDTH = 50;
 
 class FacebookShare extends Component {
 
@@ -104,7 +104,7 @@ class FacebookShare extends Component {
         if(_this.state.user == null){
             _viewName = <FacebookLoginButton user={this.state.user} onPress={this.onPress.bind(this)} />;
         }else {
-            _viewName = <ShareForm />;
+            _viewName = <ShareForm handleLogout={this.handleLogout.bind(this)} gotoShare={this.gotoShare.bind(this)} user={this.state.user} />;
         }
 
 
@@ -151,7 +151,7 @@ class FacebookShare extends Component {
 
   handleLogin(){
       var _this = this;
-      var permissions = ['email', 'public_profile'];
+      var permissions = ['email', 'public_profile','user_about_me'];
       //loginWithPermissions(permissions,
       //FBLoginManager.setLoginBehavior('Native');
       FBLoginManager.LoginBehavior=FBLoginManager.LoginBehaviors.Native;
@@ -200,7 +200,9 @@ var ShareForm = React.createClass({
    },
    render: function() {
 
-    //var points = Number(this.props.obj.product_price)*100;
+
+    var user = this.props.user;
+
     return (
     <View style={[shareStyles.formmodule]}>
       <View style={[shareStyles.formmodule1]}>
@@ -210,16 +212,17 @@ var ShareForm = React.createClass({
       </View>
       <View style={[shareStyles.formmodule2]}>
 
-          
+        { user && <Photo user={user} /> }
+        { user && <Info user={user} /> }
 
       </View>
       <View style={[shareStyles.formmodule3]}>
           <View style={[shareStyles.cell1]}>
               <Button
-                  buttonText="CANCEL"
+                  buttonText="LOGOUT"
                   buttonColor="gray"
                   onPress={() => {
-                    this.gotoShare();
+                    this.props.handleLogout();
                   }}
                 />
           </View>
@@ -228,7 +231,7 @@ var ShareForm = React.createClass({
                   buttonText="POST"
                   buttonColor="blue"
                   onPress={() => {
-                    this.gotoShare();
+                    this.props.gotoShare();
                   }}
                 />
           </View>
@@ -272,7 +275,120 @@ var FacebookLoginButton = React.createClass({
 });
 
 
+
+var Photo = React.createClass({
+  propTypes: {
+    user: React.PropTypes.object.isRequired,
+  },
+
+  getInitialState: function(){
+    return {
+      photo: null,
+    };
+  },
+
+  componentWillMount: function(){
+    var _this = this;
+    var user = this.props.user;
+    var api = `https://graph.facebook.com/v2.3/${user.userId}/picture?width=${FB_PHOTO_WIDTH}&redirect=false&access_token=${user.token}`;
+
+    fetch(api)
+      .then((response) => response.json())
+      .then((responseData) => {
+        _this.setState({
+          photo : {
+            url : responseData.data.url,
+            height: responseData.data.height,
+            width: responseData.data.width,
+          },
+        });
+      })
+      .done();
+  },
+
+  render: function(){
+    if(this.state.photo == null) return this.renderLoading();
+
+    var photo = this.state.photo;
+
+    return (
+      <View style={shareStyles.bottomBump}>
+
+        <Image
+          style={photo &&
+            {
+              height: photo.height,
+              width: photo.width,
+            }
+          }
+          source={{uri: photo && photo.url}}
+        />
+      </View>
+    );
+  },
+  renderLoading: function(){
+    return (
+      <View>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
+});
+
+var Info = React.createClass({
+  propTypes: {
+    user: React.PropTypes.object.isRequired,
+  },
+
+  getInitialState: function(){
+    return {
+      info: null,
+    };
+  },
+
+  componentWillMount: function(){
+    var _this = this;
+    var user = this.props.user;
+    var api = `https://graph.facebook.com/v2.3/${user.userId}?fields=name,email&access_token=${user.token}`;
+
+    fetch(api)
+      .then((response) => response.json())
+      .then((responseData) => {
+        _this.setState({
+          info : {
+            name : responseData.name,
+            email: responseData.email,
+          },
+        });
+      })
+      .done();
+  },
+
+  render: function(){
+    var info = this.state.info;
+
+    return (
+      <View style={shareStyles.bottomBump}>
+        <Text>{ info && this.props.user.userId }</Text>
+        <Text>{ info && info.name }</Text>
+        <Text>{ info && info.email }</Text>
+      </View>
+    );
+  }
+});
+
+
 const shareStyles = StyleSheet.create({
+  loginContainer: {
+    marginTop: 150,
+
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  bottomBump: {
+    marginBottom: 15,
+  },
   container: {
     flex: 1,
     alignItems: 'center',
@@ -321,6 +437,8 @@ const shareStyles = StyleSheet.create({
     },
     formmodule2: {
       flex: 6,
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     formmodule3:
     {
