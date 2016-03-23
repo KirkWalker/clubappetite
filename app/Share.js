@@ -73,7 +73,7 @@ class Share extends Component {
                 <Image source={require('../img/share-linkedin.png')} style={shareStyles.icons}/>
                 <Image source={require('../img/share-twitter.png')} style={shareStyles.icons}/>
               </View>
-              <TouchableOpacity onPress={this.gotoRefer.bind(this)} >
+              <TouchableOpacity onPress={this.gotoFacebook.bind(this)} >
                 <View style={shareStyles.optionsContainer}>
                   <Image source={require('../img/3-hex.png')} style={shareStyles.hexes}/>
                   <View style={shareStyles.textContainer}>

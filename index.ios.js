@@ -187,7 +187,7 @@ class AMGSandbox extends Component {
     return (
 
         <Navigator
-          initialRoute={{id: 'SplashPage', name: 'Splash Page'}}
+          initialRoute={{id: 'FacebookShare', name: 'Splash Page'}}
           renderScene={this.renderScene.bind(this)}
           configureScene={(route) => {
             if (route.sceneConfig) {
