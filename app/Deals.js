@@ -45,6 +45,7 @@ class Deals extends Component {
     this.mounted = true;
     Users.getProfile(this);
     this.gotoRedeem = this.gotoRedeem.bind(this);
+    this.gotoDirectory = this.gotoDirectory.bind(this);
     InteractionManager.runAfterInteractions(() => {
       MyDeals.getDealData(this);
     });
@@ -78,10 +79,14 @@ class Deals extends Component {
         <Image source={require('../img/shop-appetite.png')} style={shopStyles.logo} />
         
         <View style={shopStyles.searchContainer}>
-          <TextInput placeholder="Search" placeholderTextColor="#F0BB1A" style={shopStyles.search} />
+          <TextInput
+            placeholder="Search"
+            placeholderTextColor="rgb(239, 186, 026)"
+            style={shopStyles.search}
+          />
         </View>
 
-        <TouchableOpacity>
+        <TouchableOpacity onPress={this.gotoDirectory}>
           <View style={shopStyles.businessDirectoryContainer}>
             <View style={shopStyles.textContainer}>
               <Text style={shopStyles.text}>Business Directory</Text>
@@ -96,7 +101,7 @@ class Deals extends Component {
               <DealItem
                 key={deal.id}
                 item={deal}
-                onPress={this.gotoRedeem}
+                onPress={this.gotoRedeem(deal)}
               />
             )}
           </View>
@@ -107,10 +112,18 @@ class Deals extends Component {
   }
 
   gotoRedeem() {
-      this.props.navigator.push({
-        id: 'Redeem',
-        name: 'Redeem Page',
-      });
+    this.props.navigator.push({
+      id: 'Redeem',
+      name: 'Redeem Page',
+    });
+  }
+
+  gotoDirectory(deal_info) {
+    this.props.navigator.push({
+      id: 'BusinessDirectory',
+      name: 'Business Directory',
+      deal_info: deal_info,
+    });    
   }
 }
 
@@ -136,7 +149,7 @@ const shopStyles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: '#f2f2f2',
-    marginTop: 70
+    marginTop: height*0.11,
   },
   logo: {
     width: width*.65,
@@ -145,18 +158,18 @@ const shopStyles = StyleSheet.create({
     marginBottom: height*.01
   },
   searchContainer: {
+    borderColor: 'rgb(239, 186, 026)',
+    borderWidth: 1,
+    overflow: 'hidden',
     elevation: 2,
-    borderColor: '#000',
   },
   search: {
-    padding: height*.035,
-    elevation: 2,
-    width: width*.72,
-    backgroundColor: '#fff',
+    width: width*.82,
+    height: height*.075,
+    backgroundColor: '#ffffff',
     fontFamily: 'Gill Sans',
-    borderColor: '#F0BB1A',
-    borderWidth: 1,
-    borderRadius: 25,
+    color: 'rgb(239, 186, 026)',
+    paddingLeft: 15,
   },
   businessDirectoryContainer: {
     flexDirection: 'row',
@@ -168,6 +181,8 @@ const shopStyles = StyleSheet.create({
     marginTop: height*.015,
     alignItems: 'center',
     backgroundColor: '#fff',
+
+    elevation: 2,
     shadowColor: '#000',
     shadowOpacity: .3,
     shadowRadius: 3,

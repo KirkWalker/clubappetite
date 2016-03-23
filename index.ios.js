@@ -475,6 +475,7 @@ class AMGSandbox extends Component {
          <Redeem
            navigator={navigator}
            openDrawer={this.openDrawer}
+           deal_info={route.deal_info}
          />
          </Drawer>
        );
