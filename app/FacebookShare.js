@@ -13,6 +13,7 @@ var {
   Image,
   NativeModules,
   TouchableHighlight,
+  TextInput,
 } = React;
 
 var styles = require('../styles');
@@ -59,14 +60,18 @@ class FacebookShare extends Component {
       this.updateView();
   }
 
+
+
   updateView(){
       var _this = this;
+
       FBLoginManager.getCredentials(function(error, data){
         if (!error) {
-          console.log("Existing login found.");
+          console.log("Existing login found.",data.credentials);
+          console.log("FBLoginManager",FBLoginManager);
           _this.setState({ user : data.credentials });
         } else {
-           console.log("login not found.");
+           //console.log("login not found.");
           _this.setState({ user : null });
         }
       });
@@ -75,6 +80,7 @@ class FacebookShare extends Component {
 
 
   render() {
+
 
       //console.log('FBLoginManager user',this.state.user);
 
@@ -101,10 +107,15 @@ class FacebookShare extends Component {
         var _this = this;
         var _viewName = '';
 
+
         if(_this.state.user == null){
             _viewName = <FacebookLoginButton user={this.state.user} onPress={this.onPress.bind(this)} />;
         }else {
-            _viewName = <ShareForm handleLogout={this.handleLogout.bind(this)} gotoShare={this.gotoShare.bind(this)} user={this.state.user} />;
+            _viewName = <ShareForm
+            handleLogout={this.handleLogout.bind(this)}
+            gotoShare={this.gotoShare.bind(this)}
+            user={this.state.user}
+          />;
         }
 
 
@@ -151,20 +162,16 @@ class FacebookShare extends Component {
 
   handleLogin(){
       var _this = this;
-      var permissions = ['email', 'public_profile','user_about_me'];
+      var permissions = ['email', 'public_profile'];
       //loginWithPermissions(permissions,
       //FBLoginManager.setLoginBehavior('Native');
-      FBLoginManager.LoginBehavior=FBLoginManager.LoginBehaviors.Native;
+      FBLoginManager.LoginBehavior=FBLoginManager.LoginBehaviors.Browser;
 
       FBLoginManager.loginWithPermissions(permissions,function(error, data){
         if (!error) {
 
-
-
             Users.updateProfile(data,_this);
 
-
-          //_this.props.onLogin && _this.props.onLogin();
         } else {
           console.log(error, data);
         }
@@ -202,6 +209,7 @@ var ShareForm = React.createClass({
   getInitialState: function(){
     return {
       info: null,
+      messageText:"",
     };
    },
    shouldComponentUpdate: function(nextProps, nextState) {
@@ -209,14 +217,11 @@ var ShareForm = React.createClass({
    },
    render: function() {
 
-    var info = this.state.info;
-    var user = this.props.user;
-
     return (
     <View style={[shareStyles.formmodule]}>
       <View style={[shareStyles.formmodule1]}>
 
-        <Text style={[shareStyles.title]}>Write Something</Text>
+        <TextInput placeholder="Write Something" style={shareStyles.input} onChangeText={(text) => this.setState({messageText: text})} value={this.state.messageText} />
 
       </View>
       <View style={[shareStyles.formmodule2]}>
@@ -225,23 +230,13 @@ var ShareForm = React.createClass({
 
 
 
-             <View style={shareStyles.bottomBump}>
-               <Text>{ info && this.props.user.userId }</Text>
-               <Text>{ info && info.name }</Text>
-               <Text>{ info && info.email }</Text>
-               <Text>{ info && info.first_name } { info && info.last_name }</Text>
-               <Text>{ info && info.gender }</Text>
-               <Text>{ info && info.link }</Text>
-               <Text>{ info && info.locale }</Text>
-               <Text>{ info && info.picture.data.url }</Text>
-             </View>
 
 
       </View>
       <View style={[shareStyles.formmodule3]}>
           <View style={[shareStyles.cell1]}>
               <Button
-                  buttonText="LOGOUT"
+                  buttonText="CANCEL"
                   buttonColor="gray"
                   onPress={() => {
                     this.props.handleLogout();
@@ -253,7 +248,7 @@ var ShareForm = React.createClass({
                   buttonText="POST"
                   buttonColor="blue"
                   onPress={() => {
-                    this.props.gotoShare();
+                    this.postFBmessage();
                   }}
                 />
           </View>
@@ -262,7 +257,34 @@ var ShareForm = React.createClass({
 
     </View>
     );
+  },
+
+  postFBmessage() {
+
+    var _user = this.props.user;
+    var _message = this.state.messageText;
+
+    var api = `https://graph.facebook.com/${_user.userId}/feed?message=${_message}&access_token=${_user.token}`;
+
+
+
+
+
+            console.log('postFBmessage upgrade api', api);
+
+    fetch(api)
+      .then((response) => response.json())
+      .then((responseData) => {
+
+
+           console.log('postFBmessage responseData', responseData);
+
+      })
+      .done();
+
+
   }
+
 
 
 });
@@ -334,7 +356,12 @@ const shareStyles = StyleSheet.create({
             width: 1
         },
     },
-
+    input: {
+        padding: 10,
+        height: height*.06,
+        width: width*.85,
+        backgroundColor: 'white',
+    },
     module1: {
       flex: 2,
       backgroundColor: 'rgb(078, 106, 167)',
@@ -371,14 +398,14 @@ const shareStyles = StyleSheet.create({
     cell1: {
         justifyContent: 'center',
         flex:1,
-        marginLeft:10,
-        marginRight:40,
+        marginLeft:0,
+        marginRight:20,
     },
     cell2: {
         justifyContent: 'center',
         flex:1,
-    marginLeft:40,
-        marginRight:10,
+    marginLeft:20,
+        marginRight:0,
     },
     banner: {
       justifyContent: 'center',

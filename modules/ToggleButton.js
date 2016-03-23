@@ -5,6 +5,7 @@ import React, {
   View,
   Text,
   TouchableHighlight,
+  TouchableOpacity,
   Dimensions,
 } from 'react-native';
 
@@ -18,11 +19,11 @@ class ToggleButton extends React.Component {
   }
   render() {
     return (
-      <TouchableHighlight
+      <TouchableOpacity
         style={[TBStyles.buttoncontainer, this.props.text.replace('$','') == this.props.compareValue ? TBStyles.grey : {}]}
           onPressIn={this.props.onPress}>
             <Text style={TBStyles.button}>{this.props.text}</Text>
-      </TouchableHighlight>
+      </TouchableOpacity>
     );
   }
 }

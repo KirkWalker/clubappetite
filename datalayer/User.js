@@ -496,7 +496,7 @@ module.exports = {
                         console.log(API_REQUEST+' SUCCESS:',responseData2);
 
                         _this.setState({
-                          user : _data,
+                          user : _data.credentials,
                           info : {
                             name : responseData.name,
                             email: responseData.email,
