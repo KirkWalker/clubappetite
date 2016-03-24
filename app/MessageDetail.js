@@ -13,7 +13,7 @@ import React, {
   ScrollView,
 } from 'react-native';
 
-var DEBUG = true;
+var DEBUG = false;
 if (DEBUG) {console.log("MessageDetail DEBUG flag set\n---------------------");}
 
 var styles = require('../styles');

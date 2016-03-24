@@ -15,7 +15,7 @@ import React, {
   Dimensions,
 } from 'react-native';
 
-var DEBUG = true;
+var DEBUG = false;
 if (DEBUG) {console.log("BusinessDirectory DEBUG flag set\n---------------------");}
 var Users = require('../datalayer/User');
 

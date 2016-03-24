@@ -14,7 +14,7 @@ import React, {
   InteractionManager,
 } from 'react-native';
 
-var DEBUG = true;
+var DEBUG = false;
 if (DEBUG) {console.log("Deals.js DEBUG flag set\n---------------------");}
 
 var Users = require('../datalayer/User');

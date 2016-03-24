@@ -15,7 +15,7 @@ var {
   Dimensions,
 } = React;
 
-var DEBUG = true;
+var DEBUG = false;
 if (DEBUG) {console.log("Messages.js DEBUG flag set\n---------------------");}
 
 var styles = require('../styles');

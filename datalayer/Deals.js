@@ -142,7 +142,7 @@ DealsStore.fetchData = function (_this, token, current_mod, data) {
 
 DealsStore.confirmDeal = function (_this) {
 
-    DEBUG=true;
+
     var _token=_this.state.user_profile.token;
     var _amount = _this.props.deal_info.deal_price;
     var _id = _this.props.deal_info.id;
@@ -176,16 +176,16 @@ DealsStore.confirmDeal = function (_this) {
 
         if(responseData.result == 'error'){
 
-            console.log(_page_name + ' API ERROR:',responseData);
+            if(DEBUG) { console.log(_page_name + ' API ERROR:',responseData);}
 
         } else if(responseData.result == 'success'){
 
-            console.log(_page_name + ' API SUCCESS:',responseData);
+            if(DEBUG) { console.log(_page_name + ' API SUCCESS:',responseData);}
 
             _this.setState({user_profile:_user_profile, blnDoneTransaction:true,strTransDetails:responseData.result});
 
         } else {
-             console.log(_page_name+' responseData failed(update)', responseData);
+             if(DEBUG) { console.log(_page_name+' responseData failed(update)', responseData);}
         }
 
     })
