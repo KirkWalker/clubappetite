@@ -23,6 +23,7 @@ var Users = require('../datalayer/User');
 
 var MyProducts = require('../datalayer/Products');
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
+var Button = require('../modules/Button');
 
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
@@ -103,12 +104,11 @@ class Cart extends Component {
                 <Text style={cartStyles.total}>Total = ${ this.state.cartTotal }</Text>
             </View>
             <View style={cartStyles.moduleCell2}>
-                <TouchableOpacity
+                <Button
                   onPress={this.doCheckout.bind(this)}
-                  style={cartStyles.checkout}
-                  >
-                  <Text style={cartStyles.checkouttext}>CHECKOUT</Text>
-                </TouchableOpacity>
+                  buttonText="CHECKOUT"
+                  buttonColor="green"
+                />
             </View>
           </View>
         </View>
@@ -228,9 +228,11 @@ var Thumb = React.createClass({
         <View style={[cartStyles.buttonContents]}>
 
 
-            <TouchableOpacity onPress={this.del} style={[cartStyles.circle]}>
-              <Text style={[cartStyles.circletext]}>-</Text>
-            </TouchableOpacity>
+            <Button
+              buttonText="-"
+              onPress={this.del}
+              buttonColor="gray"
+            />
 
             <Image
             style={cartStyles.img}
@@ -238,9 +240,11 @@ var Thumb = React.createClass({
             />
 
 
-            <TouchableOpacity onPress={this.add} style={[cartStyles.circle]}>
-              <Text style={[cartStyles.circletext]}>+</Text>
-            </TouchableOpacity>
+            <Button
+              buttonText="+"
+              onPress={this.add}
+              buttonColor="gray"
+            />
 
         </View>
         <View style={cartStyles.qty}>
@@ -377,7 +381,7 @@ button: {
     },
 
     qty: {
-       backgroundColor: '#999999',
+       backgroundColor: 'rgb(188, 188, 188)',
        width:width*.2,
        paddingTop:5,
        paddingBottom:5,
@@ -436,7 +440,6 @@ button: {
     ppptext: {
       color:'white',
       fontWeight:'bold',
-      backgroundColor: 'rgba(0,0,0,0)',
       fontFamily: 'Gill Sans',
 
     },

@@ -94,7 +94,6 @@ class Redeem extends Component {
                     <View style={redeemStyles.buttonContainer}>
                         <Button
                             buttonText="CONFIRM"
-                            buttonColor="green"
                             onPress={() => {
                               this.gotoConfirm();
                             }}
@@ -149,7 +148,7 @@ const redeemStyles = StyleSheet.create({
   },
   buttonContainer: {
   marginTop:5,
-  width: width*.45,
+  width: width*.35,
   },
   errorContainer: {
     marginTop:10,
@@ -170,8 +169,7 @@ const redeemStyles = StyleSheet.create({
     width: width*.9,
     height: height*.35,
     padding:10,
-    backgroundColor: '#FFFFFF',
-
+    backgroundColor: '#F2F2F2'
   },
   header: {
     width: width,
@@ -199,12 +197,6 @@ const redeemStyles = StyleSheet.create({
     color: 'rgb(027, 135, 136)',
     marginTop: height*.015
   },
-  button: {
-    width: width*.23,
-    height: height*.05,
-    marginTop: height*.01,
-    marginBottom: height*.02
-  }
 });
 
 module.exports = Redeem;
