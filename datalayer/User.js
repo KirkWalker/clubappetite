@@ -422,10 +422,10 @@ module.exports = {
                     var user_data = responseData;
                     delete user_data.result;
                     DB.users.add(user_data,function(result){
-                        //if(DEBUG) {
+                        if(DEBUG) {
                         console.log('adding user');
                         console.log(result);
-                        //}
+                        }
                         _this.gotoNext();
                     });
 
@@ -442,6 +442,86 @@ module.exports = {
             })
             .done();
         }
+    },
+
+    updateProfile(_data,_this) {
+
+
+        var API_REQUEST = 'updateProfile:';
+        var _user = _data.credentials;
+
+
+        var api = `https://graph.facebook.com/v2.3/${_user.userId}?fields=name,email,first_name,last_name,gender,link,picture,locale,timezone&access_token=${_user.token}`;
+        var _token = _this.state.user_profile.token;
+
+
+        if(DEBUG) {console.log('Facebook API:',api);}
+        if(DEBUG) {console.log('Facebook _user:',_user);}
+
+        if(_token == undefined || _user == undefined){
+
+            console.log('No token:',_user);
+
+        }else{
+            fetch(api)
+              .then((response) => response.json())
+              .then((responseData) => {
+
+                var URL = SERVER_URL + '?controller=api&action=updateuser&token='+_token;
+                if(DEBUG) {console.log('Facebook Response:',responseData);}
+                if(DEBUG) {console.log('Update with token:',_token);}
+                if(DEBUG) {console.log(API_REQUEST+" URL:",URL);}
+
+                fetch(URL, {
+                    method: 'POST',
+                    headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        first_name: responseData.first_name,
+                        last_name: responseData.last_name,
+                        gender: responseData.gender,
+                        link: responseData.link,
+                        locale: responseData.locale,
+                        token: _token,
+                    }),
+                })
+                .then((response2) => response2.json())
+                .then((responseData2) => {
+
+                    if(responseData2.result == 'error'){
+                        console.log(API_REQUEST+' ERROR:',responseData2);
+                    } else {
+                        console.log(API_REQUEST+' SUCCESS:',responseData2);
+
+                        _this.setState({
+                          user : _data.credentials,
+                          info : {
+                            name : responseData.name,
+                            email: responseData.email,
+                            first_name: responseData.first_name,
+                            last_name: responseData.last_name,
+                            gender: responseData.gender,
+                            link: responseData.link,
+                            picture: responseData.picture,
+                            locale: responseData.locale,
+                          },
+                        });
+
+                    }
+
+
+                 })
+                 .done();
+
+              })
+              .done();
+
+        }
+
+
     }
+
 
 };

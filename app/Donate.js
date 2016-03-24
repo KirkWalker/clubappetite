@@ -68,11 +68,15 @@ class Donate extends Component {
 
 
   setAmount(amt) {
-    this.setState({amount: amt});
+    requestAnimationFrame(() => {
+        this.setState({amount: amt});
+    });
   }
 
   setSchedule(amt) {
-    this.setState({schedule: amt});
+      requestAnimationFrame(() => {
+        this.setState({schedule: amt});
+      });
   }
 
 
@@ -80,7 +84,7 @@ class Donate extends Component {
 
 
   //schedule
-
+//
     return (
       <View style={[donateStyles.container, {backgroundColor: '#efefef'}]}>
 
