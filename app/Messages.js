@@ -93,7 +93,7 @@ class Messages extends Component {
         <Image
           resizeMode="contain" 
           style={MessageStyles.arrow}
-          source={require('../img/NavArrow.png')}
+          source={require('../img/arrow.png')}
         />
       </TouchableOpacity>
     );

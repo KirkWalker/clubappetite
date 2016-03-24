@@ -93,7 +93,7 @@ componentDidMount() {
 				</View>
         <Image
           style={BusinessStyles.arrow}
-          source={require('../img/NavArrow.png')}
+          source={require('../img/arrow.png')}
         />
   		</TouchableOpacity>
   	);

@@ -164,12 +164,15 @@ const shopStyles = StyleSheet.create({
     elevation: 2,
   },
   search: {
-    width: width*.82,
-    height: height*.075,
-    backgroundColor: '#ffffff',
+    padding: 20,
+    elevation: 2,
+    width: width*.72,
+    backgroundColor: '#fff',
     fontFamily: 'Gill Sans',
-    color: 'rgb(239, 186, 026)',
-    paddingLeft: 15,
+    borderColor: '#F0BB1A',
+    borderWidth: 1,
+    borderRadius: 22,
+
   },
   businessDirectoryContainer: {
     flexDirection: 'row',

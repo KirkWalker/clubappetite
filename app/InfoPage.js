@@ -91,7 +91,7 @@ class InfoPage extends Component {
 
     //console.log('state');
     //console.log('renderScene state:',this.state);
-    var src = require('../img/logo.png');
+    var src = require('../img/ClubAppetiteLogo.png');
     if(this.state.logo != ''){
       src = {uri:this.state.logo}
     }
