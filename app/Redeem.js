@@ -13,17 +13,17 @@ import React, {
   View
 } from 'react-native';
 
+var DEBUG = true;
+if (DEBUG) {console.log("Redeem DEBUG flag set\n---------------------");}
+
 var {width, height} = Dimensions.get('window');
-var font = 22;
 
 var Users = require('../datalayer/User');
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
 var styles = require('../styles');
+var Button = require('../modules/Button');
 
-
-
-// var Button = require('../modules/Button');
-
+var font = 22;
 if (PixelRatio.get() <= 2) {
   font = 18;
 }
@@ -34,7 +34,7 @@ class Redeem extends Component {
         super(props);
         this.state = {user_profile: []};
         //result = props.bannerads.getAdData(this);
-
+        console.log("props: ",props);
   }
 
   componentDidMount() {
@@ -49,6 +49,7 @@ class Redeem extends Component {
 
         this.mounted = true;
         Users.getProfile(this);
+        if (DEBUG) {console.log("Received deal_info ",this.props.deal_info);}
   }
 
   componentWillUnmount() {
@@ -78,21 +79,24 @@ class Redeem extends Component {
   renderScene(route, navigator) {
     return (
       <View style={redeemStyles.container}>
-        <Image source={require('../img/shop-gallery/sample-image-3.png')} style={redeemStyles.header} />
+        <Image source={{uri: this.props.deal_info.deal_image}} style={redeemStyles.header} />
         
         <View style={redeemStyles.contentContainer}>
-          <Text style={redeemStyles.title}>Item Title Here</Text>
+          <Text style={redeemStyles.title}>{this.props.deal_info.deal_title}</Text>
           <Text style={redeemStyles.description}>One Line Description</Text>
-          <Text style={redeemStyles.points}>100 Points</Text>
+          <Text style={redeemStyles.points}>{this.props.deal_info.deal_price}</Text>
           <Image source={require('../img/redeem-button.png')} style={redeemStyles.button} />
           <ScrollView>
-            <Text style={redeemStyles.description}>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+            <View>
+              <Text style={redeemStyles.description}>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
 Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
 Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?
 
 Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
 Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
-Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?</Text>
+Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?
+              </Text>
+            </View>
           </ScrollView>
         </View>
       </View>
@@ -104,7 +108,7 @@ const redeemStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F2F2F2',
-    marginTop: 60
+    marginTop: height*0.11,
   },
   contentContainer: {
     top: height*.02,
@@ -128,7 +132,7 @@ const redeemStyles = StyleSheet.create({
   points: {
     fontWeight: '500',
     fontFamily: 'Gill Sans',
-    color: '#1B8889',
+    color: 'rgb(027, 135, 136)',
     marginTop: height*.015
   },
   button: {

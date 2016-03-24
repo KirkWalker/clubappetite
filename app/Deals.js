@@ -14,6 +14,8 @@ import React, {
   InteractionManager,
 } from 'react-native';
 
+var DEBUG = true;
+if (DEBUG) {console.log("Deals.js DEBUG flag set\n---------------------");}
 
 var Users = require('../datalayer/User');
 var MyDeals = require('../datalayer/Deals');
@@ -44,7 +46,6 @@ class Deals extends Component {
   componentDidMount() {
     this.mounted = true;
     Users.getProfile(this);
-    this.gotoRedeem = this.gotoRedeem.bind(this);
     this.gotoDirectory = this.gotoDirectory.bind(this);
     InteractionManager.runAfterInteractions(() => {
       MyDeals.getDealData(this);
@@ -101,7 +102,14 @@ class Deals extends Component {
               <DealItem
                 key={deal.id}
                 item={deal}
-                onPress={this.gotoRedeem(deal)}
+                onPress={() => {
+                  if(DEBUG) {console.log("Pushing deal_id " + deal.id + " to Redeem");}
+                  this.props.navigator.push({
+                    id: 'Redeem',
+                    name: 'Redeem Page',
+                    deal_info: deal,
+                  })}
+                }
               />
             )}
           </View>
@@ -111,18 +119,10 @@ class Deals extends Component {
     );
   }
 
-  gotoRedeem() {
-    this.props.navigator.push({
-      id: 'Redeem',
-      name: 'Redeem Page',
-    });
-  }
-
-  gotoDirectory(deal_info) {
+  gotoDirectory() {
     this.props.navigator.push({
       id: 'BusinessDirectory',
       name: 'Business Directory',
-      deal_info: deal_info,
     });    
   }
 }
