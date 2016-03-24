@@ -84,7 +84,7 @@ class Redeem extends Component {
         <View style={redeemStyles.contentContainer}>
           <Text style={redeemStyles.title}>{this.props.deal_info.deal_title}</Text>
           <Text style={redeemStyles.description}>One Line Description</Text>
-          <Text style={redeemStyles.points}>{this.props.deal_info.deal_price}</Text>
+          <Text style={redeemStyles.points}>{this.props.deal_info.deal_price} Points</Text>
           <Image source={require('../img/redeem-button.png')} style={redeemStyles.button} />
           <ScrollView>
             <View>
