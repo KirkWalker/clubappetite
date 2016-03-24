@@ -370,8 +370,8 @@ button: {
 
     },
     img: {
-      width:90,
-      height: 90,
+      width:90, //width*.3
+      height: 90, //width*.3
       marginLeft: 15,
       marginRight:15,
     },

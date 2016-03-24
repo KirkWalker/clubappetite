@@ -91,7 +91,7 @@ class Checkout extends Component {
                 <Text style={checkoutStyle.headertext}>Your Cart</Text>
              </View>
              <View style={checkoutStyle.headercell2}>
-                <Text>--</Text>
+                <Image source={require('../img/shopping-cart.png')} style={checkoutStyle.shoppingCart}/>
              </View>
           </View>
         </View>
@@ -307,6 +307,11 @@ var checkoutStyle = StyleSheet.create({
       backgroundColor: '#4A8A1D',
       fontFamily: 'Gill Sans',
     },
+  shoppingCart: {
+    width: width*.1,
+    height: width*.1,
+    resizeMode: 'contain'
+  }
 });
 
 
