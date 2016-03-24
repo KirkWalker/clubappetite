@@ -2,7 +2,7 @@ var { View } = require('react-native')
 
 var DB = require('./DB');
 
-var DEBUG = true;
+var DEBUG = false;
 var SERVER_URL = 'http://restapi.clubappetite.com/api.php';
 var _page_name = 'Deals';
 var DealsStore = {};
@@ -66,10 +66,9 @@ DealsStore.fetchData = function (_this, token, current_mod, data) {
     var URL = SERVER_URL + '?controller=api&action=sponsordeals&last_mod='+current_mod+'&token='+token;
     if(DEBUG) { console.log(_page_name+' fetchData:', URL); }
 
-    if (_this.mounted === true){ //very important, keep this from firing multiple times.
 
         fetch(URL, {
-            method: 'POST',
+            method: 'GET',
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
@@ -135,9 +134,67 @@ DealsStore.fetchData = function (_this, token, current_mod, data) {
             console.log(_page_name+' unknown failure(update):', error);
         })
         .done();
-    }
+
 
 };
 
+
+
+DealsStore.confirmDeal = function (_this) {
+
+    DEBUG=true;
+    var _token=_this.state.user_profile.token;
+    var _amount = _this.props.deal_info.deal_price;
+    var _id = _this.props.deal_info.id;
+
+    var _user_profile = _this.state.user_profile;
+    var _user_points = _user_profile.user_points;
+    var _new_user_points = _user_points - _amount;
+
+    _user_profile.user_points = _new_user_points;
+
+
+    var URL = SERVER_URL + '?controller=api&action=confirmdeal';
+    _page_name = 'confirmDeal';
+
+    if(DEBUG) { console.log(_page_name+' fetchData:', URL); }
+
+    fetch(URL, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            token: _token,
+            amount: _amount,
+            deal_id: _id,
+        })
+    })
+    .then((response) => response.json())
+    .then((responseData) => {
+
+        if(responseData.result == 'error'){
+
+            console.log(_page_name + ' API ERROR:',responseData);
+
+        } else if(responseData.result == 'success'){
+
+            console.log(_page_name + ' API SUCCESS:',responseData);
+
+            _this.setState({user_profile:_user_profile, blnDoneTransaction:true,strTransDetails:responseData.result});
+
+        } else {
+             console.log(_page_name+' responseData failed(update)', responseData);
+        }
+
+    })
+    .catch(function(error) {
+        console.log(_page_name+' Network failure (is server offline?):', error);
+    })
+    .done();
+
+
+};
 
 module.exports = DealsStore;

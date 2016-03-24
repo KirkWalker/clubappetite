@@ -23,6 +23,7 @@ var Register = require('./app/Register');
 var Shop = require('./app/Shop');
 var Deals = require('./app/Deals');
 var Redeem = require('./app/Redeem');
+var DealConfirm = require('./app/DealConfirm');
 var Cart = require('./app/Cart');
 var Share = require('./app/Share');
 var ReferAFriend = require('./app/ReferAFriend');
@@ -480,7 +481,35 @@ class AMGSandbox extends Component {
          </Drawer>
        );
     }
-
+    if (routeId === 'DealConfirm') {
+       return (
+       <Drawer
+                  ref={c => this.drawer = c}
+                  type={this.settings.drawerType}
+                  animation={this.settings.animation}
+                  openDrawerOffset={this.settings.openDrawerOffset}
+                  closedDrawerOffset={this.settings.closedDrawerOffset}
+                  panOpenMask={this.settings.panOpenMask}
+                  panCloseMask={this.settings.panCloseMask}
+                  relativeDrag={this.settings.relativeDrag}
+                  panStartCompensation={this.settings.panStartCompensation}
+                  openDrawerThreshold={this.settings.openDrawerThreshold}
+                  content={controlPanel}
+                  styles={drawerStyles}
+                  disabled={this.settings.disabled}
+                  tweenHandler={this.tweenHandler}
+                  tweenDuration={this.settings.tweenDuration}
+                  tweenEasing={this.settings.tweenEasing}
+                  negotiatePan={false}
+                >
+         <DealConfirm
+           navigator={navigator}
+           openDrawer={this.openDrawer}
+           deal_info={route.deal_info}
+         />
+         </Drawer>
+       );
+    }
     if (routeId === 'Share') {
       return (
       <Drawer

@@ -175,6 +175,7 @@ const buttonStyles = StyleSheet.create({
     paddingRight: 12,
     paddingLeft: 12,
     fontFamily: 'Gill Sans',
+    textAlign:'center',
   },
   buttonImage: {
     resizeMode: 'contain',

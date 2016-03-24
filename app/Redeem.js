@@ -13,7 +13,7 @@ import React, {
   View
 } from 'react-native';
 
-var DEBUG = true;
+var DEBUG = false;
 if (DEBUG) {console.log("Redeem DEBUG flag set\n---------------------");}
 
 var {width, height} = Dimensions.get('window');
@@ -34,7 +34,7 @@ class Redeem extends Component {
         super(props);
         this.state = {user_profile: []};
         //result = props.bannerads.getAdData(this);
-        console.log("props: ",props);
+        //console.log("props: ",props);
   }
 
   componentDidMount() {
@@ -79,29 +79,65 @@ class Redeem extends Component {
   renderScene(route, navigator) {
     return (
       <View style={redeemStyles.container}>
-        <Image source={{uri: this.props.deal_info.deal_image}} style={redeemStyles.header} />
-        
+        <View style={redeemStyles.imageContainer}>
+          <Image source={{uri: this.props.deal_info.deal_image}} style={redeemStyles.header} />
+        </View>
         <View style={redeemStyles.contentContainer}>
           <Text style={redeemStyles.title}>{this.props.deal_info.deal_title}</Text>
-          <Text style={redeemStyles.description}>One Line Description</Text>
+          <Text style={redeemStyles.description}>{this.props.deal_info.deal_short_desc}</Text>
           <Text style={redeemStyles.points}>{this.props.deal_info.deal_price} Points</Text>
-          <Image source={require('../img/redeem-button.png')} style={redeemStyles.button} />
-          <ScrollView>
-            <View>
-              <Text style={redeemStyles.description}>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
-Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?
 
-Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
-Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?
-              </Text>
-            </View>
-          </ScrollView>
+
+            {(() => {
+                if((this.state.user_profile.user_points-this.props.deal_info.deal_price) > 0){
+                    return (
+                    <View style={redeemStyles.buttonContainer}>
+                        <Button
+                            buttonText="CONFIRM"
+                            buttonColor="green"
+                            onPress={() => {
+                              this.gotoConfirm();
+                            }}
+                         />
+                    </View>
+                    );
+                }else{
+                    return (
+                    <View style={redeemStyles.errorContainer}>
+                        <Text style={redeemStyles.errortext}>Sorry, You do not have{'\n'}enough points for this item</Text>
+                    </View>
+                    );
+                }
+
+            })()}
+
+
+
+
         </View>
+        <View style={redeemStyles.scrollview}>
+        <ScrollView>
+
+           <Text style={redeemStyles.description}>{this.props.deal_info.deal_desc}</Text>
+
+        </ScrollView>
+        </View>
+
       </View>
     );
   }
+
+    gotoConfirm() {
+      this.props.navigator.push({
+        id: 'DealConfirm',
+        name: 'Deal Confirm',
+        deal_info: this.props.deal_info,
+      });
+    }
+
+
+
+
 }
 
 const redeemStyles = StyleSheet.create({
@@ -109,11 +145,33 @@ const redeemStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F2F2F2',
     marginTop: height*0.11,
+    alignItems:'center',
   },
+  buttonContainer: {
+  marginTop:5,
+  width: width*.45,
+  },
+  errorContainer: {
+    marginTop:10,
+    marginBottom:10,
+    width: width*.9,
+    alignItems:'center',
+  },
+  imageContainer: {
+      width: width,
+    },
   contentContainer: {
     top: height*.02,
     left: width*.05,
-    width: width*.9
+    width: width*.9,
+    marginBottom:20,
+  },
+  scrollview: {
+    width: width*.9,
+    height: height*.35,
+    padding:10,
+    backgroundColor: '#FFFFFF',
+
   },
   header: {
     width: width,
@@ -125,9 +183,15 @@ const redeemStyles = StyleSheet.create({
     fontFamily: 'Gill Sans'
   },
   description: {
+      fontWeight: '300',
+      fontFamily: 'Gill Sans',
+      color: '#a3a3a3'
+  },
+  errortext: {
     fontWeight: '300',
     fontFamily: 'Gill Sans',
-    color: '#a3a3a3'
+    color: 'red',
+    textAlign:'center',
   },
   points: {
     fontWeight: '500',
