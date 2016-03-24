@@ -1,5 +1,4 @@
 'use strict';
-
 var React = require('react-native');
 var {
   Component,
@@ -66,7 +65,7 @@ class SplashPage extends Component {
       <View>
 
         <View style={splashStyle.bgContainer}>
-            <Image style={splashStyle.background} resizeMode="cover" source={require('../img/splash-bg-sm.png')} />
+            <Image style={splashStyle.background} resizeMode="cover" source={require('../img/splash-bg.jpg')} />
         </View>
 
         <View style={splashStyle.container}>      
@@ -106,8 +105,8 @@ var splashStyle = StyleSheet.create({
     alignItems: 'center'
   },
   hex: {
-    width: width*.95,
-    height: height*.82,
+    width: width*.85,
+    height: height*.70,
     alignItems: 'stretch',
   },
   pointcontainer :{

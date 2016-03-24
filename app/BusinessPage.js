@@ -80,15 +80,15 @@ class BusinessPage extends Component {
 
           <View style={PageStyles.contactContainer}>
             <View style={PageStyles.contactRow}>
-              <Image style={PageStyles.icon} resizeMode="contain" source={require('../img/email-icon-sm.png')}/>
+              <Image style={PageStyles.icon} resizeMode="contain" source={require('../img/email-icon.png')}/>
               <Text style={PageStyles.grayText}>{this.props.business_info.sponsor_email}</Text>
             </View>
             <View style={PageStyles.contactRow}>
-              <Image style={PageStyles.icon} resizeMode="contain" source={require('../img/phone-icon-sm.png')}/>
+              <Image style={PageStyles.icon} resizeMode="contain" source={require('../img/phone-icon.png')}/>
               <Text style={PageStyles.grayText}>{this.props.business_info.sponsor_tel}</Text>
             </View>
             <View style={PageStyles.contactRow}>
-              <Image style={PageStyles.icon} resizeMode="contain" source={require('../img/website-icon-sm.png')}/>
+              <Image style={PageStyles.icon} resizeMode="contain" source={require('../img/website-icon.png')}/>
               <Text style={PageStyles.grayText}>{this.props.business_info.sponsor_url}</Text>
             </View>
           </View>

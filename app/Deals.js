@@ -209,14 +209,14 @@ const shopStyles = StyleSheet.create({
     borderColor: '#000',
   },
   search: {
-    padding: height*.035,
+    padding: 20,
     elevation: 2,
     width: width*.72,
     backgroundColor: '#fff',
     fontFamily: 'Gill Sans',
     borderColor: '#F0BB1A',
     borderWidth: 1,
-    borderRadius: 25,
+    borderRadius: 22,
   },
   businessDirectoryContainer: {
     flexDirection: 'row',

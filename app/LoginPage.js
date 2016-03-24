@@ -43,7 +43,7 @@ class LoginPage extends Component {
         <View>
 
           <View style={loginStyles.bgContainer}>
-              <Image style={loginStyles.background} source={require('../img/splash-bg-sm.png')} />
+              <Image style={loginStyles.background} source={require('../img/splash-bg.jpg')} />
           </View>
 
           <View style={loginStyles.container} marginTop={50}>

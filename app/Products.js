@@ -39,7 +39,7 @@ class Products extends Component {
             <View style={productsStyles.productViewContainerRow}>
               <View style={productsStyles.productContainer}>
                 <Image source={require('../img/shop-gallery/sample-image-3.png')} style={productsStyles.productImage}>
-                  <Image source={require('../img/points-container.png')} style={productsStyles.pointsContainer}>
+                  <Image source={require('../img/shop-points-container.png')} style={productsStyles.pointsContainer}>
                     <Text style={productsStyles.points}>500</Text>
                   </Image>
                   <Text style={productsStyles.productTitle}>Deal Title</Text>
@@ -56,7 +56,7 @@ class Products extends Component {
             <View style={productsStyles.productViewContainerRow}>
               <View style={productsStyles.productContainer}>
                 <Image source={require('../img/shop-gallery/sample-image-2.png')} style={productsStyles.productImage}>
-                  <Image source={require('../img/points-container.png')} style={productsStyles.pointsContainer}>
+                  <Image source={require('../img/shop-points-container.png')} style={productsStyles.pointsContainer}>
                     <Text style={productsStyles.points}>500</Text>
                   </Image>
                   <Text style={productsStyles.productTitle}>Deal Title</Text>
@@ -73,7 +73,7 @@ class Products extends Component {
             <View style={productsStyles.productViewContainerRow}>
               <View style={productsStyles.productContainer}>
                 <Image source={require('../img/shop-gallery/sample-image-1.png')} style={productsStyles.productImage}>
-                  <Image source={require('../img/points-container.png')} style={productsStyles.pointsContainer}>
+                  <Image source={require('../img/shop-points-container.png')} style={productsStyles.pointsContainer}>
                     <Text style={productsStyles.points}>500</Text>
                   </Image>
                   <Text style={productsStyles.productTitle}>Deal Title</Text>
@@ -90,7 +90,7 @@ class Products extends Component {
             <View style={productsStyles.productViewContainerRow}>
               <View style={productsStyles.productContainer}>
                 <Image source={require('../img/shop-gallery/sample-image-2.png')} style={productsStyles.productImage}>
-                  <Image source={require('../img/points-container.png')} style={productsStyles.pointsContainer}>
+                  <Image source={require('../img/shop-points-container.png')} style={productsStyles.pointsContainer}>
                     <Text style={productsStyles.points}>500</Text>
                   </Image>
                   <Text style={productsStyles.productTitle}>Deal Title</Text>
