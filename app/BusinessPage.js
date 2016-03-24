@@ -112,7 +112,7 @@ const PageStyles = StyleSheet.create({
   },
   logoContainer: {
     flex: 60,
-    paddingTop: 90,
+    paddingTop: HEIGHT*0.11,
     alignItems: 'center',
   },
   logo: {

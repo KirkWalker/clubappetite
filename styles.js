@@ -15,14 +15,9 @@ module.exports = StyleSheet.create({
         flex: 1,
         width: null,
         height: null,
-        backgroundColor: 'rgba(0,0,0,0)',
-        paddingTop:60,
+        backgroundColor: 'white',
+        paddingTop:height*0.11,
         alignItems: 'center',
-    },
-    imageContainer: {
-        justifyContent: 'center',
-        backgroundColor: 'rgba(0,0,0,0)',
-        marginTop:60,
     },
     centerContent: {
         alignItems: 'center',

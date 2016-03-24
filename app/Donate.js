@@ -161,8 +161,7 @@ var donateStyles = StyleSheet.create({
     height: null,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 50,
-    paddingTop: 20,
+    marginTop: height*0.11,
   },
   module: {
     flex: 3,

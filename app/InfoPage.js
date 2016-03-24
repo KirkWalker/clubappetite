@@ -141,7 +141,7 @@ const InfoStyles = StyleSheet.create({
     backgroundColor: '#f2f2f2',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop:150,
+    paddingTop:height*0.11+80,
   },
   webView: {
       backgroundColor: 'rgba(255,255,255,0.8)',

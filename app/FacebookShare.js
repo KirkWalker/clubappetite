@@ -320,7 +320,7 @@ var FacebookLoginButton = React.createClass({
 
 const shareStyles = StyleSheet.create({
   loginContainer: {
-    marginTop: 150,
+    marginTop: height*0.11+80,
 
     flex: 1,
     alignItems: 'center',
