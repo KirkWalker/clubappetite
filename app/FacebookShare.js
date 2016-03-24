@@ -67,8 +67,8 @@ class FacebookShare extends Component {
 
       FBLoginManager.getCredentials(function(error, data){
         if (!error) {
-          console.log("Existing login found.",data.credentials);
-          console.log("FBLoginManager",FBLoginManager);
+          //console.log("Existing login found.",data.credentials);
+          //console.log("FBLoginManager",FBLoginManager);
           _this.setState({ user : data.credentials });
         } else {
            //console.log("login not found.");
@@ -266,11 +266,7 @@ var ShareForm = React.createClass({
 
     var api = `https://graph.facebook.com/${_user.userId}/feed?message=${_message}&access_token=${_user.token}`;
 
-
-
-
-
-            console.log('postFBmessage upgrade api', api);
+    console.log('postFBmessage upgrade api', api);
 
     fetch(api)
       .then((response) => response.json())
