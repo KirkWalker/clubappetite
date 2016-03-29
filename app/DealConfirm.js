@@ -19,7 +19,7 @@ if (DEBUG) {console.log("Redeem DEBUG flag set\n---------------------");}
 var {width, height} = Dimensions.get('window');
 
 var Users = require('../datalayer/User');
-var Deals = require('../datalayer/Deals');
+var Deals = require('../datalayer/WebAPI');
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
 var styles = require('../styles');
 var Button = require('../modules/Button');

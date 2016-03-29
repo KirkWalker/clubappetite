@@ -21,7 +21,7 @@ var styles = require('../styles');
 
 var Users = require('../datalayer/User');
 
-var MyProducts = require('../datalayer/Products');
+var MyProducts = require('../datalayer/WebAPI');
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
 
 var width = Dimensions.get('window').width;
@@ -32,14 +32,14 @@ class Cart extends Component {
 
   constructor(props) {
       super(props);
-      this.state = {user_profile: [], ProductArray: [], cartTotal: 0};
+      this.state = {user_profile: [], DataArray: [], cartTotal: 0};
   }
 
   componentDidMount() {
       this.mounted = true;
       Users.getProfile(this);
       InteractionManager.runAfterInteractions(() => {
-          MyProducts.getProductData(this);
+          MyProducts.getData(this, "products");
       });
   }
 
@@ -49,8 +49,8 @@ class Cart extends Component {
 
   render() {
 
-    if(this.state.ProductArray.length > 0 && this.mounted){
-      //console.log('ProductArray::',this.state.ProductArray);
+    if(this.state.DataArray.length > 0 && this.mounted){
+      //console.log('DataArray::',this.state.DataArray);
     }
 
     var data = [];
@@ -87,7 +87,7 @@ class Cart extends Component {
                   contentOffset={{x:-65}}
                   pagingEnabled={false}
                   style={[cartStyles.scrollView, cartStyles.horizontalScrollView]}>
-                  {this.state.ProductArray.map((obj, i) => <Thumb
+                  {this.state.DataArray.map((obj, i) => <Thumb
                                                               key={i}
                                                               obj={obj}
                                                               addProduct={(idx) => this.addProduct(idx,this)}
@@ -145,44 +145,44 @@ class Cart extends Component {
 
   addProduct(idx,_this){
 
-    var ProductArray =_this.state.ProductArray;
+    var DataArray =_this.state.DataArray;
     var current_qty = 0;
     var current_total = 0;
 
-    for(var i=0;i<ProductArray.length;i++){
-        if(ProductArray[i].id == idx){
-            current_qty = ProductArray[i].user_qty;
+    for(var i=0;i<DataArray.length;i++){
+        if(DataArray[i].id == idx){
+            current_qty = DataArray[i].user_qty;
             current_qty ++;
-            ProductArray[i].user_qty = current_qty;
+            DataArray[i].user_qty = current_qty;
         }
-        current_total += (ProductArray[i].user_qty * ProductArray[i].product_price)
+        current_total += (DataArray[i].user_qty * DataArray[i].product_price)
     }
 
     current_total = current_total.toFixed(2)
-    _this.setState({ProductArray : ProductArray, cartTotal:current_total });
+    _this.setState({DataArray : DataArray, cartTotal:current_total });
 
   }
 
   delProduct(idx,_this){
 
-    var ProductArray =_this.state.ProductArray;
+    var DataArray =_this.state.DataArray;
     var current_qty = 0;
     var current_total = 0;
 
-    for(var i=0;i<ProductArray.length;i++){
-        if(ProductArray[i].id == idx){
-            current_qty = ProductArray[i].user_qty;
+    for(var i=0;i<DataArray.length;i++){
+        if(DataArray[i].id == idx){
+            current_qty = DataArray[i].user_qty;
             current_qty --;
             if(current_qty < 0) { current_qty = 0; }
 
-            ProductArray[i].user_qty = current_qty;
+            DataArray[i].user_qty = current_qty;
         }
-        current_total += (ProductArray[i].user_qty * ProductArray[i].product_price)
+        current_total += (DataArray[i].user_qty * DataArray[i].product_price)
     }
 
     current_total = current_total.toFixed(2)
     if(current_total < 0) { current_total = 0; }
-    _this.setState({ProductArray : ProductArray, cartTotal:current_total});
+    _this.setState({DataArray : DataArray, cartTotal:current_total});
 
   }
 
@@ -191,7 +191,7 @@ class Cart extends Component {
     this.props.navigator.push({
       id: 'Checkout',
       name: 'Checkout Page',
-      details: {ProductArray : this.state.ProductArray, cartTotal:this.state.cartTotal}
+      details: {DataArray : this.state.DataArray, cartTotal:this.state.cartTotal}
     });
   }
 }

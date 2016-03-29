@@ -3,32 +3,34 @@ var DB = require('./DB');
 
 var SERVER_URL = 'http://restapi.clubappetite.com/api.php?controller=api&action=';
 var _page_name = '';
+var database;
 var InfoStore = {};
 var listView = false;
 
-var DEBUG = false;
-if (DEBUG) { console.log('DBmethods DEBUG flag is set/n-------------------------'); }
+var DEBUG = true;
+if (DEBUG) { console.log('DBmethods DEBUG flag is set\n---------------------------'); }
 
-InfoStore.getData = function(_this, database) {
+InfoStore.getData = function(_this, db) {
 	var self = this;
 	var current_mod = '1900-01-01 12:00:00';
-	_page_name = database;
+	_page_name = db;
+	database = DB.get(db);
 
 	/*
-	 * If statement keeps this from firing multiple times.
+	 * if-statement keeps this from firing multiple times.
 	 *
 	 * Check to see if the datalayer has the latest version of the
 	 * requested information. If a record exists in the local datalayer
 	 * we skip ahead and set the state with the result set.
 	 */
 	if (_this.mounted === true) {
-		DB.database.get_all(function(results) {
+		database.get_all(function(results) {
 			var token = _this.state.user_profile.token;
 			
 			// If there is no data in the local datalayer
 			if(results.totalrows == 0) {
 				if(token != undefined) {
-					self.fetchData(_this, token, current_mod, '', database);
+					self.fetchData(_this, token, current_mod, '');
 				}
 			}
 			else {
@@ -39,21 +41,22 @@ InfoStore.getData = function(_this, database) {
 
 				current_mod = nk[0].max_mod;
 				if(token != undefined) {
-					self.fetchData(_this, token, current_mod, nk, database);
+					self.fetchData(_this, token, current_mod, nk);
 				}
 			}
 		});
 	}
 };
 
-InfoStore.fetchData = function(_this, token, current_mod, data, database) {
+InfoStore.fetchData = function(_this, token, current_mod, data) {
 	// if the data is to be used in a ListView, this needs to be set to true
-	if (database == "messages" || database == "directory") { listView = true; }
+	if (_page_name == "messages" || _page_name == "sponsors") { listView = true; }
+	else { listView = false; }
 
-	var URL = SERVER_URL + database + '&last_mod=' + current_mod + '&token=' + token;
+	var URL = SERVER_URL + _page_name + '&last_mod=' + current_mod + '&token=' + token;
 	if (DEBUG) { console.log(_page_name + ' fetchData: ', URL); }
 
-	// If statement to keep this from firing multiple times.
+	// if-statement to keep this from firing multiple times.
 	if (_this.mounted === true) {
 		fetch(URL, {
 			method: 'POST',
@@ -65,9 +68,12 @@ InfoStore.fetchData = function(_this, token, current_mod, data, database) {
 		.then((response) => response.json())
 		.then((responseData) => {
 
+			/* If the responseData returns an error */
 			if(responseData.result == 'error') {
 				console.log(_page_name + ' API ERROR: ', responseData);
 			}
+
+			/* If the responseData returns a successful result */
 			else if (responseData.result == 'success') {
 				delete responseData.result;
 
@@ -76,9 +82,9 @@ InfoStore.fetchData = function(_this, token, current_mod, data, database) {
 
 					// If this is the first time, we create the table
 					if (current_mod == '1900-01-01 12:00:00') {
-						DB.database.add(responseData, function(result) {
+						database.add(responseData, function(result) {
 							if (DEBUG) {
-								console.log(_page_name + ' Adding ' + database);
+								console.log(_page_name + ' Adding ' + _page_name);
 								console.log(result);
 								console.log(_page_name + ' Setting state: ', responseData.details);
 							}
@@ -98,13 +104,14 @@ InfoStore.fetchData = function(_this, token, current_mod, data, database) {
 							}
 						});
 					}
+					// If not, we update the table instead
 					else {
-						DB.database.update(
+						database.update(
 							{ max_mod: current_mod },
 							{ details: responseData.details, max_mod: responseData.max_mod },
 							function(updated_table) {
 								if (DEBUG) {
-									console.log(_page_name + ' Updating ' + database);
+									console.log(_page_name + ' Updating ' + _page_name);
 									console.log(updated_table.database);
 									console.log(_page_name + ' Setting state:', responseData.details);
 								}
@@ -150,6 +157,8 @@ InfoStore.fetchData = function(_this, token, current_mod, data, database) {
 					}
 				}
 			}
+
+			/* If the responseData returns any other result */
 			else {
 				console.log(_page_name + ' responseData failed(update)', responseData);
 			}
@@ -187,7 +196,7 @@ InfoStore.confirmDeal = function (_this) {
   		'Accept': 'application/json',
   		'Content-Type': 'application.json',
   	},
-  	body: JSON.strigify({
+  	body: JSON.stringify({
   		token: _token,
   		amount: _amount,
   		deal_id: _id,
@@ -204,7 +213,7 @@ InfoStore.confirmDeal = function (_this) {
 
   		_this.setState({user_profile: _user_profile,
   			blnDoneTransaction: true,
-  			strTransDetails: reponseData.result
+  			strTransDetails: responseData.result
   		});
   	}
   	else {

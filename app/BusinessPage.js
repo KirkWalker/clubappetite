@@ -18,12 +18,11 @@ if (DEBUG) {console.log("BusinessPAGE DEBUG flag set\n---------------------");}
 
 var styles = require('../styles');
 
-var Directory = require('../datalayer/Directory.js');
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
 var Users = require('../datalayer/User');
 
 
-/* BusinessDirectory Component */
+/* BusinessPage Component */
 class BusinessPage extends Component {
 
   constructor(props) {
@@ -36,7 +35,6 @@ class BusinessPage extends Component {
     this.mounted = true;
 
     Users.getProfile(this);
-    //Directory.getDirectoryData(this);
   }
 
   componentWillUnmount() {

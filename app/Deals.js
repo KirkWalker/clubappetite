@@ -18,7 +18,7 @@ var DEBUG = false;
 if (DEBUG) {console.log("Deals.js DEBUG flag set\n---------------------");}
 
 var Users = require('../datalayer/User');
-var MyDeals = require('../datalayer/Deals');
+var MyDeals = require('../datalayer/WebAPI');
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
 var styles = require('../styles');
 
@@ -33,7 +33,7 @@ class Deals extends Component {
 
   constructor(props) {
         super(props);
-        this.state = {user_profile: [], DealArray: []};
+        this.state = {user_profile: [], DataArray: []};
   }
 
   /*
@@ -48,7 +48,7 @@ class Deals extends Component {
     Users.getProfile(this);
     this.gotoDirectory = this.gotoDirectory.bind(this);
     InteractionManager.runAfterInteractions(() => {
-      MyDeals.getDealData(this);
+      MyDeals.getData(this, "sponsordeals");
     });
   }
 
@@ -98,7 +98,7 @@ class Deals extends Component {
 
         <ScrollView>
           <View style={shopStyles.imageContainer}>
-            {this.state.DealArray.map((deal) => 
+            {this.state.DataArray.map((deal) => 
               <DealItem
                 key={deal.id}
                 item={deal}

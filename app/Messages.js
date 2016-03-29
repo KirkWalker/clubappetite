@@ -21,7 +21,7 @@ if (DEBUG) {console.log("Messages.js DEBUG flag set\n---------------------");}
 var styles = require('../styles');
 
 var Users = require('../datalayer/User');
-var MyMessages = require('../datalayer/Messages');
+var MyMessages = require('../datalayer/WebAPI');
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
 
 class Messages extends Component {
@@ -42,7 +42,7 @@ class Messages extends Component {
     this.mounted = true;
     Users.getProfile(this);
     InteractionManager.runAfterInteractions(() => {
-      MyMessages.getMessageData(this);
+      MyMessages.getData(this, "messages");
     });
   }
 

@@ -19,7 +19,7 @@ var styles = require('../styles');
 
 var Users = require('../datalayer/User');
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
-var MyProducts = require('../datalayer/Products');
+var MyProducts = require('../datalayer/WebAPI');
 
 var font = 20;
 if (PixelRatio.get() <= 2) {
@@ -33,7 +33,7 @@ class Checkout extends Component {
 
   constructor(props) {
       super(props);
-      this.state = {user_profile: [], ProductArray: [], cartTotal: this.props.details.cartTotal};
+      this.state = {user_profile: [], DataArray: [], cartTotal: this.props.details.cartTotal};
 
   }
 
@@ -44,14 +44,14 @@ class Checkout extends Component {
         Users.getProfile(this);
 
         //strip out any products not being purchased
-        var ProductArray =[];
-        for(var i=0;i<this.props.details.ProductArray.length;i++){
-         if(this.props.details.ProductArray[i].user_qty > 0){
-             console.log('adding'+this.props.details.ProductArray[i].id+':',this.props.details.ProductArray[i].user_qty);
-             ProductArray[i] = this.props.details.ProductArray[i];
+        var DataArray =[];
+        for(var i=0;i<this.props.details.DataArray.length;i++){
+         if(this.props.details.DataArray[i].user_qty > 0){
+             console.log('adding'+this.props.details.DataArray[i].id+':',this.props.details.DataArray[i].user_qty);
+             DataArray[i] = this.props.details.DataArray[i];
          }
         }
-        this.setState({ProductArray : ProductArray});
+        this.setState({DataArray : DataArray});
     });
   }
 
@@ -105,7 +105,7 @@ class Checkout extends Component {
               showsVerticalScrollIndicator={true}
               scrollEnabled={true}
               >
-              {this.state.ProductArray.map((obj, i) => <TableRow key={i} obj={obj} />)}
+              {this.state.DataArray.map((obj, i) => <TableRow key={i} obj={obj} />)}
             </ScrollView>
 
 
@@ -153,7 +153,7 @@ class Checkout extends Component {
     this.props.navigator.push({
       id: 'Payment',
       name: 'Payment Page',
-      details: {amount:this.state.cartTotal, ProductArray : this.state.ProductArray}
+      details: {amount:this.state.cartTotal, DataArray : this.state.DataArray}
     });
   }
 

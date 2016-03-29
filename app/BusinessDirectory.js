@@ -21,7 +21,7 @@ var Users = require('../datalayer/User');
 
 var styles = require('../styles');
 
-var Directory = require('../datalayer/Directory.js');
+var Directory = require('../datalayer/WebAPI');
 
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
 
@@ -44,7 +44,7 @@ componentDidMount() {
   this.mounted = true;
   Users.getProfile(this);
   InteractionManager.runAfterInteractions(() => {
-      Directory.getDirectoryData(this);
+      Directory.getData(this, "sponsors");
   });
  }
 

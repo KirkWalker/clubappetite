@@ -19,7 +19,6 @@ if (DEBUG) {console.log("MessageDetail DEBUG flag set\n---------------------");}
 var styles = require('../styles');
 
 var Users = require('../datalayer/User');
-var Messages = require('../datalayer/Messages.js');
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
 
 /* BusinessDirectory Component */
