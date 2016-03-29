@@ -441,7 +441,7 @@ button: {
       color:'white',
       fontWeight:'bold',
       fontFamily: 'Gill Sans',
-      backgroundColor: 'rgba(0,0,0,0)',
+      backgroundColor: 'rgb(074, 138, 029)',
     },
 });
 
