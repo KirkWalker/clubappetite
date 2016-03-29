@@ -13,7 +13,7 @@ var {
 var styles = require('../styles');
 
 var Users = require('../datalayer/User');
-var MyDirectory = require('../datalayer/Directory');
+var MyDirectory = require('../datalayer/WebAPI');
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
 var BusinessDirectory = require('./BusinessDirectory');
 var BusinessPage = require('./BusinessPage');
@@ -28,7 +28,7 @@ class Shop extends Component {
   componentDidMount() {
       this.mounted = true;
       Users.getProfile(this);
-      MyDirectory.getDirectoryData(this);
+      MyDirectory.getData(this, "sponsors");
   }
 
   componentWillUnmount() {
