@@ -81,7 +81,7 @@ class DealConfirm extends Component {
     return (
       <View style={redeemStyles.container}>
         <View style={redeemStyles.imageContainer}>
-          <Image source={require('../img/logo-white.png')} style={redeemStyles.logo} />
+          <Image source={require('../img/shop-appetite-white.png')} style={redeemStyles.logo} />
         </View>
         <View style={redeemStyles.contentContainer}>
 
