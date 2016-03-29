@@ -39,7 +39,7 @@ module.exports = React.createClass({
           <Section
             id='Shop'
             name='Shop Appetite'
-            gotoShop={this.props.gotoDirectory}
+            gotoDeals={this.props.gotoDeals}
             text="Shop Appetite" />
 
           <Section
@@ -118,8 +118,8 @@ var Section = React.createClass({
       if (this.props.handleLogout)
         this.props.handleLogout();
 
-      if (this.props.gotoShop)
-        this.props.gotoShop();
+      if (this.props.gotoDeals)
+        this.props.gotoDeals();
 
       if (this.props.gotoDirectory)
         this.props.gotoDirectory();

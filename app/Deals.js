@@ -169,11 +169,7 @@ const shopStyles = StyleSheet.create({
     width: width*.72,
     backgroundColor: '#fff',
     fontFamily: 'Gill Sans',
-    borderColor: '#F0BB1A',
-    borderWidth: 1,
-    borderRadius: 22,
-
-  },
+   },
   businessDirectoryContainer: {
     flexDirection: 'row',
     width: width,
