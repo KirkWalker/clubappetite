@@ -11,12 +11,14 @@ import React, {
   Dimensions,
   PixelRatio,
   ScrollView,
+  Modal,
 } from 'react-native';
 
-var DEBUG = false;
+var DEBUG = true;
 if (DEBUG) {console.log("BusinessPAGE DEBUG flag set\n---------------------");}
 
 var styles = require('../styles');
+var Button = require('../modules/Button');
 
 var Directory = require('../datalayer/Directory.js');
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
@@ -28,6 +30,7 @@ class BusinessPage extends Component {
 
   constructor(props) {
     super(props);
+    this.phoneModal = this.phoneModal.bind(this);
     this.state = {user_profile: []}
   }
 
@@ -83,10 +86,9 @@ class BusinessPage extends Component {
               <Image style={PageStyles.icon} resizeMode="contain" source={require('../img/email-icon.png')}/>
               <Text style={PageStyles.grayText}>{this.props.business_info.sponsor_email}</Text>
             </View>
-            <View style={PageStyles.contactRow}>
-              <Image style={PageStyles.icon} resizeMode="contain" source={require('../img/phone-icon.png')}/>
-              <Text style={PageStyles.grayText}>{this.props.business_info.sponsor_tel}</Text>
-            </View>
+            {(() => {
+              return this.phoneModal();
+            })()}
             <View style={PageStyles.contactRow}>
               <Image style={PageStyles.icon} resizeMode="contain" source={require('../img/website-icon.png')}/>
               <Text style={PageStyles.grayText}>{this.props.business_info.sponsor_url}</Text>
@@ -97,6 +99,64 @@ class BusinessPage extends Component {
         </View>
       </ScrollView>
   	);
+  }
+
+  phoneModal() {
+    return(
+      <View>
+        <View style={PageStyles.contactRow}>
+          <Image style={PageStyles.icon} resizeMode="contain" source={require('../img/phone-icon.png')}/>
+          <Text
+            style={PageStyles.grayText}
+            onPress={() => {
+            console.log("props: ", this.props);
+            console.log("refs: ", this.refs);
+            this.refs.phone_modal.show();
+        }}
+            >
+            {this.props.business_info.sponsor_tel}
+          </Text>
+        </View>
+        <PhoneModal
+          {...this.props}
+          ref={'phone_modal'}
+        />
+      </View>
+    )
+  }
+}
+
+class PhoneModal extends Component {
+  show() {
+    this.setState({
+      modalVisible: true,
+    });
+  }
+
+  constructor(props){
+    super(props);
+    this.state = {
+      modalVisible: true,
+    }
+  }
+
+  render() {
+    return(
+      <Modal
+        animated={true}
+        transparent={false}
+        visible={this.state.modalVisible}
+      >
+        <View style={PageStyles.modalContainer}>
+          <Image style={PageStyles.icon} resizeMode="contain" source={require('../img/phone-icon.png')}/>
+          <Text style={PageStyles.modalText}>{this.props.business_info.sponsor_tel}</Text>
+          <View style={PageStyles.modalButtonContainer}>
+            <Button buttonText="Call" />
+            <Button buttonText="Cancel" />
+          </View>
+        </View>
+      </Modal>
+    );
   }
 }
 //Variables for styling. Used for scaling.
@@ -182,6 +242,22 @@ const PageStyles = StyleSheet.create({
     color: 'gray',
     fontWeight: '500',
   },
+  modalContainer: {
+    height: HEIGHT,
+    width: WIDTH,
+    backgroundColor: 'rgb(027, 135, 136)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalButtonContainer: {
+    flexDirection: 'row',
+  },
+  modalText: {
+    fontSize: 20,
+    fontFamily: 'Gill Sans',
+    color: 'white',
+    borderRadius: 1, borderColor: 'red', borderStyle: 'solid',
+  }
 });
 
 module.exports = BusinessPage;
