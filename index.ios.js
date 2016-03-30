@@ -818,13 +818,32 @@ class AMGSandbox extends Component {
     }
     if (routeId === 'BusinessDirectory') {
       return (
-
+      <Drawer
+                 ref={c => this.drawer = c}
+                 type={this.settings.drawerType}
+                 animation={this.settings.animation}
+                 openDrawerOffset={this.settings.openDrawerOffset}
+                 closedDrawerOffset={this.settings.closedDrawerOffset}
+                 panOpenMask={this.settings.panOpenMask}
+                 panCloseMask={this.settings.panCloseMask}
+                 relativeDrag={this.settings.relativeDrag}
+                 panStartCompensation={this.settings.panStartCompensation}
+                 openDrawerThreshold={this.settings.openDrawerThreshold}
+                 content={controlPanel}
+                 styles={drawerStyles}
+                 disabled={this.settings.disabled}
+                 tweenHandler={this.tweenHandler}
+                 tweenDuration={this.settings.tweenDuration}
+                 tweenEasing={this.settings.tweenEasing}
+                 negotiatePan={false}
+               >
         <BusinessDirectory
           navigator={navigator}
           openDrawer={this.openDrawer}
           pageName="Business Directory"
           id={routeId}
         />
+      </Drawer>
       );
     }
     if (routeId === 'BusinessPage') {
