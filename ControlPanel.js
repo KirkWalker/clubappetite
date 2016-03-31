@@ -4,10 +4,14 @@ var {
   View,
   Text,
   ScrollView,
+  Image,
+  Dimensions,
+  StyleSheet,
   TouchableHighlight
 } = React
 
 var styles = require('./styles');
+var {width, height} = Dimensions.get('window');
 
 module.exports = React.createClass({
 
@@ -49,12 +53,6 @@ module.exports = React.createClass({
             text="My Profile" />
 
           <Section
-            id='Share'
-            name='Share'
-            gotoShare={this.props.gotoShare}
-            text="Share" />
-
-          <Section
             id='Messages'
             name='Messages'
             gotoMessage={this.props.gotoMessage}
@@ -77,6 +75,13 @@ module.exports = React.createClass({
             name='Terms'
             gotoTerms={this.props.gotoTerms}
             text="Terms" />
+
+          <Section
+            id='Share'
+            name='Share'
+            tagLine='Receive Bonus Points'
+            gotoShare={this.props.gotoShare}
+            text="Share" />
 
           <Section
             id='Logout'
@@ -157,7 +162,19 @@ var Section = React.createClass({
      //console.log(this.onPress);
      //console.log('------------');
 
-
+     if (this.props.id === 'Share'){
+      return (
+        <TouchableHighlight underlayColor='#DFDFDF' onPress={this.onPress}>
+          <View style={[styles.section, controlPanelStyles.shareContainer]}>
+            <Image source={require('./img/3-hex.png')} style={controlPanelStyles.hexes}/>
+            <View style={controlPanelStyles.textContainer}>
+              <Text style={styles.sectionName}>{this.props.name.toUpperCase()}</Text>
+              <Text style={controlPanelStyles.tagLine}>{this.props.tagLine}</Text>
+            </View>
+          </View>
+        </TouchableHighlight>
+      );
+    } else {
       return (
         <TouchableHighlight underlayColor='#DFDFDF' onPress={this.onPress}>
           <View style={styles.section}>
@@ -166,4 +183,25 @@ var Section = React.createClass({
         </TouchableHighlight>
       );
     }
+    }
   });
+
+var controlPanelStyles = StyleSheet.create({
+  shareContainer: {
+    flexDirection: 'row'
+  },
+  textContainer: {
+    flexDirection: 'column'
+  },
+  hexes: {
+    width: width*.06,
+    height: width*.06,
+    marginLeft: -width*.05
+  },
+  tagLine: {
+    color: '#656565',
+    fontSize: 12,
+    fontFamily: 'Gill Sans',
+    marginLeft: 10
+  }
+});

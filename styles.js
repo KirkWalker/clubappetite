@@ -48,6 +48,7 @@ module.exports = StyleSheet.create({
         margin: 25,
         color:'white',
         fontWeight:'bold',
+        fontFamily: 'Gill Sans'
     },
     title: {
         fontSize: 20,
@@ -133,6 +134,7 @@ module.exports = StyleSheet.create({
         fontSize: 15,
         marginLeft: 10,
         color:'white',
+        fontFamily: 'Gill Sans'
     },
     /********************/
 
