@@ -38,6 +38,7 @@ var Profile = require('./app/Profile');
 var BusinessPage = require('./app/BusinessPage');
 var BusinessDirectory = require('./app/BusinessDirectory');
 var NoNavigatorPage = require('./app/NoNavigatorPage');
+var PhoneModal = require('./app/PhoneModal');
 var Drawer = require('react-native-drawer');
 var ControlPanel = require('./ControlPanel');
 
@@ -275,6 +276,16 @@ class AMGSandbox extends Component {
             openDrawer={this.openDrawer}
         />
         </Drawer>
+      );
+    }
+
+    if (routeId === 'PhoneModal') {
+      return (
+        <PhoneModal
+          navigator={navigator}
+          phoneNumber={route.phoneNumber}
+          pageName="Phone Modal"
+        />
       );
     }
 

@@ -13,6 +13,7 @@ import React, {
   ScrollView,
   Modal,
   Linking,
+  TouchableOpacity,
 } from 'react-native';
 
 var DEBUG = true;
@@ -60,6 +61,14 @@ class BusinessPage extends Component {
     );
   }
 
+  openPhoneModal() {
+    this.props.navigator.push({
+      id: 'PhoneModal',
+      sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+      phoneNumber: this.props.business_info.sponsor_tel,
+    });
+  }
+
   renderScene(route, navigator) {
   	return (
       <ScrollView>
@@ -84,9 +93,15 @@ class BusinessPage extends Component {
               <Image style={PageStyles.icon} resizeMode="contain" source={require('../img/email-icon.png')}/>
               <Text style={PageStyles.grayText}>{this.props.business_info.sponsor_email}</Text>
             </View>
-            {(() => {
-              return this.phoneModal();
-            })()}
+            <TouchableOpacity
+              style={PageStyles.contactRow}
+              onPress={() => {
+                this.openPhoneModal();
+              }}
+            >
+              <Image style={PageStyles.icon} resizeMode="contain" source={require('../img/phone-icon.png')}/>
+              <Text style={PageStyles.grayText}>{this.props.business_info.sponsor_tel}</Text>
+            </TouchableOpacity>
             <View style={PageStyles.contactRow}>
               <Image style={PageStyles.icon} resizeMode="contain" source={require('../img/website-icon.png')}/>
               <Text style={PageStyles.grayText}>{this.props.business_info.sponsor_url}</Text>
@@ -97,24 +112,6 @@ class BusinessPage extends Component {
         </View>
       </ScrollView>
   	);
-  }
-
-  phoneModal() {
-    return(
-      <View>
-        <View
-          style={PageStyles.contactRow}
-          onPress={() => {
-              console.log("props: ", this.props);
-              console.log("refs: ", this.refs);
-              this.refs.phone_modal.show();
-          }}
-        >
-          <Image style={PageStyles.icon} resizeMode="contain" source={require('../img/phone-icon.png')}/>
-          <Text style={PageStyles.grayText}>{this.props.business_info.sponsor_tel}</Text>
-        </View>
-      </View>
-    )
   }
 }
 
