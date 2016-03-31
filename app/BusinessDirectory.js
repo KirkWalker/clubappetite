@@ -133,7 +133,7 @@ componentDidMount() {
   			dataSource={this.state.dataSource}
   			renderRow={this.renderBusiness}
   			renderHeader={this.renderHeader}
-        style={[{backgroundColor: '#F2F2F2'}, {paddingTop: 70}]}
+        style={[{backgroundColor: '#F2F2F2'}, {paddingTop: HEIGHT*0.11}]}
         renderSeparator={this.renderSeparator}
   		/>
   	);
@@ -145,6 +145,7 @@ var TITLE_TEXT = (PixelRatio.get() <= 2) ? 19 : 25;
 var INFO_TEXT = (PixelRatio.get() <= 2) ? 14 : 15;
 var PADDING = (PixelRatio.get() >= 4) ? 3 : PixelRatio.get();
 var WIDTH = Dimensions.get('window').width;
+var HEIGHT = Dimensions.get('window').height;
 if (DEBUG) {console.log("PixelRatio: "+PixelRatio.get());}
 
 const BusinessStyles = StyleSheet.create({

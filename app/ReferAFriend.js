@@ -143,7 +143,7 @@ const ReferStyles = StyleSheet.create({
     container: {
         flex: 1,
         height: height,
-        marginTop: 70,
+        marginTop: height*0.11,
         backgroundColor: '#efefef',
         justifyContent: 'center',
         alignItems: 'center',
