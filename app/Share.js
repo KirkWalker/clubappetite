@@ -131,7 +131,7 @@ const shareStyles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#1B8889',
     height: height,
-    marginTop: 70
+    marginTop: 60
   },
   iconsContainer: {
     flexDirection: 'row',

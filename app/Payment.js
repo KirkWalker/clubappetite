@@ -148,7 +148,7 @@ class Payment extends Component {
                <View style={[styles.labelContainer,{flexDirection: 'row'}]}>
                 <TouchableOpacity onPress={this.gotoTerms.bind(this)} style={{flexDirection: 'row'}}>
                     <Text style={styles.label}>I agree to the </Text>
-                    <Text style={[paymentStyles.bluetext,{paddingTop:2}]}>terms and conditions</Text>
+                    <Text style={[paymentStyles.bluetext]}>terms and conditions</Text>
                 </TouchableOpacity>
                </View>
           </View>
