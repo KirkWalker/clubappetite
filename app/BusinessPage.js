@@ -12,6 +12,7 @@ import React, {
   PixelRatio,
   ScrollView,
   Modal,
+  Linking,
 } from 'react-native';
 
 var DEBUG = true;
@@ -29,7 +30,6 @@ class BusinessPage extends Component {
 
   constructor(props) {
     super(props);
-    this.phoneModal = this.phoneModal.bind(this);
     this.state = {user_profile: []}
   }
 
@@ -102,18 +102,16 @@ class BusinessPage extends Component {
   phoneModal() {
     return(
       <View>
-        <View style={PageStyles.contactRow}>
+        <View
+          style={PageStyles.contactRow}
+          onPress={() => {
+              console.log("props: ", this.props);
+              console.log("refs: ", this.refs);
+              this.refs.phone_modal.show();
+          }}
+        >
           <Image style={PageStyles.icon} resizeMode="contain" source={require('../img/phone-icon.png')}/>
-          <Text
-            style={PageStyles.grayText}
-            onPress={() => {
-            console.log("props: ", this.props);
-            console.log("refs: ", this.refs);
-            this.refs.phone_modal.show();
-        }}
-            >
-            {this.props.business_info.sponsor_tel}
-          </Text>
+          <Text style={PageStyles.grayText}>{this.props.business_info.sponsor_tel}</Text>
         </View>
         <PhoneModal
           {...this.props}
@@ -138,19 +136,47 @@ class PhoneModal extends Component {
     }
   }
 
+  openLink() {
+    var phoneNumber = this.props.business_info.sponsor_tel;
+    console.log(phoneNumber);
+    Linking.canOpenURL(phoneNumber).then(supported => {
+      if (supported) {
+        console.log("Opening link...");
+        return Linking.openURL(phoneNumber);
+      } else {
+        console.log("Can\'t open this URI.");
+      }
+    });
+  }
+
   render() {
     return(
       <Modal
         animated={true}
-        transparent={false}
+        transparent={true}
         visible={this.state.modalVisible}
       >
         <View style={PageStyles.modalContainer}>
-          <Image style={PageStyles.icon} resizeMode="contain" source={require('../img/phone-icon.png')}/>
+          <Image style={PageStyles.callingIcon} resizeMode="contain" source={require('../img/phone-icon-white.png')}/>
           <Text style={PageStyles.modalText}>{this.props.business_info.sponsor_tel}</Text>
           <View style={PageStyles.modalButtonContainer}>
-            <Button buttonText="Call" />
-            <Button buttonText="Cancel" />
+            <View style={PageStyles.callingButton}>
+              <Button
+                buttonColor="calling"
+                buttonText="Call"
+                onPress={() => {this.openLink()}}
+              />
+            </View>
+            <View style={PageStyles.callingButton}>
+              <Button
+                buttonColor="calling"
+                buttonText="Cancel"
+                onPress={() =>{
+                  console.log("cancel");
+                  this.setState({modalVisible: false})
+                }}
+              />
+            </View>
           </View>
         </View>
       </Modal>
@@ -251,11 +277,21 @@ const PageStyles = StyleSheet.create({
     flexDirection: 'row',
   },
   modalText: {
-    fontSize: 20,
+    fontSize: 23,
     fontFamily: 'Gill Sans',
     color: 'white',
-    borderRadius: 1, borderColor: 'red', borderStyle: 'solid',
-  }
+    fontWeight: '500',
+    padding: WIDTH*0.05,
+  },
+  callingIcon: {
+    width: WIDTH*0.20,
+    height: WIDTH*0.20,
+  },
+  callingButton: {
+    width: WIDTH*0.30,
+    paddingLeft: WIDTH*0.03,
+    paddingRight: WIDTH*0.03,
+  },
 });
 
 module.exports = BusinessPage;

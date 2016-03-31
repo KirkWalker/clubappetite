@@ -108,6 +108,12 @@ class Button extends Component {
         this.textColor = "white";
         break;
       }
+      case "calling": {
+        this.color = 'rgba(255, 255, 255, 0.5)';
+        this.underlayColor = 'rgba(255, 255, 255, 0.2)';
+        this.textColor = "rgb(027, 135, 136)";
+        break;
+      }
       default: {
         this.color = 'rgb(027, 135, 136)';
         this.underlayColor = 'rgba(027, 135, 136, 0.5)';
