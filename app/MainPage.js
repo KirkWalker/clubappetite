@@ -82,13 +82,16 @@ class MainPage extends Component {
         <Text>Hello {Username + '\n\n'}</Text>
 
         <View style={styles.module} marginTop={10}>
-            <Button onPress={this.gotoCartPage.bind(this)} buttonText="Shopping Cart" marginTop={10} />
+            <Button onPress={this.gotoCartPage.bind(this)} buttonText="Needed Now" marginTop={10} />
         </View>
 
         <View style={styles.module} marginTop={10}>
-            <Button onPress={this.gotoDealsPage.bind(this)} buttonText="Sponsor Offers" marginTop={10} />
+            <Button onPress={this.gotoDealsPage.bind(this)} buttonText="Shop Appetite" marginTop={10} />
         </View>
 
+        <View style={styles.module} marginTop={10}>
+            <Button onPress={this.gotoMessagesPage.bind(this)} buttonText="Messages" marginTop={10} />
+        </View>
 
       </View>
 

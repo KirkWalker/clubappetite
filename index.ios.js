@@ -20,7 +20,6 @@ var SplashPage = require('./app/SplashPage');
 var LoginPage = require('./app/LoginPage');
 var InfoPage = require('./app/InfoPage');
 var Register = require('./app/Register');
-var Shop = require('./app/Shop');
 var Deals = require('./app/Deals');
 var Redeem = require('./app/Redeem');
 var DealConfirm = require('./app/DealConfirm');
@@ -149,10 +148,10 @@ class AMGSandbox extends Component {
          name: 'Terms',
        });
   }
-  gotoShop() {
+  gotoDeals() {
        this.drawer.close();
        this.navigatorObj.push({
-         id: 'Shop',
+         id: 'Deals',
          name: 'Shop Appetite',
        });
   }
@@ -216,7 +215,7 @@ class AMGSandbox extends Component {
           gotoTerms={() => {this.gotoTerms()}}
           gotoFoodBank={() => {this.gotoFoodBank()}}
           handleLogout={() => {this.handleLogout()}}
-          gotoShop={() => {this.gotoShop()}}
+          gotoDeals={() => {this.gotoDeals()}}
           gotoDirectory={() => {this.gotoDirectory()}}
           gotoDonate={() => {this.gotoDonate()}}
           gotoShare={() => {this.gotoShare()}}
@@ -392,34 +391,6 @@ class AMGSandbox extends Component {
           openDrawer={this.openDrawer}
           pageName="Message Detail"
           message_info={route.message_info}
-        />
-        </Drawer>
-      );
-    }
-    if (routeId === 'Shop') {
-      return (
-      <Drawer
-                 ref={c => this.drawer = c}
-                 type={this.settings.drawerType}
-                 animation={this.settings.animation}
-                 openDrawerOffset={this.settings.openDrawerOffset}
-                 closedDrawerOffset={this.settings.closedDrawerOffset}
-                 panOpenMask={this.settings.panOpenMask}
-                 panCloseMask={this.settings.panCloseMask}
-                 relativeDrag={this.settings.relativeDrag}
-                 panStartCompensation={this.settings.panStartCompensation}
-                 openDrawerThreshold={this.settings.openDrawerThreshold}
-                 content={controlPanel}
-                 styles={drawerStyles}
-                 disabled={this.settings.disabled}
-                 tweenHandler={this.tweenHandler}
-                 tweenDuration={this.settings.tweenDuration}
-                 tweenEasing={this.settings.tweenEasing}
-                 negotiatePan={false}
-               >
-        <Shop
-          navigator={navigator}
-          openDrawer={this.openDrawer}
         />
         </Drawer>
       );

@@ -19,6 +19,7 @@ if (DEBUG) {console.log("Deals.js DEBUG flag set\n---------------------");}
 
 var Users = require('../datalayer/User');
 var MyDeals = require('../datalayer/WebAPI');
+
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
 var styles = require('../styles');
 
