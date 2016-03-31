@@ -211,10 +211,19 @@ InfoStore.confirmDeal = function (_this) {
   	else if (responseData.result == 'success') {
   		if (DEBUG) { console.log(_page_name + ' API SUCCESS: ', responseData); }
 
-  		_this.setState({user_profile: _user_profile,
-  			blnDoneTransaction: true,
-  			strTransDetails: responseData.result
-  		});
+		DB.users.update({name: _user_profile.name}, { user_points: _new_user_points }, function(updated_table){
+
+			_this.setState({user_profile: _user_profile,
+				blnDoneTransaction: true,
+				strTransDetails: responseData.result
+			});
+
+			if(DEBUG) { console.log('done updating users:', updated_table); }
+		})
+
+
+
+
   	}
   	else {
   		if (DEBUG) { console.log(_page_name + ' reponseData failed(update)', reponseData); }
