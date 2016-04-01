@@ -198,6 +198,7 @@ module.exports = StyleSheet.create({
         height: height*.06,
         width: width*.80,
         backgroundColor: '#f2f2f2',
+        fontFamily: 'Gill Sans'
     },
     checkboxcontainer: {
         height:20,

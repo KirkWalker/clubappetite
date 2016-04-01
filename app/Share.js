@@ -158,6 +158,7 @@ const shareStyles = StyleSheet.create({
     marginBottom: height*.05,
     alignItems: 'center',
     backgroundColor: '#1B8889',
+    elevation: 2,
     shadowColor: '#000',
     shadowOpacity: .3,
     shadowRadius: 3,

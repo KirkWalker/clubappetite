@@ -65,7 +65,7 @@ class SplashPage extends Component {
       <View>
 
         <View style={splashStyle.bgContainer}>
-            <Image style={splashStyle.background} resizeMode="cover" source={require('../img/splash-bg.jpg')} />
+            <Image style={splashStyle.background} resizeMode="cover" source={require('../img/splash-bg-ex.jpg')} />
         </View>
 
         <View style={splashStyle.container}>      
@@ -93,10 +93,10 @@ class SplashPage extends Component {
   }
 }
 
-var topoffset = .57;
+var topoffset = .475;
 
 if(Platform.OS === 'ios'){
-  topoffset = .59;
+  topoffset = .47;
 }
 
 var splashStyle = StyleSheet.create({
@@ -105,13 +105,14 @@ var splashStyle = StyleSheet.create({
     alignItems: 'center'
   },
   hex: {
-    width: width*.85,
-    height: height*.70,
+    width: width*.80,
+    height: height*.68,
     alignItems: 'stretch',
+    resizeMode: 'contain'
   },
-  pointcontainer :{
+  pointcontainer: {
     top: height*topoffset,
-    left: width*.519,
+    left: width*.4,//.519,
     width:width*.395,
     alignItems: 'center',
     justifyContent:'center',
@@ -135,7 +136,7 @@ var splashStyle = StyleSheet.create({
   },
   background: {
     width: width,
-    height: height*.25,
+    height: height,//*.25,
     position: 'absolute',
     bottom: -height,
     flex: 1,

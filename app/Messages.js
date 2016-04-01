@@ -185,7 +185,7 @@ const MessageStyles = StyleSheet.create({
   },
   headerImage: {
     width: WIDTH,
-    height: WIDTH*0.364,
+    height: WIDTH*0.357,
     alignItems: 'stretch',
   },
   separator: {
