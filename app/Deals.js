@@ -18,8 +18,7 @@ var DEBUG = false;
 if (DEBUG) {console.log("Deals.js DEBUG flag set\n---------------------");}
 
 var Users = require('../datalayer/User');
-var MyDeals = require('../datalayer/WebAPI');
-
+var MyDeals = require('../datalayer/Deals');
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
 var styles = require('../styles');
 
@@ -34,7 +33,7 @@ class Deals extends Component {
 
   constructor(props) {
         super(props);
-        this.state = {user_profile: [], DataArray: []};
+        this.state = {user_profile: [], DealArray: []};
   }
 
   /*
@@ -49,7 +48,7 @@ class Deals extends Component {
     Users.getProfile(this);
     this.gotoDirectory = this.gotoDirectory.bind(this);
     InteractionManager.runAfterInteractions(() => {
-      MyDeals.getData(this, "sponsordeals");
+      MyDeals.getDealData(this);
     });
   }
 
@@ -99,7 +98,7 @@ class Deals extends Component {
 
         <ScrollView>
           <View style={shopStyles.imageContainer}>
-            {this.state.DataArray.map((deal) => 
+            {this.state.DealArray.map((deal) => 
               <DealItem
                 key={deal.id}
                 item={deal}
@@ -165,14 +164,11 @@ const shopStyles = StyleSheet.create({
     elevation: 2,
   },
   search: {
+    padding: 20,
     elevation: 2,
-    width: width*.82,
-    height: height*0.075,
-    backgroundColor: '#ffffff',
+    width: width*.72,
+    backgroundColor: '#fff',
     fontFamily: 'Gill Sans',
-    borderColor: 'rgb(239,186,026)',
-    paddingLeft: 15,
-    color: 'rgb(239,186,026)',
   },
   businessDirectoryContainer: {
     flexDirection: 'row',

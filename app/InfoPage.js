@@ -105,7 +105,6 @@ class InfoPage extends Component {
             <View style={InfoStyles.textContainer}>
               <Text style={InfoStyles.title}>{this.state.pageName}</Text>
             </View>
-            <Image source={require('../img/arrow.png')} style={InfoStyles.arrow} resizeMode={Image.resizeMode.contain} />
           </View>
 
           <View style={InfoStyles.contentContainer}>
