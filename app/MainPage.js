@@ -9,6 +9,7 @@ var {
   Text,
   Navigator,
   Image,
+  Platform,
   TouchableHighlight,
   TouchableOpacity,
   InteractionManager,
@@ -87,7 +88,7 @@ class MainPage extends Component {
 
     return (
     <View style={styles.container}>      
-      <Image source={require('../img/home-points-container.png')} style={mainStyles.pointsContainer}>
+      <Image source={require('../img/home-points-container.png')} style={mainStyles.pointsContainer} resizeMode={Image.resizeMode.contain}>
         <View style={mainStyles.pointsTextContainer}>
           <Text style={mainStyles.accountText}>YOUR ACCOUNT</Text>
           <Text style={mainStyles.pointsAmount}>{points}</Text>
@@ -98,26 +99,26 @@ class MainPage extends Component {
       <View style={mainStyles.buttonsContainer}>
         <View style={mainStyles.buttons}>
           <TouchableOpacity onPress={this.gotoCartPage.bind(this)}>
-            <Image source={require('../img/home-cart-icon.png')} style={mainStyles.icon}/>
+            <Image source={require('../img/home-cart-icon.png')} style={mainStyles.icon} resizeMode={Image.resizeMode.contain}/>
           </TouchableOpacity>
           <Text style={mainStyles.neededNowText}>NEEDED{'\n'}  NOW</Text>
         </View>
         <View style={mainStyles.buttons}>
           <TouchableOpacity onPress={this.gotoDealsPage.bind(this)}>
-            <Image source={require('../img/home-shop-icon.png')} style={mainStyles.icon}/>
+            <Image source={require('../img/home-shop-icon.png')} style={mainStyles.icon} resizeMode={Image.resizeMode.contain}/>
           </TouchableOpacity>
           <Text style={mainStyles.shopText}>   SHOP{'\n'}APPETITE</Text>
         </View>
         <View style={mainStyles.buttons}>
           <TouchableOpacity onPress={this.gotoMessagesPage.bind(this)}>
-            <Image source={require('../img/home-message-icon.png')} style={mainStyles.icon}/>
+            <Image source={require('../img/home-message-icon.png')} style={mainStyles.icon} resizeMode={Image.resizeMode.contain}/>
           </TouchableOpacity>
           <Text style={mainStyles.messagesText}>MESSAGES{'\n'}</Text>
         </View>
       </View>
 
       <View style={mainStyles.module}>
-        <Image source={{uri: 'https://upload.wikimedia.org/wikipedia/en/thumb/e/e2/Loblaws.svg/1280px-Loblaws.svg.png'}} style={[mainStyles.banner]} />
+        <Image source={{uri: 'https://upload.wikimedia.org/wikipedia/en/thumb/e/e2/Loblaws.svg/1280px-Loblaws.svg.png'}} style={[mainStyles.banner]} resizeMode={Image.resizeMode.contain}/>
       </View>
     </View>
 
@@ -144,6 +145,11 @@ class MainPage extends Component {
 
 }
 
+var pointsFont = font*3;
+if (Platform.OS === 'ios'){
+  pointsFont = font*3.5;
+}
+
 const mainStyles = StyleSheet.create({
   container: {
     flex: 1,
@@ -155,7 +161,6 @@ const mainStyles = StyleSheet.create({
     width: width*.9,
     height: height*.4,
     marginTop: height*.06,
-    resizeMode: 'contain'
   },
   pointsTextContainer: {
     backgroundColor: 'rgba(0,0,0,0)',
@@ -169,7 +174,7 @@ const mainStyles = StyleSheet.create({
     fontFamily: 'Gill Sans'
   },
   pointsAmount: {
-    fontSize: font*3.3,
+    fontSize: pointsFont,
     fontWeight: '600',
     fontFamily: 'Gill Sans'
   },
@@ -192,7 +197,6 @@ const mainStyles = StyleSheet.create({
   icon: {
     width: width*.2,
     height: width*.2,
-    resizeMode: 'contain'
   },
   neededNowText: {
     fontSize: font*.55,
@@ -218,7 +222,6 @@ const mainStyles = StyleSheet.create({
   banner: {
     flex: 1,
     alignItems: 'stretch',
-    resizeMode: 'contain'
   },
   module: {
     flexDirection: 'column',
