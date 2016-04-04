@@ -39,6 +39,7 @@ class Register extends Component {
 
   constructor(props) {
       super(props);
+      var code = (this.props.referralCode == undefined) ? '' : this.props.referralCode;
       this.state = {
           inputTxt: '',
           inputPass: '',
@@ -48,7 +49,7 @@ class Register extends Component {
           sublocalitiesIds: [],
           locationIndex: 0,
           selectedOption: 'not chosen',
-          referralCode: '',
+          referralCode: code,
       };
       this.navigatorObj = props.navigator;
   }
@@ -70,7 +71,6 @@ class Register extends Component {
 
 
   render() {
-
     var start = ['Please choose a location:'];
     var end = this.state.sublocalities;
     var data = start.concat(end);
@@ -139,18 +139,14 @@ class Register extends Component {
 
 
   redeemCodeModal() {
-
-        console.log('redeem');
         var linktext = 'Got a Referral code?';
         var color = 'blue';
         if(this.state.referralCode != ''){
-            linktext = 'Referral Code:' + this.state.referralCode;
+            linktext = 'Referral Code: ' + this.state.referralCode;
             color = 'red';
         }
 
         return(
-
-
           <View style={styles.module} marginTop={20}>
             <Text
                 style={{color:color}}
@@ -160,7 +156,6 @@ class Register extends Component {
                 {linktext}
             </Text>
           </View>
-
         )
 
   }
@@ -173,77 +168,75 @@ class Register extends Component {
     });
   }
 
+  iosPicker(data) {
+    return(
+      <View>
+        <Text>Current Location: {this.state.selectedOption}</Text>
+        <Text
+            style={{color:'blue'}}
+            onPress={()=>{
+                this.refs.picker.setoptions(data);
+                this.refs.picker.show();
+            }}>
+            Click here to select your location
+        </Text>
 
-
-    iosPicker(data) {
-        return(
-        <View>
-            <Text>Current Location: {this.state.selectedOption}</Text>
-            <Text
-                style={{color:'blue'}}
-                onPress={()=>{
-                    this.refs.picker.setoptions(data);
-                    this.refs.picker.show();
-                }}>
-                Click here to select your location
-            </Text>
-
-            <FMPicker ref={'picker'} options={data}
-                onSubmit={(option)=>{
-                    if(option == 'Please choose a location:') {
-                        this.setState({selectedOption: 'not chosen'})
-                    }else {
-                        this.setState({selectedOption: option, location: option})
-                    }
-                }}
-            />
-        </View>
-    )}
+        <FMPicker ref={'picker'} options={data}
+            onSubmit={(option)=>{
+                if(option == 'Please choose a location:') {
+                    this.setState({selectedOption: 'not chosen'})
+                }else {
+                    this.setState({selectedOption: option, location: option})
+                }
+            }}
+        />
+      </View>
+)}
 
 
 
 
 
-    androidPicker(data) {
-        return(
+  androidPicker(data) {
+      return(
 
 
-        <RegionList
-            style={registerStyles.picker}
-            selectedValue={this.state.locationIndex}
-            onValueChange={(locationIndex) => this.setState({locationIndex: locationIndex, location: data[locationIndex]})}>
-              {data.map((regionName, locationIndex) => (
-                <PickerItem
-                style={{height: 50, margin:0,padding:0}}
-                  key={'region_' + locationIndex}
-                  value={locationIndex}
-                  label={regionName}
-                />
-                ))}
-        </RegionList>
+      <RegionList
+          style={registerStyles.picker}
+          selectedValue={this.state.locationIndex}
+          onValueChange={(locationIndex) => this.setState({locationIndex: locationIndex, location: data[locationIndex]})}>
+            {data.map((regionName, locationIndex) => (
+              <PickerItem
+              style={{height: 50, margin:0,padding:0}}
+                key={'region_' + locationIndex}
+                value={locationIndex}
+                label={regionName}
+              />
+              ))}
+      </RegionList>
 
 
-    );}
+  );}
 
 
-    gotoLogin() {
-      this.props.navigator.push({
-        id: 'LoginPage',
-        name: 'Login Page',
-      });
-    }
-    gotoNext() {
-      this.props.navigator.push({
-        id: 'MainPage',
-        name: 'Main Page',
-      });
-    }
-    _onPressButtonPOST() {
+  gotoLogin() {
+    this.props.navigator.push({
+      id: 'LoginPage',
+      name: 'Login Page',
+    });
+  }
+  gotoNext() {
+    this.props.navigator.push({
+      id: 'MainPage',
+      name: 'Main Page',
+    });
+  }
+  _onPressButtonPOST() {
 
 
-      Users.handleRegister(this);
+    Users.handleRegister(this);
 
-    }
+  }
 
 }
 

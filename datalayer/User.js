@@ -359,7 +359,7 @@ module.exports = {
         var email = _this.state.inputEmail;
         var loc = _this.state.location;
         var referralCode = _this.state.referralCode;
-        var sublocality = _this.state.sublocalitiesIds[_this.state.locationIndex];
+        var sublocality = _this.state.sublocalitiesIds[_this.state.locationIndex-1];
         var API_REQUEST = 'HandleRegister:';
         var error_message = '';
 

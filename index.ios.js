@@ -678,6 +678,7 @@ class AMGSandbox extends Component {
         <Register
           navigator={navigator}
           openDrawer={this.openDrawer}
+          referralCode={route.referralCode}
         />
       );
     }

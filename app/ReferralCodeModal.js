@@ -23,12 +23,17 @@ var CancelButton = require('../modules/ButtonLogin');
 class ReferralCodeModal extends Component {
 	constructor(props){
 		super(props);
-		this.state = { inputCode: '' };
+		this.state = { inputCode: '' }
 	}
 
-	setCode(code) {
-		this.setState({ inputCode: code });
-	}
+	closeReferralModal(referralCode) {
+    this.props.navigator.push({
+      id: 'Register',
+     	name: 'Registration Page',
+     	sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+      referralCode: referralCode,
+    });
+  }
 
 	render() {
 		return (
@@ -63,7 +68,6 @@ class ReferralCodeModal extends Component {
             <View style={styles.module} marginTop={10}>
               <CancelButton
                 onPress={() => {
-                  if(this.props.onSubmit) this.props.onSubmit('');
                   this.props.navigator.pop();
                 }}
                 buttonText="CANCEL"
@@ -106,8 +110,8 @@ class ReferralCodeModal extends Component {
           ToastAndroid.show('Code is not valid, Please check it and try again.', ToastAndroid.SHORT);
         }
       } else {
-        if(this.props.onSubmit) this.props.onSubmit(this.state.inputCode);
-        this.props.navigator.pop();
+				console.log("input code: " + this.state.inputCode);
+				this.closeReferralModal(this.state.inputCode);
       }
 	  })
 	  .catch(function(error) {
