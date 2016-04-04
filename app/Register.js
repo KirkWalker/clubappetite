@@ -204,7 +204,7 @@ class Register extends Component {
       <RegionList
           style={registerStyles.picker}
           selectedValue={this.state.locationIndex}
-          onValueChange={(locationIndex) => this.setState({locationIndex: locationIndex, location: data[locationIndex]})}>
+          onValueChange={(locationIndex) => this.setState({locationIndex: locationIndex-1, location: data[locationIndex]})}>
             {data.map((regionName, locationIndex) => (
               <PickerItem
               style={{height: 50, margin:0,padding:0}}

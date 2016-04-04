@@ -100,6 +100,7 @@ InfoStore.fetchData = function(_this, token, current_mod, data) {
 							else {
 								_this.setState({
 									DataArray: responseData.details,
+									loaded: true,
 								});
 							}
 						});
@@ -127,6 +128,7 @@ InfoStore.fetchData = function(_this, token, current_mod, data) {
 								else {
 									_this.setState({
 										DataArray: responseData.details,
+										loaded: true,
 									});
 								}
 							}
@@ -153,7 +155,7 @@ InfoStore.fetchData = function(_this, token, current_mod, data) {
 							newArray.push(resultset[key]);
 						}
 
-						_this.setState({DataArray: data[0].details});
+						_this.setState({DataArray: data[0].details, loaded: true,});
 					}
 				}
 			}
