@@ -39,6 +39,7 @@ var BusinessPage = require('./app/BusinessPage');
 var BusinessDirectory = require('./app/BusinessDirectory');
 var NoNavigatorPage = require('./app/NoNavigatorPage');
 var PhoneModal = require('./app/PhoneModal');
+var ReferralCodeModal = require('./app/ReferralCodeModal');
 var Drawer = require('react-native-drawer');
 var ControlPanel = require('./ControlPanel');
 
@@ -285,6 +286,16 @@ class AMGSandbox extends Component {
           navigator={navigator}
           phoneNumber={route.phoneNumber}
           pageName="Phone Modal"
+        />
+      );
+    }
+
+    if (routeId === 'ReferralCodeModal') {
+      return (
+        <ReferralCodeModal
+          navigator={navigator}
+          referralCode={route.referralCode}
+          pageName="Referral Code Modal"
         />
       );
     }

@@ -15,17 +15,8 @@ import React, {
 var Button = require('../modules/Button');
 
 class PhoneModal extends Component {
-  show() {
-    this.setState({
-      modalVisible: true,
-    });
-  }
-
   constructor(props){
     super(props);
-    this.state = {
-      modalVisible: true,
-    }
   }
 
   openLink() {
@@ -41,7 +32,6 @@ class PhoneModal extends Component {
     });
   }
   render() {
-    var nav = this.props.navigator;
     return(
       <View style={ModalStyles.modalContainer}>
         <Image style={ModalStyles.callingIcon} resizeMode="contain" source={require('../img/phone-icon-white.png')}/>
@@ -60,7 +50,7 @@ class PhoneModal extends Component {
               buttonText="Cancel"
               onPress={() =>{
                 console.log("Cancel~~~");
-                nav.pop()
+                this.props.navigator.pop();
               }}
             />
           </View>

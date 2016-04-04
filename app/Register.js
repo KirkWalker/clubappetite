@@ -16,7 +16,7 @@ var {
   ToastAndroid,
   TextInput,
   InteractionManager,
-  Modal
+  Navigator,
 } = React;
 
 var styles = require('../styles');
@@ -24,17 +24,15 @@ var Users = require('../datalayer/User');
 var SubLocalities = require('../datalayer/Sublocalities');
 var SignupButton = require('../modules/ButtonLogin');
 var CancelButton = require('../modules/ButtonLogin');
-var ReferralCode = require('../modules/ReferralCode');
+var ReferralCodeModal = require('../app/ReferralCodeModal');
 
 
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
 
-//let RegionList = Platform.OS === 'ios' ? PickerIOS : Picker;
 let RegionList = Picker;
 let PickerItem = RegionList.Item;
 
-//var options = ['', 'Kelowna', 'Vancouver'];
 var FMPicker = require('../modules/ApplePicker');
 
 class Register extends Component {
@@ -146,7 +144,7 @@ class Register extends Component {
         var linktext = 'Got a Referral code?';
         var color = 'blue';
         if(this.state.referralCode != ''){
-            linktext = 'Refferal Code:' + this.state.referralCode;
+            linktext = 'Referral Code:' + this.state.referralCode;
             color = 'red';
         }
 
@@ -157,21 +155,22 @@ class Register extends Component {
             <Text
                 style={{color:color}}
                 onPress={()=>{
-                    this.refs.refer_modal.show();
-                    this.refs.refer_modal.setCode(this.state.referralCode);
+                    this.openReferralModal(this.state.referralCode);
                 }}>
                 {linktext}
             </Text>
-            <ReferralCode
-                ref={'refer_modal'}
-                onSubmit={(option)=>{
-                    this.setState({referralCode: option});
-              }}
-            />
           </View>
 
         )
 
+  }
+
+  openReferralModal(referralCode) {
+    this.props.navigator.push({
+      id: 'ReferralCodeModal',
+      sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+      referralCode: referralCode,
+    });
   }
 
 
