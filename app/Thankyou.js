@@ -62,11 +62,11 @@ class ThankYou extends Component {
       <View style={thankyouStyle.container}>
 
         <View style={thankyouStyle.bgContainer}>
-            <Image style={thankyouStyle.background} source={require('../img/thankyou-bg.png')} />
+            <Image style={thankyouStyle.background} source={require('../img/thankyou-bg.png')} resizeMode={Image.resizeMode.cover}/>
         </View>
 
         <View style={thankyouStyle.hexcontainer}>
-          <Image style={thankyouStyle.hex} source={require('../img/thankyou-hex.png')} />
+          <Image style={thankyouStyle.hex} source={require('../img/thankyou-hex.png')} resizeMode={Image.resizeMode.contain}/>
           <Text style={thankyouStyle.points}> You have earned {'\n'} {this.props.points} Points </Text>
         </View>
 
@@ -92,7 +92,6 @@ var thankyouStyle = StyleSheet.create({
   hex: {
     width: width*.7,
     height: height*.7,
-    resizeMode: 'contain',
   },
   bgContainer: {
     position: 'absolute',
@@ -103,7 +102,6 @@ var thankyouStyle = StyleSheet.create({
     position: 'absolute',
     bottom: -height,
     flex: 1,
-    resizeMode: 'cover'
   },
   points: {
     fontFamily: 'Gill Sans',

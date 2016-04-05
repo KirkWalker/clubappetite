@@ -16,7 +16,7 @@ var {
   ToastAndroid,
   TextInput,
   InteractionManager,
-  Navigator,
+  Modal
 } = React;
 
 var styles = require('../styles');
@@ -24,22 +24,23 @@ var Users = require('../datalayer/User');
 var SubLocalities = require('../datalayer/Sublocalities');
 var SignupButton = require('../modules/ButtonLogin');
 var CancelButton = require('../modules/ButtonLogin');
-var ReferralCodeModal = require('../app/ReferralCodeModal');
+var ReferralCode = require('../modules/ReferralCode');
 
 
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
 
+//let RegionList = Platform.OS === 'ios' ? PickerIOS : Picker;
 let RegionList = Picker;
 let PickerItem = RegionList.Item;
 
+//var options = ['', 'Kelowna', 'Vancouver'];
 var FMPicker = require('../modules/ApplePicker');
 
 class Register extends Component {
 
   constructor(props) {
       super(props);
-      var code = (this.props.referralCode == undefined) ? '' : this.props.referralCode;
       this.state = {
           inputTxt: '',
           inputPass: '',
@@ -49,7 +50,7 @@ class Register extends Component {
           sublocalitiesIds: [],
           locationIndex: 0,
           selectedOption: 'not chosen',
-          referralCode: code,
+          referralCode: '',
       };
       this.navigatorObj = props.navigator;
   }
@@ -71,6 +72,7 @@ class Register extends Component {
 
 
   render() {
+
     var start = ['Please choose a location:'];
     var end = this.state.sublocalities;
     var data = start.concat(end);
@@ -80,11 +82,11 @@ class Register extends Component {
       <View>
 
           <View style={registerStyles.bgContainer}>
-              <Image style={registerStyles.background} source={require('../img/splash-bg-ex.jpg')} />
+              <Image style={registerStyles.background} source={require('../img/splash-bg.jpg')} resizeMode={Image.resizeMode.cover}/>
           </View>
 
         <View style={registerStyles.container} marginTop={30}>
-          <Image source={require('../img/ClubAppetiteLogo.png')} style={registerStyles.logo} marginLeft={5} />
+          <Image source={require('../img/ClubAppetiteLogo.png')} style={registerStyles.logo} marginLeft={5} resizeMode={Image.resizeMode.contain}/>
         </View>
 
         <View style={registerStyles.container} marginTop={40}>
@@ -139,104 +141,110 @@ class Register extends Component {
 
 
   redeemCodeModal() {
+
+        console.log('redeem');
         var linktext = 'Got a Referral code?';
         var color = 'blue';
         if(this.state.referralCode != ''){
-            linktext = 'Referral Code: ' + this.state.referralCode;
+            linktext = 'Refferal Code:' + this.state.referralCode;
             color = 'red';
         }
 
         return(
+
+
           <View style={styles.module} marginTop={20}>
             <Text
                 style={{color:color}}
                 onPress={()=>{
-                    this.openReferralModal(this.state.referralCode);
+                    this.refs.refer_modal.show();
+                    this.refs.refer_modal.setCode(this.state.referralCode);
                 }}>
                 {linktext}
             </Text>
+            <ReferralCode
+                ref={'refer_modal'}
+                onSubmit={(option)=>{
+                    this.setState({referralCode: option});
+              }}
+            />
           </View>
+
         )
 
   }
 
-  openReferralModal(referralCode) {
-    this.props.navigator.push({
-      id: 'ReferralCodeModal',
-      sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
-      referralCode: referralCode,
-    });
-  }
 
-  iosPicker(data) {
-    return(
-      <View>
-        <Text>Current Location: {this.state.selectedOption}</Text>
-        <Text
-            style={{color:'blue'}}
-            onPress={()=>{
-                this.refs.picker.setoptions(data);
-                this.refs.picker.show();
-            }}>
-            Click here to select your location
-        </Text>
 
-        <FMPicker ref={'picker'} options={data}
-            onSubmit={(option)=>{
-                if(option == 'Please choose a location:') {
-                    this.setState({selectedOption: 'not chosen'})
-                }else {
-                    this.setState({selectedOption: option, location: option})
-                }
-            }}
-        />
-      </View>
-)}
+    iosPicker(data) {
+        return(
+        <View>
+            <Text>Current Location: {this.state.selectedOption}</Text>
+            <Text
+                style={{color:'blue'}}
+                onPress={()=>{
+                    this.refs.picker.setoptions(data);
+                    this.refs.picker.show();
+                }}>
+                Click here to select your location
+            </Text>
+
+            <FMPicker ref={'picker'} options={data}
+                onSubmit={(option)=>{
+                    if(option == 'Please choose a location:') {
+                        this.setState({selectedOption: 'not chosen'})
+                    }else {
+                        this.setState({selectedOption: option, location: option})
+                    }
+                }}
+            />
+        </View>
+    )}
 
 
 
 
 
-  androidPicker(data) {
-      return(
+    androidPicker(data) {
+        return(
 
 
-      <RegionList
-          style={registerStyles.picker}
-          selectedValue={this.state.locationIndex}
-          onValueChange={(locationIndex) => this.setState({locationIndex: locationIndex-1, location: data[locationIndex]})}>
-            {data.map((regionName, locationIndex) => (
-              <PickerItem
-              style={{height: 50, margin:0,padding:0}}
-                key={'region_' + locationIndex}
-                value={locationIndex}
-                label={regionName}
-              />
-              ))}
-      </RegionList>
+        <RegionList
+            style={registerStyles.picker}
+            selectedValue={this.state.locationIndex}
+            onValueChange={(locationIndex) => this.setState({locationIndex: locationIndex, location: data[locationIndex]})}>
+              {data.map((regionName, locationIndex) => (
+                <PickerItem
+                style={{height: 50, margin:0,padding:0}}
+                  key={'region_' + locationIndex}
+                  value={locationIndex}
+                  label={regionName}
+                />
+                ))}
+        </RegionList>
 
 
-  );}
+    );}
 
 
-  gotoLogin() {
-    this.props.navigator.push({
-      id: 'LoginPage',
-      name: 'Login Page',
-    });
-  }
-  gotoNext() {
-    this.props.navigator.push({
-      id: 'MainPage',
-      name: 'Main Page',
-    });
-  }
-  _onPressButtonPOST() {
+    gotoLogin() {
+      this.props.navigator.push({
+        id: 'LoginPage',
+        name: 'Login Page',
+      });
+    }
+    gotoNext() {
+      this.props.navigator.push({
+        id: 'MainPage',
+        name: 'Main Page',
+      });
+    }
+    _onPressButtonPOST() {
 
 
-    Users.handleRegister(this);
+      Users.handleRegister(this);
 
-  }
+    }
 
 }
 
@@ -249,7 +257,6 @@ container: {
     width: width*.7,
     height: height*.18,
     alignItems: 'stretch',
-    resizeMode: 'contain'
   },
 moduleButtons: {
   flexDirection: 'column'
@@ -259,11 +266,10 @@ moduleButtons: {
   },
   background: {
     width: width,
-    height: height,//*.25,
+    height: height*.25,
     position: 'absolute',
     bottom: -height,
     flex: 1,
-    resizeMode: 'cover'
   },
    picker: {
        backgroundColor: '#efefef',

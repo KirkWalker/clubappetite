@@ -72,7 +72,7 @@ class Profile extends Component {
 
     return (
       <View style={profileStyles.container}>
-        <Image source={require('../img/profile-title-container.png')} style={profileStyles.header} />
+        <Image source={require('../img/profile-title-container.png')} style={profileStyles.header} resizeMode={Image.resizeMode.contain}/>
         <Text style={profileStyles.name}>{ displayName }</Text>
         <View style={profileStyles.pointsContainer}>
           <Text style={profileStyles.title}>YOU'VE EARNED</Text>
@@ -101,7 +101,6 @@ const profileStyles = StyleSheet.create({
   header: {
     width: width,
     height: height*.5,
-    resizeMode: 'contain'
   },
   name: {
     fontWeight: '500',

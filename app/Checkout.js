@@ -136,7 +136,7 @@ class Checkout extends Component {
           </TouchableOpacity>
         </View>
         <View style={[checkoutStyle.module, checkoutStyle.module5]}>
-            <Image source={{uri: 'https://upload.wikimedia.org/wikipedia/en/thumb/e/e2/Loblaws.svg/1280px-Loblaws.svg.png'}} style={[checkoutStyle.banner]} />
+            <Image source={{uri: 'https://upload.wikimedia.org/wikipedia/en/thumb/e/e2/Loblaws.svg/1280px-Loblaws.svg.png'}} style={[checkoutStyle.banner]} resizeMode={Image.resizeMode.contain}/>
         </View>
       </View>
     );
@@ -271,8 +271,6 @@ var checkoutStyle = StyleSheet.create({
   banner:{
      flex:1,
      alignItems: 'stretch',
-     resizeMode: 'contain',
-
   },
     checkout: {
       backgroundColor: '#4A8A1D',

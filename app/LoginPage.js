@@ -43,11 +43,11 @@ class LoginPage extends Component {
         <View>
 
           <View style={loginStyles.bgContainer}>
-              <Image style={loginStyles.background} source={require('../img/splash-bg-ex.jpg')} />
+              <Image style={loginStyles.background} source={require('../img/splash-bg.jpg')} resizeMode={Image.resizeMode.cover}/>
           </View>
 
           <View style={loginStyles.container} marginTop={50}>
-            <Image source={require('../img/ClubAppetiteLogo.png')} style={loginStyles.logo} />
+            <Image source={require('../img/ClubAppetiteLogo.png')} style={loginStyles.logo} resizeMode={Image.resizeMode.contain}/>
           </View>
 
           <View style={loginStyles.container} marginTop={40}>
@@ -111,26 +111,23 @@ var loginStyles = StyleSheet.create({
     width: width*.75,
     height: height*.18,
     alignItems: 'stretch',
-    resizeMode: 'contain' 
   },
   slogan: {
     width: width*.70,
     textAlign: 'center',
     color:'#F0BB1A',
     fontSize: 16,
-    fontWeight:'400',
-    fontFamily: 'Gill Sans'
+    fontWeight:'bold',
   },
   bgContainer: {
     position: 'absolute'
   },
   background: {
     width: width,
-    height: height,//*.25,
+    height: height*.25,
     position: 'absolute',
     bottom: -height,
     flex: 1,
-    resizeMode: 'cover'
   },
 });
 
