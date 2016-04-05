@@ -69,7 +69,7 @@ class SplashPage extends Component {
         </View>
 
         <View style={splashStyle.container}>      
-          <Image style={splashStyle.hex} source={require('../img/Splash.png')}>
+          <Image style={splashStyle.hex} source={require('../img/Splash.png')} resizeMode='contain'>
 
             {(() => {
                 if(hasPoints){
@@ -108,7 +108,7 @@ var splashStyle = StyleSheet.create({
     width: width*.80,
     height: height*.68,
     alignItems: 'stretch',
-    resizeMode: 'contain'
+
   },
   pointcontainer: {
     top: height*topoffset,
