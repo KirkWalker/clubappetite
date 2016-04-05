@@ -28,7 +28,8 @@ var Component = React.createClass({
             labels: this.props.labels || this.props.options,
             color: this.props.color || '#007AFF',
             modalVisible: false,
-            selectedOption: this.props.options[0]
+            selectedOption: this.props.options[0],
+            selectedIndex: 0,
         };
     },
     render: function() {
@@ -46,7 +47,12 @@ var Component = React.createClass({
                                 <Text style={{color:this.state.color}}>Cancel</Text>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => {
-                                    if(this.props.onSubmit) this.props.onSubmit(this.state.selectedOption);
+                                    if(this.props.onSubmit){
+                                        var choice = {name: '', index: 0};
+                                        choice.name = this.state.selectedOption;
+                                        choice.index = this.state.selectedIndex;
+                                        this.props.onSubmit(choice);
+                                    }
                                     this.setState({modalVisible: false});
                                 }}>
                                 <Text style={{color:this.state.color}}>Confirm</Text>
@@ -58,8 +64,11 @@ var Component = React.createClass({
                                 ref={'picker'}
                                 style={styles.bottomPicker}
                                 selectedValue={this.state.selectedOption}
-                                onValueChange={(option) => this.setState({selectedOption: option})}
-                                >
+                                onValueChange={(option) => this.setState({
+                                    selectedOption: option,
+                                    selectedIndex: this.props.options.indexOf(option),
+                                })}
+                            >
                                 {this.state.options.map((option, i) => {
                                     var label = this.state.labels[i] || option;
                                     return (

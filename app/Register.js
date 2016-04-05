@@ -76,7 +76,7 @@ class Register extends Component {
     var start = ['Please choose a location:'];
     var end = this.state.sublocalities;
     var data = start.concat(end);
-
+console.log(this.state.locationIndex);
     return (
 
       <View>
@@ -191,10 +191,10 @@ class Register extends Component {
 
             <FMPicker ref={'picker'} options={data}
                 onSubmit={(option)=>{
-                    if(option == 'Please choose a location:') {
+                    if(option.name == 'Please choose a location:') {
                         this.setState({selectedOption: 'not chosen'})
                     }else {
-                        this.setState({selectedOption: option, location: option})
+                        this.setState({selectedOption: option.name, location: option.name, locationIndex: option.index})
                     }
                 }}
             />
