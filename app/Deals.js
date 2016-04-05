@@ -56,6 +56,36 @@ class Deals extends Component {
       this.mounted = false;
   }
 
+  renderLoadingView() {
+    return(
+      <View style={shopStyles.loadingView}>
+        <Text style={shopStyles.loadingText}>Loading Deals...</Text>
+      </View>
+    );
+  }
+
+  renderDeals() {
+    return(
+      <ScrollView>
+        <View style={shopStyles.imageContainer}>
+          {this.state.DataArray.map((deal) => 
+            <DealItem
+              key={deal.id}
+              item={deal}
+              onPress={() => {
+                if(DEBUG) {console.log("Pushing deal_id " + deal.id + " to Redeem");}
+                this.props.navigator.push({
+                  id: 'Redeem',
+                  name: 'Redeem Page',
+                  deal_info: deal,
+                })}
+              }
+            />
+          )}
+        </View>
+      </ScrollView>
+    );
+  }
 
   render() {
 
@@ -96,24 +126,9 @@ class Deals extends Component {
           </View>
         </TouchableOpacity>
 
-        <ScrollView>
-          <View style={shopStyles.imageContainer}>
-            {this.state.DataArray.map((deal) => 
-              <DealItem
-                key={deal.id}
-                item={deal}
-                onPress={() => {
-                  if(DEBUG) {console.log("Pushing deal_id " + deal.id + " to Redeem");}
-                  this.props.navigator.push({
-                    id: 'Redeem',
-                    name: 'Redeem Page',
-                    deal_info: deal,
-                  })}
-                }
-              />
-            )}
-          </View>
-        </ScrollView>
+        {
+          (!this.state.loaded) ? this.renderLoadingView() : this.renderDeals()
+        }
 
       </View>
     );
@@ -150,6 +165,13 @@ const shopStyles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#f2f2f2',
     marginTop: height*0.11,
+  },
+  loadingView: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#f2f2f2',
+    justifyContent: 'center',
+    marginTop: 5,
   },
   logo: {
     width: width*.65,
@@ -246,7 +268,11 @@ const shopStyles = StyleSheet.create({
     height: height*.2,
     alignItems: 'center'
   },
-
+  loadingText: {
+    fontFamily: 'Gill Sans',
+    color: 'rgb(163, 163, 163)',
+    fontSize: 20,
+  },
 });
 
 module.exports = Deals;

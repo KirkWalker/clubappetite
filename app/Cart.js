@@ -33,7 +33,12 @@ class Cart extends Component {
 
   constructor(props) {
       super(props);
-      this.state = {user_profile: [], DataArray: [], cartTotal: 0};
+      this.state = {
+        user_profile: [],
+        DataArray: [],
+        cartTotal: 0,
+        loaded: false,
+      };
   }
 
   componentDidMount() {
@@ -46,6 +51,41 @@ class Cart extends Component {
 
   componentWillUnmount() {
     this.mounted = false;
+  }
+
+  renderLoadingView() {
+    return(
+      <View style={[cartStyles.module2, {justifyContent: 'center'}]}>
+        <Text style={cartStyles.loadingText}>Loading Products...</Text>
+      </View>
+    );
+  }
+
+  renderProducts() {
+    var _scrollView: ScrollView;
+
+    return(
+      <View style={[cartStyles.module, cartStyles.module2]}>
+        <View style={cartStyles.modulerow}>
+          <ScrollView
+            ref={(scrollView) => { _scrollView = scrollView; }}
+            automaticallyAdjustContentInsets={false}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            contentInset={{top:0,left:70,bottom:0,right:65}}
+            contentOffset={{x:-65}}
+            pagingEnabled={false}
+            style={[cartStyles.scrollView, cartStyles.horizontalScrollView]}>
+            {this.state.DataArray.map((obj, i) => <Thumb
+              key={i}
+              obj={obj}
+              addProduct={(idx) => this.addProduct(idx,this)}
+              delProduct={(idx) => this.delProduct(idx,this)}
+            />)}
+          </ScrollView>
+        </View>
+      </View>
+    );
   }
 
   render() {
@@ -69,34 +109,15 @@ class Cart extends Component {
   }
   renderScene(route, navigator) {
 
-
-    var _scrollView: ScrollView;
-
     return (
       <View style={styles.container}>
         <View style={[cartStyles.module, cartStyles.module1]}>
              <Image source={require('../img/cartheader.png')} style={cartStyles.cartheader} resizeMode={Image.resizeMode.contain} />
         </View>
-        <View style={[cartStyles.module, cartStyles.module2]}>
-            <View style={cartStyles.modulerow}>
-                <ScrollView
-                  ref={(scrollView) => { _scrollView = scrollView; }}
-                  automaticallyAdjustContentInsets={false}
-                  horizontal={true}
-                  showsHorizontalScrollIndicator={false}
-                  contentInset={{top:0,left:70,bottom:0,right:65}}
-                  contentOffset={{x:-65}}
-                  pagingEnabled={false}
-                  style={[cartStyles.scrollView, cartStyles.horizontalScrollView]}>
-                  {this.state.DataArray.map((obj, i) => <Thumb
-                                                              key={i}
-                                                              obj={obj}
-                                                              addProduct={(idx) => this.addProduct(idx,this)}
-                                                              delProduct={(idx) => this.delProduct(idx,this)}
-                  />)}
-                </ScrollView>
-            </View>
-        </View>
+        
+        {
+          (!this.state.loaded) ? this.renderLoadingView() : this.renderProducts() 
+        }
 
         <View style={[cartStyles.module, cartStyles.module3]}>
            <View style={cartStyles.moduleRow}>
@@ -440,6 +461,11 @@ button: {
       fontFamily: 'Gill Sans',
       backgroundColor: 'rgb(074, 138, 029)',
     },
+  loadingText: {
+    fontFamily: 'Gill Sans',
+    color: 'rgb(163, 163, 163)',
+    fontSize: 20,
+  },
 });
 
 

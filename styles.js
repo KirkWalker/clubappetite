@@ -16,7 +16,7 @@ module.exports = StyleSheet.create({
         width: null,
         height: null,
         backgroundColor: 'white',
-        paddingTop:height*0.11,
+        paddingTop:height*0.108,
         alignItems: 'center',
     },
     centerContent: {

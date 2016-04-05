@@ -8,7 +8,7 @@ var InfoStore = {};
 var listView = false;
 
 var DEBUG = true;
-if (DEBUG) { console.log('DBmethods DEBUG flag is set\n---------------------------'); }
+if (DEBUG) { console.log('WebAPI DEBUG flag is set\n---------------------------'); }
 
 InfoStore.getData = function(_this, db) {
 	var self = this;

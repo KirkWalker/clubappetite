@@ -132,7 +132,7 @@ class Messages extends Component {
         dataSource={this.state.dataSource}
         renderRow={this.renderMessage}
         renderHeader={this.renderHeader}
-        style={[{backgroundColor: '#F2F2F2'}, {paddingTop: HEIGHT*0.11}]}
+        style={[{backgroundColor: '#F2F2F2'}, {paddingTop: HEIGHT*0.108}]}
         renderSeparator={this.renderSeparator}
       />
     );
