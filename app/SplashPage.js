@@ -139,7 +139,6 @@ var splashStyle = StyleSheet.create({
     position: 'absolute',
     bottom: -height,
     flex: 1,
-    resizeMode: 'cover'
   },
 
 });

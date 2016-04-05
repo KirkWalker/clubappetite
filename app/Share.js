@@ -68,10 +68,10 @@ class Share extends Component {
     return (
       <View style={shareStyles.container}>
               <View style={shareStyles.iconsContainer}>
-                <Image source={require('../img/share-facebook.png')} style={shareStyles.icons}/>
-                <Image source={require('../img/share-instagram.png')} style={shareStyles.icons}/>
-                <Image source={require('../img/share-linkedin.png')} style={shareStyles.icons}/>
-                <Image source={require('../img/share-twitter.png')} style={shareStyles.icons}/>
+                <Image source={require('../img/share-facebook.png')} style={shareStyles.icons} resizeMode={Image.resizeMode.contain}/>
+                <Image source={require('../img/share-instagram.png')} style={shareStyles.icons} resizeMode={Image.resizeMode.contain}/>
+                <Image source={require('../img/share-linkedin.png')} style={shareStyles.icons} resizeMode={Image.resizeMode.contain}/>
+                <Image source={require('../img/share-twitter.png')} style={shareStyles.icons} resizeMode={Image.resizeMode.contain}/>
               </View>
               <TouchableOpacity onPress={this.gotoFacebook.bind(this)} >
                 <View style={shareStyles.optionsContainer}>
@@ -80,7 +80,7 @@ class Share extends Component {
                     <Text style={shareStyles.title}>Tell People</Text>
                     <Text style={shareStyles.description}>100 points for each share</Text>
                   </View>
-                  <Image source={require('../img/arrow.png')} style={shareStyles.arrow}/>
+                  <Image source={require('../img/arrow.png')} style={shareStyles.arrow} resizeMode={Image.resizeMode.contain}/>
                 </View>
               </TouchableOpacity>
               <TouchableOpacity onPress={this.gotoRefer.bind(this)} >
@@ -144,7 +144,6 @@ const shareStyles = StyleSheet.create({
     height: height*.11,
     marginLeft: width*.035,
     marginRight: width*.035,
-    resizeMode: 'contain',
     alignItems: 'stretch',
     justifyContent: 'center'
   },
@@ -191,7 +190,6 @@ const shareStyles = StyleSheet.create({
   arrow: {
     height: 33,
     width: 33,
-    resizeMode: 'contain'
   },
   banner: {
     marginTop:55,

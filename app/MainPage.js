@@ -161,12 +161,14 @@ const mainStyles = StyleSheet.create({
     width: width*.9,
     height: height*.4,
     marginTop: height*.06,
+    alignItems: 'center'
   },
   pointsTextContainer: {
     backgroundColor: 'rgba(0,0,0,0)',
     alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: height*.12
+    marginTop: height*.12,
+    width: width*.45,
+    height: height*.1,
   },
   accountText: {
     fontSize: font*.6,

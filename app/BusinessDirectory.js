@@ -86,6 +86,7 @@ componentDidMount() {
 				<Image
 					style={BusinessStyles.businessThumbnail}
 					source={{uri: business.sponsor_img}}
+          resizeMode={Image.resizeMode.contain}
 				/>
 				<View style={BusinessStyles.listInnerContainer}>
 					<Text style={BusinessStyles.businessName}>{business.sponsor_name}</Text>
@@ -93,6 +94,7 @@ componentDidMount() {
 				</View>
         <Image
           style={BusinessStyles.arrow}
+          resizeMode={Image.resizeMode.contain}
           source={require('../img/arrow.png')}
         />
   		</TouchableOpacity>
@@ -202,7 +204,6 @@ const BusinessStyles = StyleSheet.create({
 	businessThumbnail: {
 		width: WIDTH*0.14,
 		height: WIDTH*0.14,
-    resizeMode: 'contain',
 	},
 	businessName: {
 		fontSize: INFO_TEXT,
@@ -219,7 +220,6 @@ const BusinessStyles = StyleSheet.create({
   arrow: {
     height: WIDTH*0.07,
     width: WIDTH*0.07,
-    resizeMode: 'contain',
   },
 });
 

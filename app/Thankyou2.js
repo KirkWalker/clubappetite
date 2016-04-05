@@ -23,8 +23,8 @@ class Thankyou2 extends Component {
   render() {
     return (
       <View style={thankyou2Styles.container}>
-        <Image source={require('../img/thankyou2-bg.png')} style={thankyou2Styles.containerImg} />
-        <Image source={require('../img/yellow-hex.png')} style={thankyou2Styles.yellowHex} />
+        <Image source={require('../img/thankyou2-bg.png')} style={thankyou2Styles.containerImg} resizeMode={Image.resizeMode.contain}/>
+        <Image source={require('../img/yellow-hex.png')} style={thankyou2Styles.yellowHex} resizeMode={Image.resizeMode.contain}/>
         <View style={thankyou2Styles.textContainer}>
           <Text style={thankyou2Styles.text}>YOU'VE EARNED</Text>
           <Text style={thankyou2Styles.number}>550</Text>
@@ -32,10 +32,10 @@ class Thankyou2 extends Component {
         </View>
         <View style={thankyou2Styles.buttonContainer}>
           <TouchableOpacity>
-            <Image source={require('../img/receipt-button.png')} style={thankyou2Styles.button} />
+            <Image source={require('../img/receipt-button.png')} style={thankyou2Styles.button} resizeMode={Image.resizeMode.contain}/>
           </TouchableOpacity>
           <TouchableOpacity>
-            <Image source={require('../img/shop-button.png')} style={thankyou2Styles.button} />
+            <Image source={require('../img/shop-button.png')} style={thankyou2Styles.button} resizeMode={Image.resizeMode.contain}/>
           </TouchableOpacity>
         </View>
       </View>
@@ -53,14 +53,12 @@ const thankyou2Styles = StyleSheet.create({
   containerImg: {
     width: width,
     height: height,
-    resizeMode: 'cover'
   },
   yellowHex: {
     width: width*.4,
     height: height*.23,
     top: -height*.58,
     marginBottom: -height*.04,
-    resizeMode: 'contain',
   },
   textContainer: {
     flexDirection: 'column',
@@ -88,7 +86,6 @@ const thankyou2Styles = StyleSheet.create({
   button: {
     width: width*.45,
     height: height*.08,
-    resizeMode: 'contain'
   }
 });
 

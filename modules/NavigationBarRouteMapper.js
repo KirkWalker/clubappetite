@@ -30,7 +30,7 @@ module.exports = props =>({
    return (
 
        <TouchableOpacity style={styles.navbar_logocontainer} onPress={() => navigator.parentNavigator.push({id: 'MainPage',name:"Main Page"})}>
-         <Image source={require('../img/logo-white.png')} style={styles.navbar_logo}/>
+         <Image source={require('../img/logo-white.png')} style={styles.navbar_logo} resizeMode={Image.resizeMode.contain}/>
        </TouchableOpacity>
 
    );

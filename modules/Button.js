@@ -61,6 +61,7 @@ import React, {
   View,
   Text,
   Image,
+  Platform,
   TouchableHighlight,
   TouchableOpacity,
 } from 'react-native';
@@ -168,6 +169,15 @@ class Button extends Component {
   }
 }
 
+var buttonPaddingTop = 2;
+var buttonPaddingBottom = 8;
+var buttonTop = 4;
+if (Platform.OS === 'ios'){
+  buttonPaddingTop = 8;
+  buttonPaddingBottom = 8;
+  buttonTop = 0;
+}
+
 const buttonStyles = StyleSheet.create({
   defaultButton: {
     borderRadius: 20,
@@ -176,8 +186,9 @@ const buttonStyles = StyleSheet.create({
   buttonText: {
     fontSize: 18,
     fontWeight: '500',
-    paddingTop: 8,
-    paddingBottom: 8,
+    top: buttonTop,
+    paddingTop: buttonPaddingTop,
+    paddingBottom: buttonPaddingBottom,
     paddingRight: 12,
     paddingLeft: 12,
     fontFamily: 'Gill Sans',

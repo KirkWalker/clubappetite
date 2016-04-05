@@ -75,7 +75,7 @@ class Cart extends Component {
     return (
       <View style={styles.container}>
         <View style={[cartStyles.module, cartStyles.module1]}>
-             <Image source={require('../img/cartheader.png')} style={cartStyles.cartheader} />
+             <Image source={require('../img/cartheader.png')} style={cartStyles.cartheader} resizeMode={Image.resizeMode.contain} />
         </View>
         <View style={[cartStyles.module, cartStyles.module2]}>
             <View style={cartStyles.modulerow}>
@@ -114,7 +114,7 @@ class Cart extends Component {
         </View>
         <View style={[cartStyles.module, cartStyles.module4]}>
 
-            <Image source={{uri: 'https://upload.wikimedia.org/wikipedia/en/thumb/e/e2/Loblaws.svg/1280px-Loblaws.svg.png'}} style={[cartStyles.banner]} />
+            <Image source={{uri: 'https://upload.wikimedia.org/wikipedia/en/thumb/e/e2/Loblaws.svg/1280px-Loblaws.svg.png'}} style={[cartStyles.banner]} resizeMode={Image.resizeMode.contain} />
 
 
         </View>
@@ -232,6 +232,7 @@ var Thumb = React.createClass({
               buttonText="-"
               onPress={this.del}
               buttonColor="gray"
+              style={{paddingTop: 0}}
             />
 
             <Image
@@ -262,9 +263,7 @@ var Thumb = React.createClass({
 var cartStyles = StyleSheet.create({
   cartheader: {
     width: width,
-
     alignItems: 'stretch',
-    resizeMode: 'contain'
   },
   module: {
     flexDirection: 'column',
@@ -309,8 +308,6 @@ var cartStyles = StyleSheet.create({
   banner:{
      flex:1,
      alignItems: 'stretch',
-     resizeMode: 'contain',
-
   },
   scrollView: {
 

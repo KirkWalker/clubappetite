@@ -81,7 +81,7 @@ class DealConfirm extends Component {
     return (
       <View style={redeemStyles.container}>
         <View style={redeemStyles.imageContainer}>
-          <Image source={require('../img/shop-appetite-white.png')} style={redeemStyles.logo} />
+          <Image source={require('../img/shop-appetite-white.png')} style={redeemStyles.logo} resizeMode={Image.resizeMode.contain}/>
         </View>
         <View style={redeemStyles.contentContainer}>
 
@@ -234,7 +234,6 @@ const redeemStyles = StyleSheet.create({
     width: width*.5,
     height: height*.18,
     alignItems: 'stretch',
-    resizeMode: 'contain'
   },
 
   title: {

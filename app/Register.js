@@ -82,11 +82,11 @@ class Register extends Component {
       <View>
 
           <View style={registerStyles.bgContainer}>
-              <Image style={registerStyles.background} source={require('../img/splash-bg.jpg')} />
+              <Image style={registerStyles.background} source={require('../img/splash-bg.jpg')} resizeMode={Image.resizeMode.cover}/>
           </View>
 
         <View style={registerStyles.container} marginTop={30}>
-          <Image source={require('../img/ClubAppetiteLogo.png')} style={registerStyles.logo} marginLeft={5} />
+          <Image source={require('../img/ClubAppetiteLogo.png')} style={registerStyles.logo} marginLeft={5} resizeMode={Image.resizeMode.contain}/>
         </View>
 
         <View style={registerStyles.container} marginTop={40}>
@@ -257,7 +257,6 @@ container: {
     width: width*.7,
     height: height*.18,
     alignItems: 'stretch',
-    resizeMode: 'contain'
   },
 moduleButtons: {
   flexDirection: 'column'
@@ -271,7 +270,6 @@ moduleButtons: {
     position: 'absolute',
     bottom: -height,
     flex: 1,
-    resizeMode: 'cover'
   },
    picker: {
        backgroundColor: '#efefef',
