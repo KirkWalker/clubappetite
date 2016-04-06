@@ -16,7 +16,7 @@ var {
   ToastAndroid,
   TextInput,
   InteractionManager,
-  Modal
+  Navigator,
 } = React;
 
 var styles = require('../styles');
@@ -24,23 +24,22 @@ var Users = require('../datalayer/User');
 var SubLocalities = require('../datalayer/Sublocalities');
 var SignupButton = require('../modules/ButtonLogin');
 var CancelButton = require('../modules/ButtonLogin');
-var ReferralCode = require('../modules/ReferralCode');
+var ReferralCode = require('../app/ReferralCodeModal');
 
 
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
 
-//let RegionList = Platform.OS === 'ios' ? PickerIOS : Picker;
 let RegionList = Picker;
 let PickerItem = RegionList.Item;
 
-//var options = ['', 'Kelowna', 'Vancouver'];
 var FMPicker = require('../modules/ApplePicker');
 
 class Register extends Component {
 
   constructor(props) {
       super(props);
+      var code = (this.props.referralCode == undefined ? '' : this.props.referralCode);
       this.state = {
           inputTxt: '',
           inputPass: '',
@@ -50,7 +49,7 @@ class Register extends Component {
           sublocalitiesIds: [],
           locationIndex: 0,
           selectedOption: 'not chosen',
-          referralCode: '',
+          referralCode: code,
       };
       this.navigatorObj = props.navigator;
   }
@@ -72,11 +71,10 @@ class Register extends Component {
 
 
   render() {
-
     var start = ['Please choose a location:'];
     var end = this.state.sublocalities;
     var data = start.concat(end);
-console.log(this.state.locationIndex);
+
     return (
 
       <View>
@@ -141,78 +139,71 @@ console.log(this.state.locationIndex);
 
 
   redeemCodeModal() {
+    var linktext = 'Got a Referral code?';
+    var color = 'blue';
+    if(this.state.referralCode != ''){
+        linktext = 'Refferal Code: ' + this.state.referralCode;
+        color = 'red';
+    }
 
-        console.log('redeem');
-        var linktext = 'Got a Referral code?';
-        var color = 'blue';
-        if(this.state.referralCode != ''){
-            linktext = 'Refferal Code:' + this.state.referralCode;
-            color = 'red';
-        }
+    return(
+      <View style={styles.module} marginTop={20}>
+        <Text
+            style={{color:color}}
+            onPress={()=>{
+                this.openReferralModal(this.state.referralCode);
+            }}>
+            {linktext}
+        </Text>
+      </View>
+    )
+  }
 
-        return(
-
-
-          <View style={styles.module} marginTop={20}>
-            <Text
-                style={{color:color}}
-                onPress={()=>{
-                    this.refs.refer_modal.show();
-                    this.refs.refer_modal.setCode(this.state.referralCode);
-                }}>
-                {linktext}
-            </Text>
-            <ReferralCode
-                ref={'refer_modal'}
-                onSubmit={(option)=>{
-                    this.setState({referralCode: option});
-              }}
-            />
-          </View>
-
-        )
-
+  openReferralModal(referralCode) {
+    this.props.navigator.push({
+      id: 'ReferralCodeModal',
+      sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+      referralCode: referralCode,
+    });
   }
 
 
+  iosPicker(data) {
+    return(
+      <View>
+        <Text>Current Location: {this.state.selectedOption}</Text>
+        <Text
+            style={{color:'blue'}}
+            onPress={()=>{
+                this.refs.picker.setoptions(data);
+                this.refs.picker.show();
+            }}>
+            Click here to select your location
+        </Text>
 
-    iosPicker(data) {
-        return(
-        <View>
-            <Text>Current Location: {this.state.selectedOption}</Text>
-            <Text
-                style={{color:'blue'}}
-                onPress={()=>{
-                    this.refs.picker.setoptions(data);
-                    this.refs.picker.show();
-                }}>
-                Click here to select your location
-            </Text>
+        <FMPicker ref={'picker'} options={data}
+            onSubmit={(option)=>{
+                if(option == 'Please choose a location:') {
+                    this.setState({selectedOption: 'not chosen'})
+                }else {
+                    this.setState({selectedOption: option, location: option})
+                }
+            }}
+        />
+      </View>
+)}
 
-            <FMPicker ref={'picker'} options={data}
-                onSubmit={(option)=>{
-                    if(option.name == 'Please choose a location:') {
-                        this.setState({selectedOption: 'not chosen'})
-                    }else {
-                        this.setState({selectedOption: option.name, location: option.name, locationIndex: option.index})
-                    }
-                }}
-            />
-        </View>
-    )}
 
 
 
 
 
     androidPicker(data) {
-        return(
-
-
+      return(
         <RegionList
             style={registerStyles.picker}
             selectedValue={this.state.locationIndex}
-            onValueChange={(locationIndex) => this.setState({locationIndex: locationIndex, location: data[locationIndex]})}>
+            onValueChange={(locationIndex) => this.setState({locationIndex: locationIndex-1, location: data[locationIndex]})}>
               {data.map((regionName, locationIndex) => (
                 <PickerItem
                 style={{height: 50, margin:0,padding:0}}
@@ -222,30 +213,24 @@ console.log(this.state.locationIndex);
                 />
                 ))}
         </RegionList>
-
-
     );}
 
 
-    gotoLogin() {
-      this.props.navigator.push({
-        id: 'LoginPage',
-        name: 'Login Page',
-      });
-    }
-    gotoNext() {
-      this.props.navigator.push({
-        id: 'MainPage',
-        name: 'Main Page',
-      });
-    }
-    _onPressButtonPOST() {
-
-
-      Users.handleRegister(this);
-
-    }
-
+  gotoLogin() {
+    this.props.navigator.push({
+      id: 'LoginPage',
+      name: 'Login Page',
+    });
+  }
+  gotoNext() {
+    this.props.navigator.push({
+      id: 'MainPage',
+      name: 'Main Page',
+    });
+  }
+  _onPressButtonPOST() {
+    Users.handleRegister(this);
+  }
 }
 
 var registerStyles = StyleSheet.create({
