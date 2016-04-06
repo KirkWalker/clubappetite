@@ -183,10 +183,10 @@ class Register extends Component {
 
         <FMPicker ref={'picker'} options={data}
             onSubmit={(option)=>{
-                if(option == 'Please choose a location:') {
+                if(option.name == 'Please choose a location:') {
                     this.setState({selectedOption: 'not chosen'})
                 }else {
-                    this.setState({selectedOption: option, location: option})
+                    this.setState({locationIndex: option.index-1, selectedOption: option.name, location: option.name})
                 }
             }}
         />

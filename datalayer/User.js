@@ -362,6 +362,8 @@ module.exports = {
         var API_REQUEST = 'HandleRegister:';
         var error_message = '';
 
+        console.log("sublocality: " +sublocality);
+
         if(username == '' || password == '' || email == '') {
             error_message = 'Please fill in all the form fields';
         } else if(email.indexOf("@") == -1 || email.indexOf(".") == -1) {
