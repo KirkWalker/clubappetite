@@ -69,7 +69,7 @@ class SplashPage extends Component {
         </View>
 
         <View style={splashStyle.container}>      
-          <Image style={splashStyle.hex} source={require('../img/Splash.png')}>
+          <Image style={splashStyle.hex} resizeMode="contain" source={require('../img/Splash.png')}>
 
             {(() => {
                 if(hasPoints){

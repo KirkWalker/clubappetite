@@ -17,16 +17,21 @@ var {
 } = React;
 
 var styles = require('../styles');
-
-var Button = require('../modules/ButtonLogin');
 var Users = require('../datalayer/User');
-
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
+
 var {width,height} = Dimensions.get('window');
 var font = 20;
+var fontWeight;
 
 if (PixelRatio.get() <= 2) {
-  font = 17;
+  font = 12.5;
+  fontWeight = '400';
+}
+
+if (width > 500 && height > 1000) {
+  font = 44;
+  fontWeight = '400';
 }
 
 class MainPage extends Component {
@@ -145,45 +150,47 @@ class MainPage extends Component {
 
 }
 
-var pointsFont = font*3;
+var pointsFont = font*2;
+var accountFont = font*.6;
+var pointsLabelFont = font*.8;
 if (Platform.OS === 'ios'){
-  pointsFont = font*3.5;
+  pointsFont = font*3;
+  accountFont = font*.85;
+  pointsLabelFont = font;
 }
 
 const mainStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    marginTop: 60,
-    backgroundColor: '#F2F2F2',
-  },
   pointsContainer: {
     width: width*.9,
     height: height*.4,
     marginTop: height*.06,
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   pointsTextContainer: {
     backgroundColor: 'rgba(0,0,0,0)',
     alignItems: 'center',
-    marginTop: height*.12,
-    width: width*.45,
-    height: height*.1,
   },
   accountText: {
-    fontSize: font*.6,
+    fontSize: accountFont,
     fontWeight: '600',
-    fontFamily: 'Gill Sans'
+    fontFamily: 'Gill Sans',
+    color: '#000',
   },
   pointsAmount: {
     fontSize: pointsFont,
-    fontWeight: '600',
-    fontFamily: 'Gill Sans'
+    fontWeight: fontWeight,
+    fontFamily: 'Gill Sans',
+    textAlign: 'center',
+    marginTop: height*.02,
+    marginBottom: height*.02,
+    color: '#000'
   },
   pointsLabel: {
-    fontSize: font*.8,
+    fontSize: pointsLabelFont,
     fontWeight: '600',
-    fontFamily: 'Gill Sans'
+    fontFamily: 'Gill Sans',
+    color: '#000'
   },
   buttonsContainer: {
     flexDirection: 'row',
@@ -231,6 +238,5 @@ const mainStyles = StyleSheet.create({
     flex: 3
   }
 });
-
 
 module.exports = MainPage;
