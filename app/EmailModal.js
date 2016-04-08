@@ -20,7 +20,7 @@ class EmailModal extends Component {
   }
 
   openLink() {
-    var email = this.props.email;
+    var email = 'mailto:' + this.props.email;
     console.log(email);
     Linking.canOpenURL(email).then(supported => {
       if (supported) {

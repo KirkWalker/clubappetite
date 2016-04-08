@@ -20,7 +20,7 @@ class WebModal extends Component {
   }
 
   openLink() {
-    var website = this.props.website;
+    var website = 'http://' + this.props.website;
     console.log(website);
     Linking.canOpenURL(website).then(supported => {
       if (supported) {

@@ -20,7 +20,7 @@ class PhoneModal extends Component {
   }
 
   openLink() {
-    var phoneNumber = this.props.phoneNumber;
+    var phoneNumber = 'tel:' + this.props.phoneNumber;
     console.log(phoneNumber);
     Linking.canOpenURL(phoneNumber).then(supported => {
       if (supported) {
