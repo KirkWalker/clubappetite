@@ -93,10 +93,10 @@ class SplashPage extends Component {
   }
 }
 
-var topoffset = .57;
+var topoffset = .475;
 
 if(Platform.OS === 'ios'){
-  topoffset = .59;
+  topoffset = .47;
 }
 
 var splashStyle = StyleSheet.create({
@@ -105,13 +105,13 @@ var splashStyle = StyleSheet.create({
     alignItems: 'center'
   },
   hex: {
-    width: width*.85,
-    height: height*.70,
+    width: width*.80,
+    height: height*.68,
     alignItems: 'stretch',
   },
   pointcontainer :{
     top: height*topoffset,
-    left: width*.519,
+    left: width*.4,
     width:width*.395,
     alignItems: 'center',
     justifyContent:'center',
