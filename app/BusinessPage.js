@@ -76,6 +76,14 @@ class BusinessPage extends Component {
     });
   }
 
+  openEmailModal() {
+    this.props.navigator.push({
+      id: 'EmailModal',
+      sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+      email: this.props.business_info.sponsor_email,
+    });
+  }
+
   renderScene(route, navigator) {
   	return (
       <ScrollView>
@@ -96,10 +104,16 @@ class BusinessPage extends Component {
           <View style={PageStyles.separator}/>
 
           <View style={PageStyles.contactContainer}>
-            <View style={PageStyles.contactRow}>
+
+            <TouchableOpacity
+              style={PageStyles.contactRow}
+              onPress={() => {
+                this.openEmailModal();
+              }}
+            >
               <Image style={PageStyles.icon} resizeMode="contain" source={require('../img/email-icon.png')}/>
               <Text style={PageStyles.grayText}>{this.props.business_info.sponsor_email}</Text>
-            </View>
+            </TouchableOpacity>
 
             <TouchableOpacity
               style={PageStyles.contactRow}
