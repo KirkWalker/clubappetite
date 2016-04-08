@@ -66,7 +66,6 @@ class MainPage extends Component {
   }
 
   render() {
-console.log("banner_ad: ",this.state.banner_ad);
     var data = [];
     data.push(this.props.openDrawer);
 
@@ -123,7 +122,7 @@ console.log("banner_ad: ",this.state.banner_ad);
         </View>
       </View>
 
-      <BannerAd ad={this.state.banner_ad} />
+      <BannerAd ad={this.state.banner_ad} user_profile={this.state.user_profile} />
     </View>
 
     );

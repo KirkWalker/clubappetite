@@ -25,13 +25,11 @@ var {
 var DB = require('./DB.js');
 
 var SERVER_URL = 'http://restapi.clubappetite.com/api.php';
-var DEBUG = false;
+var DEBUG = true;
 
 module.exports = {
 
     getReferalCode(_this){
-
-        DEBUG = false;
 
         var _user_profile = _this.state.user_profile;
         var token = _user_profile.token;
@@ -76,8 +74,6 @@ module.exports = {
     },
 
     addPoints(_user_profile,_amount,_first_name,_last_name){
-
-        //DEBUG = true;
 
         var token = _user_profile.token;
         var current_points = _user_profile.user_points;
@@ -190,7 +186,6 @@ module.exports = {
 
         var self = this;
         var _pageName = _this.props.pageName;
-        DEBUG = true;
         /*
         Check to see if this user is already logged in once with Facebook
         If a record exists in the local datalayer we skip ahead and set the state
@@ -530,7 +525,37 @@ module.exports = {
         }
 
 
+    },
+//http://restapi.clubappetite.com/api.php?controller=api
+//&action=trackbannerclick
+//&ad_id=3
+//&token=KF31cSosW6HbhSWRi2FEkLBrVSAo8nu2fUO
+    trackBannerClick(_ad_id, _user_profile) {
+        var token = _user_profile.token;
+        var ad_id = _ad_id;
+
+        fetch(SERVER_URL + '?controller=api&action=trackbannerclick', {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              token: token,
+              ad_id: ad_id,
+            })
+        })
+        .then((response) => response.json())
+        .then((responseData) => {
+            if(responseData.result == 'error'){
+                console.log('User Class ERROR:',responseData);
+            } else {
+                if(DEBUG) { console.log('trackBannerClick: responseData=', responseData); }
+            }
+        })
+        .catch(function(error) {
+            console.log('trackBannerClick request failed', error);
+        })
+        .done();
     }
-
-
 };

@@ -9,6 +9,7 @@ import React, {
   Dimensions,
 } from 'react-native';
 
+var Users = require('../datalayer/User');
 var {width, height} = Dimensions.get('window');
 
 /* AdSlider Component */
@@ -17,6 +18,11 @@ class BannerAds extends Component {
   constructor(props){
     super(props);
 	}
+
+  handlePress() {
+    this.openAdWebsite();
+    Users.trackBannerClick(this.props.ad_id, this.props.user_profile);
+  }
 
 	openAdWebsite() {
 		var website = this.props.ad.url;
@@ -34,7 +40,7 @@ class BannerAds extends Component {
 		return(
       <TouchableOpacity
       	style={BannerStyles.container}
-      	onPress={() => this.openAdWebsite()}
+      	onPress={() => this.handlePress()}
       >
         <Image
         	source={{uri: this.props.ad.media_file}}

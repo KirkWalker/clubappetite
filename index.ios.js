@@ -46,16 +46,6 @@ var ControlPanel = require('./ControlPanel');
 var Users = require('./datalayer/User');
 
 var styles = require('./styles');
-var drawerStyles = {
-  drawer: {
-    shadowColor: "#000000",
-    shadowOpacity: 0.8,
-    shadowRadius: 0,
-  }
-}
-
-
-
 
 class AMGSandbox extends Component {
 
@@ -265,7 +255,6 @@ class AMGSandbox extends Component {
               panStartCompensation={this.settings.panStartCompensation}
               openDrawerThreshold={this.settings.openDrawerThreshold}
               content={controlPanel}
-              styles={drawerStyles}
               disabled={this.settings.disabled}
               tweenHandler={this.tweenHandler}
               tweenDuration={this.settings.tweenDuration}
@@ -315,7 +304,6 @@ class AMGSandbox extends Component {
            panStartCompensation={this.settings.panStartCompensation}
            openDrawerThreshold={this.settings.openDrawerThreshold}
            content={controlPanel}
-           styles={drawerStyles}
            disabled={this.settings.disabled}
            tweenHandler={this.tweenHandler}
            tweenDuration={this.settings.tweenDuration}
@@ -347,7 +335,6 @@ class AMGSandbox extends Component {
          panStartCompensation={this.settings.panStartCompensation}
          openDrawerThreshold={this.settings.openDrawerThreshold}
          content={controlPanel}
-         styles={drawerStyles}
          disabled={this.settings.disabled}
          tweenHandler={this.tweenHandler}
          tweenDuration={this.settings.tweenDuration}
@@ -375,7 +362,6 @@ class AMGSandbox extends Component {
                  panStartCompensation={this.settings.panStartCompensation}
                  openDrawerThreshold={this.settings.openDrawerThreshold}
                  content={controlPanel}
-                 styles={drawerStyles}
                  disabled={this.settings.disabled}
                  tweenHandler={this.tweenHandler}
                  tweenDuration={this.settings.tweenDuration}
@@ -403,7 +389,6 @@ class AMGSandbox extends Component {
                  panStartCompensation={this.settings.panStartCompensation}
                  openDrawerThreshold={this.settings.openDrawerThreshold}
                  content={controlPanel}
-                 styles={drawerStyles}
                  disabled={this.settings.disabled}
                  tweenHandler={this.tweenHandler}
                  tweenDuration={this.settings.tweenDuration}
@@ -433,7 +418,6 @@ class AMGSandbox extends Component {
                   panStartCompensation={this.settings.panStartCompensation}
                   openDrawerThreshold={this.settings.openDrawerThreshold}
                   content={controlPanel}
-                  styles={drawerStyles}
                   disabled={this.settings.disabled}
                   tweenHandler={this.tweenHandler}
                   tweenDuration={this.settings.tweenDuration}
@@ -461,7 +445,6 @@ class AMGSandbox extends Component {
                   panStartCompensation={this.settings.panStartCompensation}
                   openDrawerThreshold={this.settings.openDrawerThreshold}
                   content={controlPanel}
-                  styles={drawerStyles}
                   disabled={this.settings.disabled}
                   tweenHandler={this.tweenHandler}
                   tweenDuration={this.settings.tweenDuration}
@@ -490,7 +473,6 @@ class AMGSandbox extends Component {
                   panStartCompensation={this.settings.panStartCompensation}
                   openDrawerThreshold={this.settings.openDrawerThreshold}
                   content={controlPanel}
-                  styles={drawerStyles}
                   disabled={this.settings.disabled}
                   tweenHandler={this.tweenHandler}
                   tweenDuration={this.settings.tweenDuration}
@@ -519,7 +501,6 @@ class AMGSandbox extends Component {
                  panStartCompensation={this.settings.panStartCompensation}
                  openDrawerThreshold={this.settings.openDrawerThreshold}
                  content={controlPanel}
-                 styles={drawerStyles}
                  disabled={this.settings.disabled}
                  tweenHandler={this.tweenHandler}
                  tweenDuration={this.settings.tweenDuration}
@@ -548,7 +529,6 @@ class AMGSandbox extends Component {
                  panStartCompensation={this.settings.panStartCompensation}
                  openDrawerThreshold={this.settings.openDrawerThreshold}
                  content={controlPanel}
-                 styles={drawerStyles}
                  disabled={this.settings.disabled}
                  tweenHandler={this.tweenHandler}
                  tweenDuration={this.settings.tweenDuration}
@@ -577,7 +557,6 @@ class AMGSandbox extends Component {
                  panStartCompensation={this.settings.panStartCompensation}
                  openDrawerThreshold={this.settings.openDrawerThreshold}
                  content={controlPanel}
-                 styles={drawerStyles}
                  disabled={this.settings.disabled}
                  tweenHandler={this.tweenHandler}
                  tweenDuration={this.settings.tweenDuration}
@@ -606,7 +585,6 @@ class AMGSandbox extends Component {
                  panStartCompensation={this.settings.panStartCompensation}
                  openDrawerThreshold={this.settings.openDrawerThreshold}
                  content={controlPanel}
-                 styles={drawerStyles}
                  disabled={this.settings.disabled}
                  tweenHandler={this.tweenHandler}
                  tweenDuration={this.settings.tweenDuration}
@@ -634,7 +612,6 @@ class AMGSandbox extends Component {
                    panStartCompensation={this.settings.panStartCompensation}
                    openDrawerThreshold={this.settings.openDrawerThreshold}
                    content={controlPanel}
-                   styles={drawerStyles}
                    disabled={this.settings.disabled}
                    tweenHandler={this.tweenHandler}
                    tweenDuration={this.settings.tweenDuration}
@@ -663,7 +640,6 @@ class AMGSandbox extends Component {
                    panStartCompensation={this.settings.panStartCompensation}
                    openDrawerThreshold={this.settings.openDrawerThreshold}
                    content={controlPanel}
-                   styles={drawerStyles}
                    disabled={this.settings.disabled}
                    tweenHandler={this.tweenHandler}
                    tweenDuration={this.settings.tweenDuration}
@@ -702,7 +678,6 @@ class AMGSandbox extends Component {
                  panStartCompensation={this.settings.panStartCompensation}
                  openDrawerThreshold={this.settings.openDrawerThreshold}
                  content={controlPanel}
-                 styles={drawerStyles}
                  disabled={this.settings.disabled}
                  tweenHandler={this.tweenHandler}
                  tweenDuration={this.settings.tweenDuration}
@@ -734,7 +709,6 @@ class AMGSandbox extends Component {
                  panStartCompensation={this.settings.panStartCompensation}
                  openDrawerThreshold={this.settings.openDrawerThreshold}
                  content={controlPanel}
-                 styles={drawerStyles}
                  disabled={this.settings.disabled}
                  tweenHandler={this.tweenHandler}
                  tweenDuration={this.settings.tweenDuration}
@@ -764,7 +738,6 @@ class AMGSandbox extends Component {
                  panStartCompensation={this.settings.panStartCompensation}
                  openDrawerThreshold={this.settings.openDrawerThreshold}
                  content={controlPanel}
-                 styles={drawerStyles}
                  disabled={this.settings.disabled}
                  tweenHandler={this.tweenHandler}
                  tweenDuration={this.settings.tweenDuration}
@@ -794,7 +767,6 @@ class AMGSandbox extends Component {
                  panStartCompensation={this.settings.panStartCompensation}
                  openDrawerThreshold={this.settings.openDrawerThreshold}
                  content={controlPanel}
-                 styles={drawerStyles}
                  disabled={this.settings.disabled}
                  tweenHandler={this.tweenHandler}
                  tweenDuration={this.settings.tweenDuration}
@@ -830,7 +802,6 @@ class AMGSandbox extends Component {
                  panStartCompensation={this.settings.panStartCompensation}
                  openDrawerThreshold={this.settings.openDrawerThreshold}
                  content={controlPanel}
-                 styles={drawerStyles}
                  disabled={this.settings.disabled}
                  tweenHandler={this.tweenHandler}
                  tweenDuration={this.settings.tweenDuration}
@@ -860,7 +831,6 @@ class AMGSandbox extends Component {
                  panStartCompensation={this.settings.panStartCompensation}
                  openDrawerThreshold={this.settings.openDrawerThreshold}
                  content={controlPanel}
-                 styles={drawerStyles}
                  disabled={this.settings.disabled}
                  tweenHandler={this.tweenHandler}
                  tweenDuration={this.settings.tweenDuration}
