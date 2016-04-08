@@ -65,7 +65,7 @@ class SplashPage extends Component {
       <View>
 
         <View style={splashStyle.bgContainer}>
-            <Image style={splashStyle.background} resizeMode="cover" source={require('../img/splash-bg.jpg')} />
+            <Image style={splashStyle.background} resizeMode="cover" source={require('../img/splash-bg-ex.jpg')} />
         </View>
 
         <View style={splashStyle.container}>      
@@ -135,7 +135,7 @@ var splashStyle = StyleSheet.create({
   },
   background: {
     width: width,
-    height: height*.25,
+    height: height,
     position: 'absolute',
     bottom: -height,
     flex: 1,

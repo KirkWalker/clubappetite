@@ -80,7 +80,7 @@ class Register extends Component {
       <View>
 
           <View style={registerStyles.bgContainer}>
-              <Image style={registerStyles.background} source={require('../img/splash-bg.jpg')} resizeMode={Image.resizeMode.cover}/>
+              <Image style={registerStyles.background} source={require('../img/splash-bg-ex.jpg')} resizeMode={Image.resizeMode.cover}/>
           </View>
 
         <View style={registerStyles.container} marginTop={30}>
@@ -251,7 +251,7 @@ moduleButtons: {
   },
   background: {
     width: width,
-    height: height*.25,
+    height: height,
     position: 'absolute',
     bottom: -height,
     flex: 1,
