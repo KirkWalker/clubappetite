@@ -114,9 +114,11 @@ class ReferAFriend extends Component {
 
             <Text style={[ReferStyles.message]}>{message}</Text>
           </View>
-         </View>
-         <BannerAd ad={this.state.banner_ad} />
-       </View>
+        </View>
+        <View style={[ReferStyles.module3, ReferStyles.module]}>
+          <BannerAd ad={this.state.banner_ad} />
+        </View>
+      </View>
     );
   }
 

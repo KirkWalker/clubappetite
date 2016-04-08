@@ -95,7 +95,9 @@ class Share extends Component {
                 </View>
               </TouchableOpacity>
 
-              <BannerAd ad={this.state.banner_ad} />
+              <View style={shareStyles.banner}>
+                <BannerAd ad={this.state.banner_ad} />
+              </View>
 
             </View>
     );
@@ -187,6 +189,20 @@ const shareStyles = StyleSheet.create({
     height: 33,
     width: 33,
   },
+  banner: {
+    marginTop:55,
+    alignSelf: "stretch",
+    backgroundColor: "#fff",
+    elevation:2,
+    shadowColor: '#999999',
+    shadowOpacity: .8,
+    shadowRadius: 2,
+    shadowOffset: {
+        height: 1,
+        width: 1
+    },
+  },
+
 });
 
 

@@ -49,7 +49,6 @@ const BannerStyles = StyleSheet.create({
 	 image: {
     flex: 1,
     alignItems: 'stretch',
-    alignSelf: 'flex-end'
   },
   container: {
     flexDirection: 'column',

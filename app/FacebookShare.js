@@ -136,8 +136,10 @@ class FacebookShare extends Component {
                {_viewName}
 
             </View>
-
-            <BannerAd ad={this.state.banner_ad} />
+            
+            <View style={shareStyles.banner}>
+              <BannerAd ad={this.state.banner_ad} />
+            </View>
           </View>
 
           );
@@ -467,6 +469,12 @@ const shareStyles = StyleSheet.create({
 
       left: 7,
       top: 7,
+    },
+    banner: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      flex: 2,
+      backgroundColor: 'white',
     },
 
 
