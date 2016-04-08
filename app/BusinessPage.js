@@ -68,6 +68,13 @@ class BusinessPage extends Component {
       phoneNumber: this.props.business_info.sponsor_tel,
     });
   }
+  openWebModal() {
+    this.props.navigator.push({
+      id: 'WebModal',
+      sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+      website: this.props.business_info.sponsor_url,
+    });
+  }
 
   renderScene(route, navigator) {
   	return (
@@ -93,6 +100,7 @@ class BusinessPage extends Component {
               <Image style={PageStyles.icon} resizeMode="contain" source={require('../img/email-icon.png')}/>
               <Text style={PageStyles.grayText}>{this.props.business_info.sponsor_email}</Text>
             </View>
+
             <TouchableOpacity
               style={PageStyles.contactRow}
               onPress={() => {
@@ -102,10 +110,18 @@ class BusinessPage extends Component {
               <Image style={PageStyles.icon} resizeMode="contain" source={require('../img/phone-icon.png')}/>
               <Text style={PageStyles.grayText}>{this.props.business_info.sponsor_tel}</Text>
             </TouchableOpacity>
-            <View style={PageStyles.contactRow}>
+
+
+            <TouchableOpacity 
+              style={PageStyles.contactRow}
+              onPress={() => {
+                this.openWebModal();
+              }}
+            >
               <Image style={PageStyles.icon} resizeMode="contain" source={require('../img/website-icon.png')}/>
               <Text style={PageStyles.grayText}>{this.props.business_info.sponsor_url}</Text>
-            </View>
+            </TouchableOpacity>
+
           </View>
 
           <View style={PageStyles.separator}/>
