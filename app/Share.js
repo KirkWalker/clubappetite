@@ -17,6 +17,7 @@ var styles = require('../styles');
 
 var Users = require('../datalayer/User');
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
+var BannerAd = require('../modules/BannerAds');
 
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
@@ -26,7 +27,7 @@ class Share extends Component {
 
   constructor(props) {
       super(props);
-      this.state = {user_profile:[]};
+      this.state = {user_profile:[], banner_ad: []};
 
   }
 
@@ -94,13 +95,7 @@ class Share extends Component {
                 </View>
               </TouchableOpacity>
 
-              <View style={shareStyles.banner}>
-                <Image
-                      source={{uri: 'https://upload.wikimedia.org/wikipedia/en/thumb/e/e2/Loblaws.svg/1280px-Loblaws.svg.png'}}
-                      style={[shareStyles.bannerad]}
-                      resizeMode="cover"
-                 />
-              </View>
+              <BannerAd ad={this.state.banner_ad} />
 
             </View>
     );
@@ -192,24 +187,6 @@ const shareStyles = StyleSheet.create({
     height: 33,
     width: 33,
   },
-  banner: {
-    marginTop:55,
-    alignSelf: "stretch",
-    backgroundColor: "#fff",
-    elevation:2,
-    shadowColor: '#999999',
-    shadowOpacity: .8,
-    shadowRadius: 2,
-    shadowOffset: {
-        height: 1,
-        width: 1
-    },
-  },
-      bannerad:{
-         width:width,
-         height:height*.15,
-         alignItems: 'stretch',
-      },
 });
 
 

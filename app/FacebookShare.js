@@ -22,6 +22,7 @@ var Users = require('../datalayer/User');
 var Button = require('../modules/Button');
 
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
+var BannerAd = require('../modules/BannerAds');
 
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
@@ -35,7 +36,7 @@ class FacebookShare extends Component {
 
   constructor(props) {
       super(props);
-      this.state = {user_profile: [], user:null};
+      this.state = {user_profile: [], user:null, banner_ad: []};
   }
 
   componentDidMount() {
@@ -136,16 +137,7 @@ class FacebookShare extends Component {
 
             </View>
 
-            <View style={[shareStyles.banner]}>
-                <Image
-                     source={{uri: 'https://upload.wikimedia.org/wikipedia/en/thumb/e/e2/Loblaws.svg/1280px-Loblaws.svg.png'}}
-                     style={[shareStyles.bannerimg]}
-                     resizeMode="cover"
-                />
-            </View>
-
-
-
+            <BannerAd ad={this.state.banner_ad} />
           </View>
 
           );
@@ -402,12 +394,6 @@ const shareStyles = StyleSheet.create({
         flex:1,
     marginLeft:20,
         marginRight:0,
-    },
-    banner: {
-      justifyContent: 'center',
-      alignItems: 'center',
-      flex: 2,
-      backgroundColor: 'white',
     },
     heading: {
       fontSize:25,

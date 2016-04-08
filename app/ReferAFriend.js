@@ -17,6 +17,7 @@ var styles = require('../styles');
 
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
 var Users = require('../datalayer/User');
+var BannerAd = require('../modules/BannerAds');
 
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
@@ -26,7 +27,7 @@ class ReferAFriend extends Component {
 
   constructor(props) {
       super(props);
-      this.state = {user_profile: []};
+      this.state = {user_profile: [], banner_ad: []};
 
   }
 
@@ -114,14 +115,7 @@ class ReferAFriend extends Component {
             <Text style={[ReferStyles.message]}>{message}</Text>
           </View>
          </View>
-         <View style={[ReferStyles.module3, ReferStyles.module]}>
-           <Image
-                source={{uri: 'https://upload.wikimedia.org/wikipedia/en/thumb/e/e2/Loblaws.svg/1280px-Loblaws.svg.png'}}
-                style={[ReferStyles.banner]}
-                resizeMode="cover"
-           />
-         </View>
-
+         <BannerAd ad={this.state.banner_ad} />
        </View>
     );
   }
@@ -218,11 +212,6 @@ const ReferStyles = StyleSheet.create({
       fontFamily: 'Gill Sans',
       lineHeight:30,
       textAlign:'center',
-    },
-    banner:{
-       width:width,
-       height:height*.15,
-       alignItems: 'stretch',
     },
         generate: {
           backgroundColor: '#4A8A1D',

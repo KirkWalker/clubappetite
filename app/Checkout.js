@@ -20,6 +20,7 @@ var styles = require('../styles');
 var Users = require('../datalayer/User');
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
 var MyProducts = require('../datalayer/WebAPI');
+var BannerAd = require('../modules/BannerAds');
 
 var font = 20;
 if (PixelRatio.get() <= 2) {
@@ -33,7 +34,7 @@ class Checkout extends Component {
 
   constructor(props) {
       super(props);
-      this.state = {user_profile: [], DataArray: [], cartTotal: this.props.details.cartTotal};
+      this.state = {user_profile: [], banner_ad: [], DataArray: [], cartTotal: this.props.details.cartTotal};
 
   }
 
@@ -135,9 +136,7 @@ class Checkout extends Component {
             <Text style={checkoutStyle.checkouttext}>CHECKOUT</Text>
           </TouchableOpacity>
         </View>
-        <View style={[checkoutStyle.module, checkoutStyle.module5]}>
-            <Image source={{uri: 'https://upload.wikimedia.org/wikipedia/en/thumb/e/e2/Loblaws.svg/1280px-Loblaws.svg.png'}} style={[checkoutStyle.banner]} resizeMode={Image.resizeMode.contain}/>
-        </View>
+        <BannerAd ad={this.state.banner_ad} />
       </View>
     );
   }
@@ -267,10 +266,6 @@ var checkoutStyle = StyleSheet.create({
      justifyContent: 'center',
      alignItems: 'flex-start',
      marginLeft:10,
-  },
-  banner:{
-     flex:1,
-     alignItems: 'stretch',
   },
     checkout: {
       backgroundColor: '#4A8A1D',

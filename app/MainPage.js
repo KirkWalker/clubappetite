@@ -19,6 +19,7 @@ var {
 var styles = require('../styles');
 var Users = require('../datalayer/User');
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
+var BannerAd = require('../modules/BannerAds');
 
 var {width,height} = Dimensions.get('window');
 var font = 20;
@@ -39,7 +40,7 @@ class MainPage extends Component {
 
   constructor(props) {
         super(props);
-        this.state = {user_profile: []};
+        this.state = {user_profile: [], banner_ad: []};
         //result = props.bannerads.getAdData(this);
 
   }
@@ -65,7 +66,7 @@ class MainPage extends Component {
   }
 
   render() {
-
+console.log("banner_ad: ",this.state.banner_ad);
     var data = [];
     data.push(this.props.openDrawer);
 
@@ -122,9 +123,7 @@ class MainPage extends Component {
         </View>
       </View>
 
-      <View style={mainStyles.module}>
-        <Image source={{uri: 'https://upload.wikimedia.org/wikipedia/en/thumb/e/e2/Loblaws.svg/1280px-Loblaws.svg.png'}} style={[mainStyles.banner]} resizeMode={Image.resizeMode.contain}/>
-      </View>
+      <BannerAd ad={this.state.banner_ad} />
     </View>
 
     );
@@ -228,15 +227,6 @@ const mainStyles = StyleSheet.create({
     color: '#6EC0C4',
     marginTop: height*.02,
   },
-  banner: {
-    flex: 1,
-    alignItems: 'stretch',
-  },
-  module: {
-    flexDirection: 'column',
-    width: width,
-    flex: 3
-  }
 });
 
 module.exports = MainPage;

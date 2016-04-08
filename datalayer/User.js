@@ -189,7 +189,8 @@ module.exports = {
 
 
         var self = this;
-
+        var _pageName = _this.props.pageName;
+        DEBUG = true;
         /*
         Check to see if this user is already logged in once with Facebook
         If a record exists in the local datalayer we skip ahead and set the state
@@ -247,7 +248,8 @@ module.exports = {
                         },
                         body: JSON.stringify({
                           token: data.token,
-                          id: data.userid
+                          id: data.userid,
+                          page: _pageName,
                         })
                     })
                     .then((response) => response.json())
@@ -277,7 +279,13 @@ module.exports = {
 
                                 DB.users.update({name: name}, { token: token }, function(updated_table){
                                     data.token = token;
-                                    _this.setState({user_profile:data});
+
+                                    if (responseData.banner_ad != undefined){
+                                        _this.setState({user_profile:data, banner_ad: responseData.banner_ad});
+                                    }
+                                    else {
+                                        _this.setState({user_profile:data});
+                                    }
                                     if(DEBUG) { console.log('done updating users:', updated_table); }
                                 })
 

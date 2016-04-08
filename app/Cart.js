@@ -24,6 +24,7 @@ var Users = require('../datalayer/User');
 var MyProducts = require('../datalayer/WebAPI');
 var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
 var Button = require('../modules/Button');
+var BannerAd = require('../modules/BannerAds');
 
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
@@ -35,6 +36,7 @@ class Cart extends Component {
       super(props);
       this.state = {
         user_profile: [],
+        banner_ad: [],
         DataArray: [],
         cartTotal: 0,
         loaded: false,
@@ -133,12 +135,7 @@ class Cart extends Component {
             </View>
           </View>
         </View>
-        <View style={[cartStyles.module, cartStyles.module4]}>
-
-            <Image source={{uri: 'https://upload.wikimedia.org/wikipedia/en/thumb/e/e2/Loblaws.svg/1280px-Loblaws.svg.png'}} style={[cartStyles.banner]} resizeMode={Image.resizeMode.contain} />
-
-
-        </View>
+        <BannerAd ad={this.state.banner_ad} />
       </View>
 
     );
@@ -325,10 +322,6 @@ var cartStyles = StyleSheet.create({
      justifyContent: 'center',
      alignItems: 'flex-start',
      marginLeft:10,
-  },
-  banner:{
-     flex:1,
-     alignItems: 'stretch',
   },
   scrollView: {
 

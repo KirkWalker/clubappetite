@@ -275,6 +275,7 @@ class AMGSandbox extends Component {
             navigator={navigator}
             data={route.data}
             openDrawer={this.openDrawer}
+            pageName="MainPage"
         />
         </Drawer>
       );
@@ -324,6 +325,7 @@ class AMGSandbox extends Component {
        <Cart
          navigator={navigator}
          openDrawer={this.openDrawer}
+         pageName="Cart"
        />
        </Drawer>
      );
@@ -527,6 +529,7 @@ class AMGSandbox extends Component {
         <Share
           navigator={navigator}
           openDrawer={this.openDrawer}
+          pageName="Share"
         />
         </Drawer>
       );
@@ -555,6 +558,7 @@ class AMGSandbox extends Component {
         <FacebookShare
           navigator={navigator}
           openDrawer={this.openDrawer}
+          pageName="Facebook"
         />
         </Drawer>
       );
@@ -583,6 +587,7 @@ class AMGSandbox extends Component {
         <ReferAFriend
           navigator={navigator}
           openDrawer={this.openDrawer}
+          pageName="Refferafriend"
         />
         </Drawer>
       );
@@ -669,6 +674,7 @@ class AMGSandbox extends Component {
             navigator={navigator}
             openDrawer={this.openDrawer}
             details={route.details}
+            pageName="Checkout"
           />
         </Drawer>
         );
