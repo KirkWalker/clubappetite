@@ -21,7 +21,7 @@ class BannerAds extends Component {
 
   handlePress() {
     this.openAdWebsite();
-    Users.trackBannerClick(this.props.ad_id, this.props.user_profile);
+    Users.trackBannerClick(this.props.ad.ad_id, this.props.user_profile);
   }
 
 	openAdWebsite() {

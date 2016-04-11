@@ -25,7 +25,7 @@ var {
 var DB = require('./DB.js');
 
 var SERVER_URL = 'http://restapi.clubappetite.com/api.php';
-var DEBUG = true;
+var DEBUG = false;
 
 module.exports = {
 
@@ -548,6 +548,7 @@ module.exports = {
         .then((response) => response.json())
         .then((responseData) => {
             if(responseData.result == 'error'){
+                //console.log(SERVER_URL+'?controller=api&action=trackbannerclick&ad_id='+ad_id+"&token="+token);
                 console.log('User Class ERROR:',responseData);
             } else {
                 if(DEBUG) { console.log('trackBannerClick: responseData=', responseData); }
