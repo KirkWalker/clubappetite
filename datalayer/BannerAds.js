@@ -2,7 +2,7 @@ var { View } = require('react-native')
 
 var DB = require('./DB');
 var resultData;
-var DEBUG = true;
+var DEBUG = false;
 var SERVER_URL = 'http://restapi.clubappetite.com/api.php';
 
 
@@ -13,10 +13,6 @@ module.exports = {
         var token = _props.state.user_profile.token;
         var sub_id = _props.state.user_profile.sublocality_id;
         var database = DB.get('banner_ads');
-
-        //console.log('_route:', _route);
-
-
 
         if(sub_id != undefined){
 
@@ -72,12 +68,7 @@ module.exports = {
 
                 }
 
-                //var page = _this.navigator.pagename;
-                //URL += '&token=' + token + '&last_mod=' + current_mod;
-                //URL += '&page=' + _route + '&adViewPayload=' + adViewPayload;
-                console.log('URL:', URL);
 
- /**/
                 fetch(URL, {
                     method: 'POST',
                     headers: {
@@ -93,7 +84,7 @@ module.exports = {
                 })
                 .then((response) => response.json())
                 .then((responseData) => {
-                    console.log('responseData: ', responseData);
+
                     /* If the responseData returns an error */
                     if(responseData.result == 'error') {
                         console.log(' API ERROR: ', responseData);
@@ -137,8 +128,6 @@ module.exports = {
                         else {
 
                             var details = current_data.details;
-
-
                             database.update(
                             { max_mod: current_mod },
                             { details: details },
@@ -152,23 +141,19 @@ module.exports = {
 
                             });
 
-
-
-
-
                         }
-
-
 
                     }
 
                 })
                 .catch(function(error) {
                     console.log('Banner network error: ', error);
+                    var details = current_data.details;
+                    details.sort(function (a, b) {return Math.random() - 0.5;});
+                    _this.setState({banner_ads: details, ad: details[0]});
                 })
                 .done();
 
-                //_this.setState({banner_ads: result.rows});
 
             })
 

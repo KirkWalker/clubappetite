@@ -27,7 +27,7 @@ class Share extends Component {
 
   constructor(props) {
       super(props);
-      this.state = {user_profile:[], banner_ad: []};
+      this.state = {user_profile:[]};
 
   }
 
@@ -95,7 +95,7 @@ class Share extends Component {
                 </View>
               </TouchableOpacity>
 
-              <BannerAd ad={this.state.banner_ad} />
+              <BannerAd refThis={this} pageName={'Share'} />
 
             </View>
     );

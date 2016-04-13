@@ -27,7 +27,7 @@ class ReferAFriend extends Component {
 
   constructor(props) {
       super(props);
-      this.state = {user_profile: [], banner_ad: []};
+      this.state = {user_profile: []};
 
   }
 
@@ -116,7 +116,7 @@ class ReferAFriend extends Component {
           </View>
         </View>
         <View style={[ReferStyles.module3, ReferStyles.module]}>
-          <BannerAd ad={this.state.banner_ad} />
+          <BannerAd refThis={this} pageName={'Refferafriend'} />
         </View>
       </View>
     );

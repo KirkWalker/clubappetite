@@ -34,7 +34,7 @@ class Checkout extends Component {
 
   constructor(props) {
       super(props);
-      this.state = {user_profile: [], banner_ad: [], DataArray: [], cartTotal: this.props.details.cartTotal};
+      this.state = {user_profile: [], DataArray: [], cartTotal: this.props.details.cartTotal};
 
   }
 
@@ -136,7 +136,7 @@ class Checkout extends Component {
             <Text style={checkoutStyle.checkouttext}>CHECKOUT</Text>
           </TouchableOpacity>
         </View>
-        <BannerAd ad={this.state.banner_ad} />
+        <BannerAd refThis={this} pageName={'Checkout'} />
       </View>
     );
   }

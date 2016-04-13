@@ -36,7 +36,7 @@ class FacebookShare extends Component {
 
   constructor(props) {
       super(props);
-      this.state = {user_profile: [], user:null, banner_ad: []};
+      this.state = {user_profile: [], user:null};
   }
 
   componentDidMount() {
@@ -138,7 +138,7 @@ class FacebookShare extends Component {
             </View>
             
             <View style={shareStyles.banner}>
-              <BannerAd ad={this.state.banner_ad} />
+              <BannerAd refThis={this} pageName={'Facebook'} />
             </View>
           </View>
 

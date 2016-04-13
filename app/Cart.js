@@ -36,7 +36,6 @@ class Cart extends Component {
       super(props);
       this.state = {
         user_profile: [],
-        banner_ad: [],
         DataArray: [],
         cartTotal: 0,
         loaded: false,
@@ -135,7 +134,7 @@ class Cart extends Component {
             </View>
           </View>
         </View>
-        <BannerAd ad={this.state.banner_ad} />
+        <BannerAd refThis={this} pageName={'Cart'} />
       </View>
 
     );
