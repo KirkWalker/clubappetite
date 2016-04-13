@@ -14,18 +14,18 @@ import React, {
 
 var Button = require('../modules/Button');
 
-class PhoneModal extends Component {
+class WebModal extends Component {
   constructor(props){
     super(props);
   }
 
   openLink() {
-    var phoneNumber = 'tel:' + this.props.phoneNumber;
-    console.log(phoneNumber);
-    Linking.canOpenURL(phoneNumber).then(supported => {
+    var website = 'http://' + this.props.website;
+    console.log(website);
+    Linking.canOpenURL(website).then(supported => {
       if (supported) {
         console.log("Opening link...");
-        return Linking.openURL(phoneNumber);
+        return Linking.openURL(website);
       } else {
         console.log("Can\'t open this URI.");
       }
@@ -34,17 +34,17 @@ class PhoneModal extends Component {
   render() {
     return(
       <View style={ModalStyles.modalContainer}>
-        <Image style={ModalStyles.callingIcon} resizeMode="contain" source={require('../img/phone-icon-white.png')}/>
-        <Text style={ModalStyles.modalText}>{this.props.phoneNumber}</Text>
+        <Image style={ModalStyles.webIcon} resizeMode="contain" source={require('../img/web-icon-white.png')}/>
+        <Text style={ModalStyles.modalText}>{this.props.website}</Text>
         <View style={ModalStyles.modalButtonContainer}>
-          <View style={ModalStyles.callingButton}>
+          <View style={ModalStyles.webButton}>
             <Button
               buttonColor="calling"
-              buttonText="Call"
+              buttonText="Visit"
               onPress={() => {this.openLink()}}
             />
           </View>
-          <View style={ModalStyles.callingButton}>
+          <View style={ModalStyles.webButton}>
             <Button
               buttonColor="calling"
               buttonText="Cancel"
@@ -82,15 +82,15 @@ const ModalStyles = StyleSheet.create({
     fontWeight: '500',
     padding: WIDTH*0.05,
   },
-  callingIcon: {
+  webIcon: {
     width: WIDTH*0.20,
     height: WIDTH*0.20,
   },
-  callingButton: {
+  webButton: {
     width: WIDTH*0.30,
     paddingLeft: WIDTH*0.03,
     paddingRight: WIDTH*0.03,
   },
 });
 
-module.exports = PhoneModal;
+module.exports = WebModal;

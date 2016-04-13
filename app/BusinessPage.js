@@ -68,6 +68,21 @@ class BusinessPage extends Component {
       phoneNumber: this.props.business_info.sponsor_tel,
     });
   }
+  openWebModal() {
+    this.props.navigator.push({
+      id: 'WebModal',
+      sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+      website: this.props.business_info.sponsor_url,
+    });
+  }
+
+  openEmailModal() {
+    this.props.navigator.push({
+      id: 'EmailModal',
+      sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+      email: this.props.business_info.sponsor_email,
+    });
+  }
 
   renderScene(route, navigator) {
   	return (
@@ -89,10 +104,17 @@ class BusinessPage extends Component {
           <View style={PageStyles.separator}/>
 
           <View style={PageStyles.contactContainer}>
-            <View style={PageStyles.contactRow}>
+
+            <TouchableOpacity
+              style={PageStyles.contactRow}
+              onPress={() => {
+                this.openEmailModal();
+              }}
+            >
               <Image style={PageStyles.icon} resizeMode="contain" source={require('../img/email-icon.png')}/>
               <Text style={PageStyles.grayText}>{this.props.business_info.sponsor_email}</Text>
-            </View>
+            </TouchableOpacity>
+
             <TouchableOpacity
               style={PageStyles.contactRow}
               onPress={() => {
@@ -102,10 +124,18 @@ class BusinessPage extends Component {
               <Image style={PageStyles.icon} resizeMode="contain" source={require('../img/phone-icon.png')}/>
               <Text style={PageStyles.grayText}>{this.props.business_info.sponsor_tel}</Text>
             </TouchableOpacity>
-            <View style={PageStyles.contactRow}>
+
+
+            <TouchableOpacity 
+              style={PageStyles.contactRow}
+              onPress={() => {
+                this.openWebModal();
+              }}
+            >
               <Image style={PageStyles.icon} resizeMode="contain" source={require('../img/website-icon.png')}/>
               <Text style={PageStyles.grayText}>{this.props.business_info.sponsor_url}</Text>
-            </View>
+            </TouchableOpacity>
+
           </View>
 
           <View style={PageStyles.separator}/>

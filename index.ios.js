@@ -39,6 +39,8 @@ var BusinessPage = require('./app/BusinessPage');
 var BusinessDirectory = require('./app/BusinessDirectory');
 var NoNavigatorPage = require('./app/NoNavigatorPage');
 var PhoneModal = require('./app/PhoneModal');
+var WebModal = require('./app/WebModal');
+var EmailModal = require('./app/EmailModal');
 var ReferralCodeModal = require('./app/ReferralCodeModal');
 var Drawer = require('react-native-drawer');
 var ControlPanel = require('./ControlPanel');
@@ -270,12 +272,33 @@ class AMGSandbox extends Component {
       );
     }
 
+
     if (routeId === 'PhoneModal') {
       return (
         <PhoneModal
           navigator={navigator}
           phoneNumber={route.phoneNumber}
           pageName="Phone Modal"
+        />
+      );
+    }
+
+    if (routeId === 'WebModal') {
+      return (
+        <WebModal
+          navigator={navigator}
+          website={route.website}
+          pageName="Web Modal"
+        />
+      );
+    }
+
+    if (routeId === 'EmailModal') {
+      return (
+        <EmailModal
+          navigator={navigator}
+          email={route.email}
+          pageName="Email Modal"
         />
       );
     }

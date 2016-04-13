@@ -43,7 +43,7 @@ class LoginPage extends Component {
         <View>
 
           <View style={loginStyles.bgContainer}>
-              <Image style={loginStyles.background} source={require('../img/splash-bg.jpg')} resizeMode={Image.resizeMode.cover}/>
+              <Image style={loginStyles.background} source={require('../img/splash-bg-ex.jpg')} resizeMode={Image.resizeMode.cover}/>
           </View>
 
           <View style={loginStyles.container} marginTop={50}>
@@ -118,13 +118,14 @@ var loginStyles = StyleSheet.create({
     color:'#F0BB1A',
     fontSize: 16,
     fontWeight:'bold',
+    fontFamily: 'Gill Sans'
   },
   bgContainer: {
     position: 'absolute'
   },
   background: {
     width: width,
-    height: height*.25,
+    height: height,
     position: 'absolute',
     bottom: -height,
     flex: 1,
