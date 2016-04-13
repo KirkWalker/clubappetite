@@ -8,11 +8,13 @@ var SERVER_URL = 'http://restapi.clubappetite.com/api.php';
 
 module.exports = {
 
-    getAdData(_user_profile, _this) {
+    getAdData( _this, _props, _route) {
 
-        var token = _user_profile.token;
-        var sub_id = _user_profile.sublocality_id;
+        var token = _props.state.user_profile.token;
+        var sub_id = _props.state.user_profile.sublocality_id;
         var database = DB.get('banner_ads');
+
+        //console.log('_route:', _route);
 
 
 
@@ -33,22 +35,61 @@ module.exports = {
                     current_mod = result.rows['1'].max_mod;
                     current_data = result.rows['1'];
                     //if there are impressions tracked, we need to send to the server
+                    var tempArray = [];
+                    var tempString = [];
+                    var adViewPayload = '[';
+
+                    for (var key in current_data.details) {
+
+                        tempArray = current_data.details[key];
+                        tempString = '';
+                        for (var subkey in tempArray) {
+
+                            if(subkey === 'ad_id'){
+                                tempString += '"id":'+tempArray[subkey] + ', ';
+                            }
+                            if(subkey === 'views'){
+                                tempString += '"views":'+tempArray[subkey];
+                                if(parseInt(tempArray[subkey])>0) {
+                                    adViewPayload += '{' + tempString + '},';
+                                }
+
+                            }
+
+                        }
+
+                        current_data.details[key].views = 0;
 
 
+                    }
 
+                    adViewPayload += ']';
+                    adViewPayload = adViewPayload.replace(',]',']');
+                    adViewPayload = adViewPayload.replace('[]','');
+
+                    if (DEBUG) {console.log('adViewPayload:', adViewPayload);}
+                    //if (DEBUG) {console.log('current_data.details:', current_data.details);}
 
                 }
 
-
-                URL += '&token=' + token + '&last_mod=' + current_mod;
+                //var page = _this.navigator.pagename;
+                //URL += '&token=' + token + '&last_mod=' + current_mod;
+                //URL += '&page=' + _route + '&adViewPayload=' + adViewPayload;
                 console.log('URL:', URL);
 
+ /**/
                 fetch(URL, {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json',
-                    }
+                    },
+                     body: JSON.stringify({
+                           token: token,
+                           last_mod: current_mod,
+                           adViewPayload: adViewPayload,
+                           page:_route,
+                     })
                 })
                 .then((response) => response.json())
                 .then((responseData) => {
@@ -97,9 +138,22 @@ module.exports = {
 
                             var details = current_data.details;
 
-                            //details.sort(sort_by('ad_id', false, parseInt));
-                            //console.log('Banner ad current_data:', details);
-                            _this.setState({banner_ads: details, ad: details[0]});
+
+                            database.update(
+                            { max_mod: current_mod },
+                            { details: details },
+                            function(updated_table) {
+                                if (DEBUG) {
+                                    console.log(' Updating banner views');
+                                    //console.log(updated_table);
+                                }
+                                details.sort(function (a, b) {return Math.random() - 0.5;});
+                                _this.setState({banner_ads: details, ad: details[0]});
+
+                            });
+
+
+
 
 
                         }

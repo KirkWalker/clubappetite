@@ -19,16 +19,17 @@ import TimerMixin from 'react-timer-mixin';
 /* AdSlider Component */
 class BannerAds extends Component {
 
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.state = { ad: [], banner_ads:[]};
-
+    this.mounted = false;
 
   }
 
   componentDidMount () {
 
     var ad_index = 0;//maintain current index
+    this.mounted = true;
 
     this.timer = TimerMixin.setInterval(
       () => {
@@ -59,19 +60,23 @@ class BannerAds extends Component {
 
   componentWillUnmount() {
         TimerMixin.clearInterval(this.timer);
+        this.mounted = false;
   }
 
   componentWillReceiveProps(nextProps) {
 
-    InteractionManager.runAfterInteractions(() => {
-       BannerData.getAdData(nextProps.user_profile, this);
-    });
+    //InteractionManager.runAfterInteractions(() => {
+    if(this.mounted){
+        BannerData.getAdData(this, nextProps.refThis, nextProps.pageName);
+    }
+
+    //});
 
   }
 
   handlePress() {
     this.openAdWebsite();
-    Users.trackBannerClick(this.state.ad.ad_id, this.props.user_profile);
+    Users.trackBannerClick(this.state.ad.ad_id, this.props.refThis.state.user_profile);
   }
 
   openAdWebsite() {

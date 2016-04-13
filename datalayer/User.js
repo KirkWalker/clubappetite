@@ -124,10 +124,10 @@ module.exports = {
 
 
     eraseUsers(){
-        var value = AsyncStorage.removeItem('db_store');
+        //var value = AsyncStorage.removeItem('db_store');
 
         /*
-        This does not remove the data from the server.
+        This removes the data from the server.
         Login will sync the server with new data if needed
         */
 
