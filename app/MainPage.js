@@ -122,7 +122,7 @@ class MainPage extends Component {
         </View>
       </View>
 
-      <BannerAd ad={this.state.banner_ad} user_profile={this.state.user_profile} />
+      <BannerAd user_profile={this.state.user_profile} />
     </View>
 
     );

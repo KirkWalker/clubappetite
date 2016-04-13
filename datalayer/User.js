@@ -276,7 +276,7 @@ module.exports = {
                                     data.token = token;
 
                                     if (responseData.banner_ad != undefined){
-                                        _this.setState({user_profile:data, banner_ad: responseData.banner_ad});
+                                        _this.setState({user_profile:data});
                                     }
                                     else {
                                         _this.setState({user_profile:data});

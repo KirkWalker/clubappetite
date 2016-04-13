@@ -2,26 +2,175 @@ var { View } = require('react-native')
 
 var DB = require('./DB');
 var resultData;
+var DEBUG = true;
+var SERVER_URL = 'http://restapi.clubappetite.com/api.php';
+
 
 module.exports = {
 
+    getAdData(_user_profile, _this) {
+
+        var token = _user_profile.token;
+        var sub_id = _user_profile.sublocality_id;
+        var database = DB.get('banner_ads');
 
 
-    getAdData(_this) {
-        DB.banner_ads.get_all(function(result){
-            //console.log(result);
-            resultData = result;
-            _this.setState({count: result.totalrows, dataObj: result});
-            //return result;
-        })
+
+        if(sub_id != undefined){
+
+            database.get_all(function(result){
+
+
+                var URL = SERVER_URL + '?controller=api&action=banners&sub_id='+sub_id;
+                var current_mod = '1900-01-01 12:00:00';
+                var current_data = '';
+
+
+                if(result.totalrows == 0){ // banners not in local datalayer
+                    if (DEBUG) { console.log('getAdData fetching banners for the first time:', result); }
+                } else {
+                    if (DEBUG) {console.log('getAdData checking for new banners:', result.rows['1'].max_mod);}
+                    current_mod = result.rows['1'].max_mod;
+                    current_data = result.rows['1'];
+                    //if there are impressions tracked, we need to send to the server
+
+
+
+
+                }
+
+
+                URL += '&token=' + token + '&last_mod=' + current_mod;
+                console.log('URL:', URL);
+
+                fetch(URL, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    }
+                })
+                .then((response) => response.json())
+                .then((responseData) => {
+                    console.log('responseData: ', responseData);
+                    /* If the responseData returns an error */
+                    if(responseData.result == 'error') {
+                        console.log(' API ERROR: ', responseData);
+                    }
+
+                    /* If the responseData returns a successful result */
+                    else if (responseData.result == 'success') {
+
+                        if (responseData.code == 'refresh') {
+                            delete responseData.result;//so we don't insert it into the db
+                            delete responseData.code;//so we don't insert it into the db
+                            if (current_mod == '1900-01-01 12:00:00') {
+                                database.add(responseData, function(result) {
+                                    if (DEBUG) {
+                                     console.log('Adding banner');
+                                     console.log(result);
+                                     console.log('Setting state: ', responseData.details);
+                                    }
+                                    _this.setState({banner_ads: responseData.details, ad: responseData.details[0]});
+                                });
+
+                            } else {
+
+                                database.update(
+                                    { max_mod: current_mod },
+                                    { details: responseData.details, max_mod: responseData.max_mod },
+                                    function(updated_table) {
+                                        if (DEBUG) {
+                                        console.log(' Updating banners');
+                                        console.log(updated_table);
+                                        console.log(' Setting state:', responseData.details);
+                                        }
+
+                                        _this.setState({banner_ads: responseData.details, ad: responseData.details[0]});
+
+                                    });
+                            }
+                        }
+
+                        //no new banners, use the existing banners
+                        else {
+
+                            var details = current_data.details;
+
+                            //details.sort(sort_by('ad_id', false, parseInt));
+                            //console.log('Banner ad current_data:', details);
+                            _this.setState({banner_ads: details, ad: details[0]});
+
+
+                        }
+
+
+
+                    }
+
+                })
+                .catch(function(error) {
+                    console.log('Banner network error: ', error);
+                })
+                .done();
+
+                //_this.setState({banner_ads: result.rows});
+
+            })
+
+        }
+
+
+
+
     },
-    getResult(){
-        return this.resultData;
+
+    trackImpression(_current_ad_array, _ad_index){
+
+        //var database = DB.get('banner_ads');
+        //console.log('ad_id:',_current_ad.ad_id);
+
+        _current_ad_array[_ad_index].views = parseInt(_current_ad_array[_ad_index].views)+1;
+
+        DB.banner_ads.update_id(1, {details: _current_ad_array}, function(details) {
+
+            //console.log('details:',details.banner_ads);
+
+        });
+
+/*
+        database.update(
+        { ad_id: ad_id },
+        { details.views: },
+        function(updated_table) {
+            if (DEBUG) {
+            console.log(' Updating banners');
+            console.log(updated_table);
+            console.log(' Setting state:', responseData.details);
+            }
+
+            _this.setState({banner_ads: responseData.details, ad: responseData.details[0]});
+
+        });
+*/
+
+
     }
 
 
 
-
-
-
 }
+
+
+var sort_by = function(field, reverse, primer){
+
+         var key = primer ?
+             function(x) {return primer(x[field])} :
+             function(x) {return x[field]};
+
+         reverse = !reverse ? 1 : -1;
+
+         return function (a, b) {
+             return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
+           }
+      }
