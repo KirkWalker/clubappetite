@@ -54,7 +54,7 @@ module.exports = {
 
                         }
 
-                        current_data.details[key].views = 0;
+                        //current_data.details[key].views = 0;
 
 
                     }
@@ -63,7 +63,7 @@ module.exports = {
                     adViewPayload = adViewPayload.replace(',]',']');
                     adViewPayload = adViewPayload.replace('[]','');
 
-                    if (DEBUG) {console.log('adViewPayload:', adViewPayload);}
+                    console.log('adViewPayload:', adViewPayload);
                     //if (DEBUG) {console.log('current_data.details:', current_data.details);}
 
                 }
@@ -128,6 +128,15 @@ module.exports = {
                         else {
 
                             var details = current_data.details;
+
+                            details.sort(sort_by('views',false, parseInt));// bring the ad with the fewest views to the top
+                            //console.log('Sorting banner by views:',details);
+
+
+                            for (var key in current_data.details) {//reset all views to zero
+                               current_data.details[key].views = 0;
+                            }
+
                             database.update(
                             { max_mod: current_mod },
                             { details: details },
@@ -136,7 +145,8 @@ module.exports = {
                                     console.log(' Updating banner views');
                                     //console.log(updated_table);
                                 }
-                                details.sort(function (a, b) {return Math.random() - 0.5;});
+
+
                                 _this.setState({banner_ads: details, ad: details[0]});
 
                             });
@@ -166,9 +176,6 @@ module.exports = {
 
     trackImpression(_current_ad_array, _ad_index){
 
-        //var database = DB.get('banner_ads');
-        //console.log('ad_id:',_current_ad.ad_id);
-
         _current_ad_array[_ad_index].views = parseInt(_current_ad_array[_ad_index].views)+1;
 
         DB.banner_ads.update_id(1, {details: _current_ad_array}, function(details) {
@@ -176,23 +183,6 @@ module.exports = {
             //console.log('details:',details.banner_ads);
 
         });
-
-/*
-        database.update(
-        { ad_id: ad_id },
-        { details.views: },
-        function(updated_table) {
-            if (DEBUG) {
-            console.log(' Updating banners');
-            console.log(updated_table);
-            console.log(' Setting state:', responseData.details);
-            }
-
-            _this.setState({banner_ads: responseData.details, ad: responseData.details[0]});
-
-        });
-*/
-
 
     }
 
