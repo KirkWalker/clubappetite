@@ -127,14 +127,11 @@ class BannerAds extends Component {
 }
 
 const BannerStyles = StyleSheet.create({
-	 image: {
-    flex: 1,
-    alignItems: 'stretch',
-  },
   container: {
     flexDirection: 'column',
     width: width,
-    flex: 3,
+    flex:1,
+    alignItems: 'stretch',
   },
 });
 

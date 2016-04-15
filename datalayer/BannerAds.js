@@ -39,23 +39,10 @@ module.exports = {
 
                         tempArray = current_data.details[key];
                         tempString = '';
-                        for (var subkey in tempArray) {
 
-                            if(subkey === 'ad_id'){
-                                tempString += '"id":'+tempArray[subkey] + ', ';
-                            }
-                            if(subkey === 'views'){
-                                tempString += '"views":'+tempArray[subkey];
-                                if(parseInt(tempArray[subkey])>0) {
-                                    adViewPayload += '{' + tempString + '},';
-                                }
-
-                            }
-
+                        if(parseInt(tempArray.views)>0) {
+                            adViewPayload += '{"id":' + tempArray.ad_id + ',"views": ' + tempArray.views + '},';
                         }
-
-                        //current_data.details[key].views = 0;
-
 
                     }
 
@@ -174,7 +161,7 @@ module.exports = {
                                         }
                                     }
                                 }
-
+                                //console.log('Setting banners:',tempArray);
                                 _this.setState({banner_ads: tempArray, ad: tempArray[0]});
 
                             });
