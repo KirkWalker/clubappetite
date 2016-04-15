@@ -14,6 +14,7 @@ var {
   Navigator,
   TouchableOpacity,
   StyleSheet,
+  BackAndroid,
 } = React;
 
 var SplashPage = require('./app/SplashPage');
@@ -48,6 +49,16 @@ var ControlPanel = require('./ControlPanel');
 var Users = require('./datalayer/User');
 
 var styles = require('./styles');
+
+var _navigator;
+
+BackAndroid.addEventListener('hardwareBackPress', () => {
+  if (_navigator.getCurrentRoutes().length === 1  ) {
+     return false;
+  }
+  _navigator.pop();
+  return true;
+});
 
 class AMGSandbox extends Component {
 
@@ -194,6 +205,7 @@ class AMGSandbox extends Component {
   }
   renderScene(route, navigator) {
 
+    _navigator = navigator;
 
       /*
       this is an example of how to add navagation items to the drawer.

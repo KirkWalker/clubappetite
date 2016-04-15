@@ -10,10 +10,10 @@ import React, {
   TouchableOpacity,
   ScrollView,
   Navigator,
-  View
+  View,
 } from 'react-native';
 
-var DEBUG = false;
+var DEBUG = true;
 if (DEBUG) {console.log("Redeem DEBUG flag set\n---------------------");}
 
 var {width, height} = Dimensions.get('window');
@@ -27,6 +27,9 @@ var font = 22;
 if (PixelRatio.get() <= 2) {
   font = 18;
 }
+
+
+
 
 class Redeem extends Component {
 

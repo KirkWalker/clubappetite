@@ -39,4 +39,5 @@ public class MainActivity extends ReactActivity {
         new FacebookLoginPackage() // <------ add the package
         );
     }
+
 }

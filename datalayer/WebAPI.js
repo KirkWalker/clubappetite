@@ -217,7 +217,8 @@ InfoStore.confirmDeal = function (_this) {
 
 			_this.setState({user_profile: _user_profile,
 				blnDoneTransaction: true,
-				strTransDetails: responseData.result
+				strTransDetails: responseData.result,
+				strBarcode: responseData.barcode_image,
 			});
 
 			if(DEBUG) { console.log('done updating users:', updated_table); }

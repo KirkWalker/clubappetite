@@ -33,7 +33,7 @@ class DealConfirm extends Component {
 
   constructor(props) {
         super(props);
-        this.state = {user_profile: [], blnDoneTransaction:false,strTransDetails:''};
+        this.state = {user_profile: [], blnDoneTransaction:false, strTransResult:'', strBarcode:''};
   }
 
   componentDidMount() {
@@ -49,33 +49,13 @@ class DealConfirm extends Component {
 
   render() {
 
-      var data = [];
-      data.push(this.props.openDrawer);
-
-      return (
-        <Navigator
-            renderScene={this.renderScene.bind(this)}
-            navigator={this.props.navigator}
-            navigationBar={
-              <Navigator.NavigationBar style={styles.navbar}
-                  routeMapper={NavigationBarRouteMapper(data)} />
-            } />
-      );
-  }
-
-
-
-
-  renderScene(route, navigator) {
-
-
     var _this = this;
     var _viewName = '';
 
     if(!this.state.blnDoneTransaction){
         _viewName = <ConfirmButton onPress={() => this.confirmDeal(this)} />;
     }else {
-        _viewName = <Notification details={this.state.strTransDetails} />;
+        _viewName = <Notification details={this.state.strTransDetails} barcode={this.state.strBarcode} />;
     }
 
     return (
@@ -90,7 +70,7 @@ class DealConfirm extends Component {
                 <Text style={redeemStyles.title}>{this.props.deal_info.deal_title}</Text>
                 <Text style={redeemStyles.description}>{this.props.deal_info.deal_short_desc}</Text>
                 <Text style={redeemStyles.points}>{this.props.deal_info.deal_price} Points</Text>
-                <Text style={redeemStyles.points}>You have {this.state.user_profile.user_points} Points</Text>
+
 
                 {_viewName}
 
@@ -136,13 +116,22 @@ var Notification = React.createClass({
         message = 'Thank You! Your Points have been deducted';
     }
 
+    var bar_code = '';
+    if(this.props.barcode != '') {
+        bar_code = <Image source={{uri:this.props.barcode}} style={redeemStyles.barcode} resizeMode={Image.resizeMode.contain}/>;
+    } else {
+        bar_code = <Text style={redeemStyles.thankyou}>{message}</Text>;
+
+    }
+
+    console.log('this.props.barcode',this.props.barcode);
+
     return (
 
        <View style={redeemStyles.thankyouContainer}>
 
-            <Text>Result:{this.props.details}</Text>
-            <Text style={redeemStyles.thankyou}>{message}</Text>
 
+            {bar_code}
 
        </View>
 
@@ -165,8 +154,7 @@ var ConfirmButton = React.createClass({
         <View style={redeemStyles.buttonContainer}>
 
             <Button
-                buttonText="REDEEM PONTS"
-                buttonColor="green"
+                buttonText="REDEEM"
                 onPress={() => this.props.onPress()}
             />
 
@@ -182,12 +170,11 @@ const redeemStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F0BB1A',
-    marginTop: height*0.11,
     alignItems:'center',
   },
   thankyouContainer: {
       marginTop: 10,
-
+      alignItems:'center',
   },
   thankyou: {
     marginTop: 10,
@@ -202,7 +189,14 @@ const redeemStyles = StyleSheet.create({
       width: width,
       flex:2,
       alignItems:'center',
-    },
+      marginTop:30,
+      marginBottom:30,
+  },
+  barcode: {
+    width:width*.7,
+    height:height*.15,
+
+  },
   contentContainer: {
     top: height*.02,
     width: width*.9,
@@ -215,13 +209,13 @@ const redeemStyles = StyleSheet.create({
   mod1:{
     padding:20,
     backgroundColor: '#FFFFFF',
-    borderRadius:20,
-    elevation:2,
+    borderRadius:25,
+    elevation:3,
       shadowColor: '#999999',
       shadowOpacity: .8,
       shadowRadius: 2,
       shadowOffset: {
-          height: 1,
+          height: 2,
           width: 1
       },
   },
@@ -231,15 +225,16 @@ const redeemStyles = StyleSheet.create({
 
   },
   logo: {
-    width: width*.5,
-    height: height*.18,
+    width: width*.7,
+    height: height*.2,
     alignItems: 'stretch',
   },
 
   title: {
     fontWeight: '400',
     fontSize: font,
-    fontFamily: 'Gill Sans'
+    fontFamily: 'Gill Sans',
+    textAlign:'center',
   },
   whitetext: {
 
@@ -249,12 +244,14 @@ const redeemStyles = StyleSheet.create({
   description: {
       fontWeight: '300',
       fontFamily: 'Gill Sans',
+      textAlign:'center',
   },
   points: {
     fontWeight: '500',
     fontFamily: 'Gill Sans',
     color: 'rgb(027, 135, 136)',
-    marginTop: height*.015
+    marginTop: height*.015,
+    textAlign:'center',
   },
   button: {
     width: width*.23,
