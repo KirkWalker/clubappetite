@@ -68,10 +68,18 @@ class Share extends Component {
     return (
       <View style={shareStyles.container}>
               <View style={shareStyles.iconsContainer}>
-                <Image source={require('../img/share-facebook.png')} style={shareStyles.icons} resizeMode={Image.resizeMode.contain}/>
-                <Image source={require('../img/share-instagram.png')} style={shareStyles.icons} resizeMode={Image.resizeMode.contain}/>
-                <Image source={require('../img/share-linkedin.png')} style={shareStyles.icons} resizeMode={Image.resizeMode.contain}/>
-                <Image source={require('../img/share-twitter.png')} style={shareStyles.icons} resizeMode={Image.resizeMode.contain}/>
+                <TouchableOpacity>
+                  <Image source={require('../img/share-facebook.png')} style={shareStyles.icons} resizeMode={Image.resizeMode.contain}/>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <Image source={require('../img/share-instagram.png')} style={shareStyles.icons} resizeMode={Image.resizeMode.contain}/>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <Image source={require('../img/share-linkedin.png')} style={shareStyles.icons} resizeMode={Image.resizeMode.contain}/>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <Image source={require('../img/share-twitter.png')} style={shareStyles.icons} resizeMode={Image.resizeMode.contain}/>
+                </TouchableOpacity>
               </View>
               <TouchableOpacity onPress={this.gotoFacebook.bind(this)} >
                 <View style={shareStyles.optionsContainer}>
