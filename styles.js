@@ -31,19 +31,12 @@ module.exports = StyleSheet.create({
         flex: 1
     },
     controlPanel: {
-    flex: 1,
+        flex: 1,
         backgroundColor:'#333333',
+        width: width*.6
     },
     controlPanelText: {
         color:'white',
-    },
-    controlPanelWelcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 25,
-        color:'white',
-        fontWeight:'bold',
-        fontFamily: 'Gill Sans'
     },
     title: {
         fontSize: 20,
@@ -114,10 +107,10 @@ module.exports = StyleSheet.create({
     },
     scrollView: {
       position: 'absolute',
-      top: 50,
+      top: 40,
       left: 0,
       right: 0,
-      bottom: 50,
+      bottom: 0,
     },
     section: {
         padding: 10,

@@ -25,10 +25,6 @@ module.exports = React.createClass({
 
 
       <View style={styles.controlPanel}>
-        <Text style={styles.controlPanelWelcome}>
-          Menu
-        </Text>
-
 
         <ScrollView
           contentContainerStyle={styles.contentContainer}
