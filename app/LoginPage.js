@@ -58,7 +58,7 @@ class LoginPage extends Component {
             <View style={styles.module}>
 
                <View style={styles.inputContainer}>
-                <TextInput placeholder="USERNAME" placeholderTextColor='#1B898A' style={styles.input} onChangeText={(text) => this.setState({inputTxt: text})} value={this.state.inputTxt} />
+                <TextInput placeholder="EMAIL" placeholderTextColor='#1B898A' style={styles.input} onChangeText={(text) => this.setState({inputTxt: text})} value={this.state.inputTxt} />
                </View>
                
                <View style={styles.inputContainer}>
@@ -94,9 +94,9 @@ class LoginPage extends Component {
     }
     _onPressButtonPOST() {
 
-        var username = this.state.inputTxt;
+        var email = this.state.inputTxt;
         var password = this.state.inputPass;
-        Users.handleLogin(username,password,this);
+        Users.handleLogin(email,password,this);
     }
 
 }

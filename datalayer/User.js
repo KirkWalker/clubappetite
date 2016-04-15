@@ -308,23 +308,28 @@ module.exports = {
 
     },
 
-    handleLogin(_username,_password,_this){
+    handleLogin(_email,_password,_this){
+
+    var body = JSON.stringify({
+                             email: _email,
+                             password: _password,
+                           });
+
+    console.log('SERVER_URL',SERVER_URL);
+    console.log('body',body);
+
         fetch(SERVER_URL + '?controller=api&action=login', {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-              username: _username,
-              password: _password,
-            })
+            body: body
         })
         .then((response) => response.json())
         .then((responseData) => {
 
-            var resData = JSON.parse(responseData);
-            if(resData.result == 'error'){
+            if(responseData.result == 'error'){
                 if(Platform.OS === 'ios'){
                     AlertIOS.alert(
                      'Login Has Failed',
@@ -334,10 +339,8 @@ module.exports = {
                     ToastAndroid.show('Login Has Failed', ToastAndroid.SHORT);
                 }
             } else {
-                var user_data = resData;
+                var user_data = responseData;
                 delete user_data.result;
-                //console.log(user_data);
-
                 DB.users.add(user_data,function(result){
                     if(DEBUG) {
                     console.log('adding user');
