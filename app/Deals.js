@@ -32,8 +32,13 @@ if (PixelRatio.get() <= 2) {
 class Deals extends Component {
 
   constructor(props) {
-        super(props);
-        this.state = {user_profile: [], DataArray: []};
+    super(props);
+    this.state = {
+      user_profile: [],
+      DataArray: [],
+      searchResults: [],
+      searchText: "",
+    };
   }
 
   /*
@@ -47,6 +52,7 @@ class Deals extends Component {
     this.mounted = true;
     Users.getProfile(this);
     this.gotoDirectory = this.gotoDirectory.bind(this);
+    this.search = this.search.bind(this);
     InteractionManager.runAfterInteractions(() => {
       MyDeals.getData(this, "sponsordeals");
     });
@@ -54,6 +60,31 @@ class Deals extends Component {
 
   componentWillUnmount() {
       this.mounted = false;
+  }
+
+  /*
+   * Used for the search bar. Uses the string provided in the search bar
+   * to search the local deal array. Searches deal_title, deal_short_desc,
+   * and cat_title fields.
+   */
+  search(event) {
+    // Updates searchText's value to match the text in the search bar
+    this.setState({searchText: event.nativeEvent.text});
+
+    var tempResults = [];
+    var filterText = this.state.searchText.toLowerCase();
+    this.state.DataArray.forEach((deal) => {
+      if(deal.deal_title.toLowerCase().indexOf(filterText) !== -1
+        || deal.deal_short_desc.toLowerCase().indexOf(filterText) !== -1
+        || deal.cat_title.toLowerCase().indexOf(filterText) !== -1) {
+        if (DEBUG) { console.log("deal: ",deal); }
+        tempResults.push(deal);
+      }
+    });
+
+    // Updates searchResults to match tempResults. Done this way rather than
+    // pushing directly to searchResults because state should be immutable
+    this.setState({searchResults: tempResults});
   }
 
   renderLoadingView() {
@@ -68,7 +99,7 @@ class Deals extends Component {
     return(
       <ScrollView>
         <View style={shopStyles.imageContainer}>
-          {this.state.DataArray.map((deal) => 
+          {this.state.searchResults.map((deal) => 
             <DealItem
               key={deal.id}
               item={deal}
@@ -111,9 +142,11 @@ class Deals extends Component {
         
         <View style={shopStyles.searchContainer}>
           <TextInput
-            placeholder="Search"
+            placeholder="Search..."
             placeholderTextColor="rgb(239, 186, 026)"
             style={shopStyles.search}
+            value={this.state.searchText}
+            onChange={this.search.bind(this)}
           />
         </View>
 
