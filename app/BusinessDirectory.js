@@ -13,6 +13,7 @@ import React, {
   PixelRatio,
   InteractionManager,
   Dimensions,
+  TextInput,
 } from 'react-native';
 
 var DEBUG = false;
@@ -31,12 +32,17 @@ class BusinessDirectory extends Component {
   constructor(props) {
     super(props);
     this.renderBusiness = this.renderBusiness.bind(this);
+    this.renderHeader = this.renderHeader.bind(this);
     this.state = {
     	dataSource: new ListView.DataSource({
     		rowHasChanged: (r1, r2) => r1 !== r2,
     	}),
+      searchResults: new ListView.DataSource({
+        rowHasChanged: (r1, r2) => r1 !== r2,
+      }),
     	loaded: false,
     	user_profile: [],
+      searchText: "",
     };
   }
 
@@ -50,6 +56,29 @@ componentDidMount() {
 
   componentWillUnmount() {
       this.mounted = false;
+  }
+
+  /*
+   * Used for the search bar. Uses the string provided in the search bar
+   * to search the local sponsor array. Searches sponsor_name field.
+   */
+  search(event) {
+    // Updates searchText's value to match the text in the search bar
+    this.setState({searchText: event.nativeEvent.text});
+
+    var dataSource = this.state.dataSource;
+    var tempResults = [];
+    var filterText = this.state.searchText.toLowerCase();
+    for(var i = 0; i < dataSource.getRowCount(); i++) { 
+      if(dataSource.getRowData(0,i).sponsor_name.toLowerCase().indexOf(filterText) !== -1) {
+        if (DEBUG) { console.log("sponsor item: ",dataSource.getRowData(0,i)); }
+        tempResults.push(dataSource.getRowData(0,i));
+      }
+    }
+    // Updates searchResults to match tempResults. Done this way rather than
+    // pushing directly to searchResults because state should be immutable
+    this.setState({searchResults: this.state.searchResults.cloneWithRows(tempResults)});
+
   }
 
   gotoDetails(business) {
@@ -73,6 +102,16 @@ componentDidMount() {
   	return(
 	  	<View style={BusinessStyles.header}>
 	  		<Text style={BusinessStyles.headerText}>BUSINESS DIRECTORY</Text>
+
+        <View style={BusinessStyles.searchContainer}>
+          <TextInput
+            placeholder="Search..."
+            placeholderTextColor="rgb(027, 135, 136)"
+            style={BusinessStyles.search}
+            value={this.state.searchText}
+            onChange={this.search.bind(this)}
+          />
+        </View>
 	  	</View>
 	  );
   }
@@ -129,10 +168,11 @@ componentDidMount() {
   	if (!this.state.loaded) {
   		return this.renderLoadingView();
   	}
-
+    console.log("dataSource: ",this.state.dataSource);
+    console.log("searchResults: ",this.state.searchResults);
   	return (
   		<ListView
-  			dataSource={this.state.dataSource}
+  			dataSource={this.state.searchResults}
   			renderRow={this.renderBusiness}
   			renderHeader={this.renderHeader}
         style={[{backgroundColor: '#F2F2F2'}, {paddingTop: HEIGHT*0.11}]}
@@ -196,6 +236,7 @@ const BusinessStyles = StyleSheet.create({
     color: 'rgb(027, 135, 136)',
     fontSize: TITLE_TEXT,
     fontWeight: '400',
+    marginBottom: 20,
   },
   separator: {
     backgroundColor: '#f2f2f2',
@@ -220,6 +261,22 @@ const BusinessStyles = StyleSheet.create({
   arrow: {
     height: WIDTH*0.07,
     width: WIDTH*0.07,
+  },
+  searchContainer: {
+    borderColor: 'rgb(027, 135, 136)',
+    borderWidth: 1,
+    overflow: 'hidden',
+    elevation: 2,
+  },
+  search: {
+    elevation: 2,
+    width: WIDTH*.82,
+    height: HEIGHT*0.075,
+    backgroundColor: '#ffffff',
+    fontFamily: 'Gill Sans',
+    borderColor: 'rgb(027, 135, 136)',
+    paddingLeft: 15,
+    color: 'rgb(027, 135, 136)',
   },
 });
 

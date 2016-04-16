@@ -7,7 +7,7 @@ var database;
 var InfoStore = {};
 var listView = false;
 
-var DEBUG = false;
+var DEBUG = true;
 if (DEBUG) { console.log('WebAPI DEBUG flag is set\n---------------------------'); }
 
 InfoStore.getData = function(_this, db) {
@@ -93,6 +93,7 @@ InfoStore.fetchData = function(_this, token, current_mod, data) {
 							if (listView) {
 								_this.setState({
 									dataSource: _this.state.dataSource.cloneWithRows(responseData.details),
+									searchResults: _this.state.searchResults.cloneWithRows(responseData.details),
 									loaded: true,
 								});
 							}
@@ -122,6 +123,7 @@ InfoStore.fetchData = function(_this, token, current_mod, data) {
 								if (listView) {
 									_this.setState({
 										dataSource: _this.state.dataSource.cloneWithRows(responseData.details),
+										searchResults: _this.state.searchResults.cloneWithRows(responseData.details),
 										loaded: true,
 									});
 								}
@@ -145,6 +147,7 @@ InfoStore.fetchData = function(_this, token, current_mod, data) {
 						if (_this.state.dataSource != undefined) {
 							_this.setState({
 								dataSource: _this.state.dataSource.cloneWithRows(data[0].details),
+								searchResults: _this.state.searchResults.cloneWithRows(data[0].details),
 								loaded: true,
 							});
 						}
