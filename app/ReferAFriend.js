@@ -10,6 +10,7 @@ var {
   TouchableOpacity,
   Dimensions,
   InteractionManager,
+  PixelRatio,
   Image,
 } = React;
 
@@ -21,6 +22,12 @@ var BannerAd = require('../modules/BannerAds');
 
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
+var font = 20;
+var fontWeight;
+
+if (PixelRatio.get() <= 2) {
+  font = 18;
+}
 
 
 class ReferAFriend extends Component {
@@ -72,7 +79,6 @@ class ReferAFriend extends Component {
 
 
     var title = 'Here is your referral code:';
-    var message = 'Each person who uses your code when they register earns you 500 points!';
     var showButton = false;
 
     if(this.state.user_profile.refer_code == null
@@ -84,13 +90,28 @@ class ReferAFriend extends Component {
     }
 
     return (
-       <View style={[ReferStyles.container]}>
-         <View style={[ReferStyles.column]}>
-          <View style={[ReferStyles.module1, ReferStyles.module]}>
-            <Text style={[ReferStyles.heading]}>Refer A Friend And Earn POINTS!</Text>
-          </View>
+       <View style={ReferStyles.container}>
+        <View style={ReferStyles.iconsContainer}>
+          <TouchableOpacity>
+            <Image source={require('../img/share-facebook.png')} style={ReferStyles.icons} resizeMode={Image.resizeMode.contain}/>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Image source={require('../img/share-instagram.png')} style={ReferStyles.icons} resizeMode={Image.resizeMode.contain}/>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Image source={require('../img/share-linkedin.png')} style={ReferStyles.icons} resizeMode={Image.resizeMode.contain}/>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Image source={require('../img/share-twitter.png')} style={ReferStyles.icons} resizeMode={Image.resizeMode.contain}/>
+          </TouchableOpacity>
+        </View>
+
+        <Image source={require('../img/3-hex.png')} style={ReferStyles.hexes}/>
+        <Text style={ReferStyles.heading}>Refer A Friend!</Text>
+        <Text style={ReferStyles.description}>Receive 500 points when they sign-up{'\n'}using your code below</Text>
+         <View>
+          
           <View style={[ReferStyles.module2, ReferStyles.module]}>
-            <Text style={[ReferStyles.title]}>{title}</Text>
             {(() => {
                 if(showButton) {
                   return (
@@ -111,8 +132,6 @@ class ReferAFriend extends Component {
                 }
             })()}
 
-
-            <Text style={[ReferStyles.message]}>{message}</Text>
           </View>
         </View>
         <View style={[ReferStyles.module3, ReferStyles.module]}>
@@ -140,9 +159,26 @@ const ReferStyles = StyleSheet.create({
         flex: 1,
         height: height,
         marginTop: height*0.11,
-        backgroundColor: '#efefef',
+        backgroundColor: '#1B8889',
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    iconsContainer: {
+        flexDirection: 'row',
+        marginTop: height*.1,
+        marginBottom: height*.1
+    },
+    icons: {
+        width: width*.16,
+        height: height*.11,
+        marginLeft: width*.035,
+        marginRight: width*.035,
+        alignItems: 'stretch',
+        justifyContent: 'center'
+    },
+    hexes: {
+        width: width*.1,
+        height: width*.1
     },
     column: {
         width:width*.9,
@@ -184,9 +220,9 @@ const ReferStyles = StyleSheet.create({
       marginTop:5,
     },
     heading: {
-      fontSize:25,
-      color:'#4A8A1D',
-      fontWeight:'bold',
+      fontSize:font,
+      color:'#fff',
+      fontWeight:'400',
       fontFamily: 'Gill Sans',
       textAlign:'center',
       lineHeight:40,
@@ -198,6 +234,15 @@ const ReferStyles = StyleSheet.create({
       fontFamily: 'Gill Sans',
       textAlign:'center',
       lineHeight:40,
+    },
+    description: {
+      fontSize:font*.7,
+      color:'#fff',
+      fontWeight:'200',
+      fontFamily: 'Gill Sans',
+      textAlign:'center',
+      lineHeight:18,
+      top:5,
     },
     code: {
       fontSize:40,
