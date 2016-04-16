@@ -11,6 +11,7 @@ var {
   Dimensions,
   InteractionManager,
   PixelRatio,
+  Linking,
   Image,
 } = React;
 
@@ -56,7 +57,54 @@ class ReferAFriend extends Component {
       this.mounted = false;
   }
 
-
+  openFacebook() {
+    var website = 'http://www.facebook.com/clubappetite/';
+    console.log(website);
+    Linking.canOpenURL(website).then(supported => {
+      if (supported) {
+        console.log("Opening link...");
+        return Linking.openURL(website);
+      } else {
+        console.log("Can\'t open this URI.");
+      }
+    });
+  }
+  openInstagram() {
+    var website = 'http://www.instagram.com/clubappetite/';
+    console.log(website);
+    Linking.canOpenURL(website).then(supported => {
+      if (supported) {
+        console.log("Opening link...");
+        return Linking.openURL(website);
+      } else {
+        console.log("Can\'t open this URI.");
+      }
+    });
+  }
+  openLinkedin() {
+    var website = 'http://www.linkedin.com/company/club-appetite';
+    console.log(website);
+    Linking.canOpenURL(website).then(supported => {
+      if (supported) {
+        console.log("Opening link...");
+        return Linking.openURL(website);
+      } else {
+        console.log("Can\'t open this URI.");
+      }
+    });
+  }
+  openTwitter() {
+    var website = 'http://twitter.com/clubappetite';
+    console.log(website);
+    Linking.canOpenURL(website).then(supported => {
+      if (supported) {
+        console.log("Opening link...");
+        return Linking.openURL(website);
+      } else {
+        console.log("Can\'t open this URI.");
+      }
+    });
+  }
 
   render() {
 
@@ -92,26 +140,25 @@ class ReferAFriend extends Component {
     return (
        <View style={ReferStyles.container}>
         <View style={ReferStyles.iconsContainer}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => {this.openFacebook()}}>
             <Image source={require('../img/share-facebook.png')} style={ReferStyles.icons} resizeMode={Image.resizeMode.contain}/>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => {this.openInstagram()}}>
             <Image source={require('../img/share-instagram.png')} style={ReferStyles.icons} resizeMode={Image.resizeMode.contain}/>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => {this.openLinkedin()}}>
             <Image source={require('../img/share-linkedin.png')} style={ReferStyles.icons} resizeMode={Image.resizeMode.contain}/>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => {this.openTwitter()}}>
             <Image source={require('../img/share-twitter.png')} style={ReferStyles.icons} resizeMode={Image.resizeMode.contain}/>
           </TouchableOpacity>
         </View>
 
         <Image source={require('../img/3-hex.png')} style={ReferStyles.hexes}/>
-        <Text style={ReferStyles.heading}>Refer A Friend!</Text>
+        <Text style={ReferStyles.heading}>Refer a Friend!</Text>
         <Text style={ReferStyles.description}>Receive 500 points when they sign-up{'\n'}using your code below</Text>
          <View>
-          
-          <View style={[ReferStyles.module2, ReferStyles.module]}>
+          <View style={ReferStyles.codeContainer}>
             {(() => {
                 if(showButton) {
                   return (
@@ -184,6 +231,15 @@ const ReferStyles = StyleSheet.create({
         width:width*.9,
         height:height*.7,
     },
+    codeContainer: {
+      backgroundColor: 'rgba(255, 255, 255, 0.5)',
+      borderRadius: 7,
+      width: width*.85,
+      height: height*.1,
+      marginTop: height*.05,
+      marginBottom: height*.1,
+      flex: 3
+    },
     module:{
         backgroundColor: 'white',
         elevation:2,
@@ -245,13 +301,12 @@ const ReferStyles = StyleSheet.create({
       top:5,
     },
     code: {
-      fontSize:40,
-      color:'red',
+      fontSize:font*2,
+      color:'black',
       fontWeight:'bold',
       fontFamily: 'Gill Sans',
       textAlign:'center',
-      lineHeight:80,
-      marginBottom:20,
+      marginTop:5,
     },
     message: {
 
