@@ -10,6 +10,8 @@ import React, {
   Dimensions,
   TextInput,
   Platform,
+  Image,
+  PixelRatio,
   ToastAndroid,
   AlertIOS,
 } from 'react-native';
@@ -19,6 +21,10 @@ var height = Dimensions.get('window').height;
 var mainstyles = require('../styles');
 var CheckButton = require('../modules/ButtonLogin');
 var CancelButton = require('../modules/ButtonLogin');
+var font = 20;
+if (PixelRatio.get() <= 2) {
+  font = 15;
+}
 
 class ReferralCodeModal extends Component {
 	constructor(props){
@@ -38,27 +44,27 @@ class ReferralCodeModal extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-        <View style={styles.column}>
-          <View style={[styles.module1, styles.module]}>
-            <Text style={[styles.heading]}>Refer A Friend And Earn POINTS!</Text>
-          </View>
-          <View style={[styles.module2, styles.module]}>
-            <Text style={[styles.title]}>Enter your code here:</Text>
-            <View style={mainstyles.module} marginTop={20}>
-              <View style={mainstyles.inputContainer}>
+          <Image source={require('../img/logo-white.png')} style={styles.logo} resizeMode="contain"/>
+            <Text style={styles.text1}>Do you have a points code to{'\n'}redeem?</Text>
+            <Text style={styles.text2}>Enter below to receive you Club{'\n'}Appetite points.</Text>
+
+            <View style={mainstyles.module} marginTop={40}>
+            <View style={styles.box}>
+              <View style={styles.inputContainer}>
                 <TextInput
-                  style={mainstyles.input}
+                  style={styles.input}
                   placeholder="ENTER CODE"
                   placeholderTextColor='#1B898A'
                   onChangeText={(text) => this.setState({inputCode: text})}
                   value={this.state.inputCode}
                 />
+                </View>
               </View>
             </View>
-            <View style={styles.module} marginTop={40}>
+            <View style={styles.module} marginTop={10}>
               <CheckButton
-                buttonText="USE CODE"
-                color="#009999"
+                buttonText="REDEEM"
+                color="#f0bb1a"
                 textcolor="white"
                 onPress={() => {
                     this._onPressButtonPOST();
@@ -70,14 +76,12 @@ class ReferralCodeModal extends Component {
                 onPress={() => {
                   this.props.navigator.pop();
                 }}
-                buttonText="CANCEL"
+                buttonText="SKIP"
                 marginTop={10}
-                color="#efefef"
-                textcolor="#999999"
+                color="#1B8889"
+                textcolor="white"
               />
             </View>
-          </View>
-        </View>
     	</View>
 		);
 	}
@@ -123,101 +127,129 @@ class ReferralCodeModal extends Component {
 
 var styles = StyleSheet.create({
 	container: {
-   flex: 1,
-   height: height,
-   backgroundColor: '#efefef',
-   justifyContent: 'center',
-   alignItems: 'center',
- },
-	column: {
-   width:width*.9,
-   height:height,
+		flex: 1,
+		height: height,
+		backgroundColor: '#1B8889',
+		justifyContent: 'center',
+		alignItems: 'center',
 	},
 	module:{
-	 backgroundColor: "#eeeeee",
-	 elevation:2,
-	 shadowColor: '#999999',
-	 shadowOpacity: .8,
-	 shadowRadius: 2,
-	 shadowOffset: {
-	     height: 1,
-	     width: 1
-	 },
-  },
+		backgroundColor: "#eeeeee",
+		elevation:2,
+		shadowColor: '#000',
+		shadowOpacity: .8,
+		shadowRadius: 2,
+		shadowOffset: {
+			height: 1,
+			width: 1
+		},
+	},
 	module1: {
-	  flex: 2,
-	  backgroundColor: 'white',
-	  justifyContent: 'center',
-	  alignItems: 'center',
-	  marginTop:5,
-	  marginBottom:5,
-	 },
+		flex: 2,
+		backgroundColor: 'white',
+		justifyContent: 'center',
+		alignItems: 'center',
+		marginTop:5,
+		marginBottom:5,
+	},
 	module2: {
-	  flex: 4,
-	  backgroundColor: 'white',
-	  marginTop:5,
-	  marginBottom:5,
-	  padding:20,
-	  alignItems: 'center',
-	 },
+		flex: 4,
+		backgroundColor: 'white',
+		marginTop:5,
+		marginBottom:5,
+		padding:20,
+		alignItems: 'center',
+	},
 	module3: {
-	  justifyContent: 'center',
-	  alignItems: 'center',
-	  flex: 2,
-	  width:width,
-	  backgroundColor: 'white',
-	  marginTop:5,
-	 },
-	heading: {
-	  fontSize:25,
-	  color:'#4A8A1D',
-	  fontWeight:'bold',
-	  fontFamily: 'Gill Sans',
-	  textAlign:'center',
-	  lineHeight:40,
-	 },
-	title: {
-	  fontSize:20,
-	  color:'#4A8A1D',
-	  fontWeight:'bold',
-	  fontFamily: 'Gill Sans',
-	  textAlign:'center',
-	  lineHeight:40,
-	 },
+		justifyContent: 'center',
+		alignItems: 'center',
+		flex: 2,
+		width:width,
+		backgroundColor: 'white',
+		marginTop:5,
+	},
 	code: {
-	  fontSize:40,
-	  color:'red',
-	  fontWeight:'bold',
-	  fontFamily: 'Gill Sans',
-	  textAlign:'center',
-	  lineHeight:80,
-	  marginBottom:20,
-	 },
+		fontSize:40,
+		color:'red',
+		fontWeight:'bold',
+		fontFamily: 'Gill Sans',
+		textAlign:'center',
+		lineHeight:80,
+		marginBottom:20,
+	},
 	message: {
-	  fontSize:16,
-	  fontFamily: 'Gill Sans',
-	  lineHeight:30,
-	  textAlign:'center',
-	 },
+		fontSize:16,
+		fontFamily: 'Gill Sans',
+		lineHeight:30,
+		textAlign:'center',
+	},
 	banner:{
-    width:width,
-    height:height*.15,
-    alignItems: 'stretch',
-	 },
-  generate: {
-	   backgroundColor: '#4A8A1D',
-	   paddingLeft:15,
-	   paddingRight:15,
-	   paddingTop:5,
-	   paddingBottom:5,
-     borderRadius:50,
-	 },
+		width:width,
+		height:height*.15,
+		alignItems: 'stretch',
+	},
+	generate: {
+		backgroundColor: '#4A8A1D',
+		paddingLeft:15,
+		paddingRight:15,
+		paddingTop:5,
+		paddingBottom:5,
+		borderRadius:50,
+	},
 	generatetext: {
-	 	fontSize:18,
-	  color:'white',
-	  fontWeight:'bold',
-	  fontFamily: 'Gill Sans',
-	 },
+		fontSize:18,
+		color:'white',
+		fontWeight:'bold',
+		fontFamily: 'Gill Sans',
+	},
+	logo: {
+		width: width*.8,
+		height: height*.2,
+	},
+	text1: {
+		fontSize: font,
+		fontFamily: 'Gill Sans',
+		letterSpacing: 1,
+		fontWeight: '400',
+		color: '#fff',
+		textAlign: 'center',
+		marginTop: height*.05
+	},
+	text2: {
+		fontSize: font*.85,
+		fontFamily: 'Gill Sans',
+		fontWeight: '300',
+		color: '#fff',
+		letterSpacing: 1,
+		textAlign: 'center',
+		marginTop: height*.02
+	},
+	input: {
+		padding: 10,
+		height: height*.06,
+		width: width*.80,
+		fontFamily: 'Gill Sans',
+	},
+	inputContainer: {
+        backgroundColor: '#eee',
+        overflow: 'hidden',
+        padding:0,
+        elevation:2,
+        shadowColor: '#000',
+        borderWidth: 0.5,
+        borderColor: '#1B8889',
+        shadowOpacity: 1,
+        shadowRadius: 2,
+        shadowOffset: {
+            height: 2,
+            width: 1
+        },
+    },
+	box: {
+		width: width*.8,
+		height: height*.06,
+		backgroundColor: '#eee'
+	}
 });
 
 module.exports = ReferralCodeModal;
