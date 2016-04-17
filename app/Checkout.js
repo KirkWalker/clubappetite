@@ -89,7 +89,7 @@ class Checkout extends Component {
         <View style={[checkoutStyle.module, checkoutStyle.module1]}>
           <View style={checkoutStyle.moduleRow}>
              <View style={checkoutStyle.headercell1}>
-                <Text style={checkoutStyle.headertext}>Your Cart</Text>
+                <Text style={checkoutStyle.headertext}>YOUR CART</Text>
              </View>
              <View style={checkoutStyle.headercell2}>
                 <Image source={require('../img/shopping-cart.png')} style={checkoutStyle.shoppingCart}/>
@@ -119,15 +119,14 @@ class Checkout extends Component {
 
             <View style={checkoutStyle.moduleRow}>
                <View style={checkoutStyle.headercell1}>
-                  <Text style={checkoutStyle.headertext}>Your Total</Text>
+                  <Text style={checkoutStyle.headertext}>YOUR TOTAL</Text>
                </View>
                <View style={checkoutStyle.headercell2}>
                   <Text style={checkoutStyle.headertext}>${this.state.cartTotal}</Text>
                </View>
             </View>
-
-
         </View>
+        <Image source={require('../img/checkout-hex.png')} style={checkoutStyle.bottomHex}/>
         <View style={[checkoutStyle.module, checkoutStyle.module4]}>
           <TouchableOpacity
             onPress={this.doCheckout.bind(this)}
@@ -212,7 +211,7 @@ var checkoutStyle = StyleSheet.create({
   module3: {
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 3,
+    // flex: 3,
     backgroundColor: '#4A8A1D',
   },
   module4: {
@@ -276,27 +275,23 @@ var checkoutStyle = StyleSheet.create({
       borderRadius:50,
     },
     checkouttext: {
-          fontSize:18,
+          fontSize:font*.8,
           color:'white',
-          fontWeight:'bold',
           fontFamily: 'Gill Sans',
         },
     celltext1: {
       fontSize:16,
       color:'white',
-      fontWeight:'bold',
       fontFamily: 'Gill Sans',
     },
     celltext2: {
       fontSize:14,
       color:'white',
-      fontWeight:'bold',
       fontFamily: 'Gill Sans',
     },
     headertext: {
-      fontSize:22,
+      fontSize:font,
       color:'white',
-      fontWeight:'bold',
       backgroundColor: '#4A8A1D',
       fontFamily: 'Gill Sans',
     },
@@ -304,6 +299,10 @@ var checkoutStyle = StyleSheet.create({
     width: width*.1,
     height: width*.1,
     resizeMode: 'contain'
+  },
+  bottomHex: {
+    width: width,
+    height: height*.2
   }
 });
 
