@@ -151,7 +151,14 @@ class DealItem extends Component {
           <Image source={require('../img/shop-points-container.png')} style={shopStyles.pointsContainer}>
             <Text style={shopStyles.points}>{this.props.item.deal_price}</Text>
           </Image>
-          <Text style={shopStyles.dealTitle}>{this.props.item.deal_title}</Text>
+          <View style={shopStyles.dealBg}>
+            <TextInput 
+              style={shopStyles.dealTitle}
+              placeholder={this.props.item.deal_title}
+              editable={false}
+              placeholderTextColor='#fff'
+              />
+          </View>
         </Image>
       </TouchableOpacity>
       </View>
@@ -184,6 +191,7 @@ const shopStyles = StyleSheet.create({
     borderWidth: 1,
     overflow: 'hidden',
     elevation: 2,
+    borderRadius: 25
   },
   search: {
     elevation: 2,
@@ -205,7 +213,6 @@ const shopStyles = StyleSheet.create({
     marginTop: height*.015,
     alignItems: 'center',
     backgroundColor: '#fff',
-
     elevation: 2,
     shadowColor: '#000',
     shadowOpacity: .3,
@@ -243,12 +250,13 @@ const shopStyles = StyleSheet.create({
     justifyContent: 'center'
   },
   dealTitle: {
-    fontWeight: '500',
     fontSize: font,
+    textAlign: 'center',
+    padding: 10,
+    height: height*.06,
+    width: width*.80,
+    backgroundColor: 'transparent',
     fontFamily: 'Gill Sans',
-    color: '#fff',
-    backgroundColor: 'rgba(0,0,0,0)',
-    top: height*.07
   },
   points: {
     fontWeight: '400',
@@ -261,7 +269,7 @@ const shopStyles = StyleSheet.create({
     flexDirection: 'row'
   },
   dealContainer: {
-    alignItems: 'center'
+    alignItems: 'center',
   },
   dealImage: {
     width: width*.5,
@@ -272,6 +280,21 @@ const shopStyles = StyleSheet.create({
     fontFamily: 'Gill Sans',
     color: 'rgb(163, 163, 163)',
     fontSize: 20,
+  },
+  dealBg: {
+    top: height*.07,
+    backgroundColor: 'transparent',
+    overflow: 'hidden',
+    padding:0,
+    elevation:2,
+    shadowColor: '#000',
+    borderColor: '#1B8889',
+    shadowOpacity: 1,
+    shadowRadius: 2,
+    shadowOffset: {
+        height: 2,
+        width: 1
+    },
   },
 });
 
