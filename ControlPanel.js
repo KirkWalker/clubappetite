@@ -164,7 +164,7 @@ var Section = React.createClass({
           <View style={[styles.section, controlPanelStyles.shareContainer]}>
             <Image source={require('./img/3-hex.png')} style={controlPanelStyles.hexes}/>
             <View style={controlPanelStyles.textContainer}>
-              <Text style={styles.sectionName}>{this.props.name.toUpperCase()}</Text>
+              <Text style={styles.sectionName}>{this.props.name}</Text>
               <Text style={controlPanelStyles.tagLine}>{this.props.tagLine}</Text>
             </View>
           </View>
@@ -174,7 +174,7 @@ var Section = React.createClass({
       return (
         <TouchableHighlight underlayColor='#DFDFDF' onPress={this.onPress}>
           <View style={styles.section}>
-            <Text style={styles.sectionName}>{this.props.name.toUpperCase()}</Text>
+            <Text style={styles.sectionName}>{this.props.name}</Text>
           </View>
         </TouchableHighlight>
       );
