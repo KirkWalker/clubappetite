@@ -95,7 +95,7 @@ const profileStyles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    marginTop: height*0.11,
+    marginTop: height*0.105,
     backgroundColor: '#1d888a',
   },
   header: {
