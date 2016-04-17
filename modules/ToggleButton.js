@@ -20,9 +20,9 @@ class ToggleButton extends React.Component {
   render() {
     return (
       <TouchableOpacity
-        style={[TBStyles.buttoncontainer, this.props.text.replace('$','') == this.props.compareValue ? TBStyles.grey : {}]}
+        style={[TBStyles.buttoncontainer, this.props.text.replace('$','') == this.props.compareValue ? TBStyles.yellow : {}]}
           onPressIn={this.props.onPress}>
-            <Text style={TBStyles.button}>{this.props.text}</Text>
+            <Text style={[TBStyles.button, this.props.text.replace('$','') == this.props.compareValue ? TBStyles.text : {}]}>{this.props.text}</Text>
       </TouchableOpacity>
     );
   }
@@ -38,10 +38,12 @@ var TBStyles = StyleSheet.create({
     height: height*.05,
     borderWidth:1,
     borderColor:'#efefef'
-    //
   },
-  grey: {
-    backgroundColor: '#efefef',
+  yellow: {
+    backgroundColor: '#f0bb1a',
+  },
+  text: {
+    color: '#000'
   },
   white: {
     backgroundColor: '#ffffff',
@@ -50,6 +52,7 @@ var TBStyles = StyleSheet.create({
     fontSize: 12,
     fontFamily: 'Gill Sans',
     alignSelf: 'center',
+    color: '#a3a3a3'
   },
 });
 

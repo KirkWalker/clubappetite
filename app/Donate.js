@@ -12,6 +12,9 @@ var {
   Image,
   TouchableHighlight,
   InteractionManager,
+  ScrollView,
+  PixelRatio,
+  TextInput
 } = React;
 
 var styles = require('../styles');
@@ -23,6 +26,11 @@ var NavigationBarRouteMapper = require('../modules/NavigationBarRouteMapper');
 
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
+var font = 22;
+
+if (PixelRatio.get() <= 2) {
+  font = 18;
+}
 
 class Donate extends Component {
 
@@ -87,8 +95,23 @@ class Donate extends Component {
 //
     return (
       <View style={[donateStyles.container, {backgroundColor: '#efefef'}]}>
-
-
+          <Image source={require('../img/donate-header.jpg')} style={donateStyles.header} resizeMode='contain'>
+            <View style={donateStyles.headerBg}>
+              <TextInput 
+                style={donateStyles.headerText}
+                placeholder='DONATE TO YOU FOOD BANK'
+                editable={false}
+                placeholderTextColor='#fff'
+                />
+              <TextInput 
+                style={donateStyles.headerText}
+                placeholder='take care of your community'
+                editable={false}
+                placeholderTextColor='#fff'
+                />
+            </View>
+          </Image>
+          <ScrollView>
           <View style={donateStyles.module}>
             <Text style={donateStyles.title}>Select Your Amount</Text>
             <View style={donateStyles.modulerow}>
@@ -132,15 +155,10 @@ class Donate extends Component {
           </View>
 
           <View style={donateStyles.moduleclear}>
-             <Text style={donateStyles.subtitle}>Cancel At Any Time</Text>
-             <Text style={donateStyles.text}>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-             sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-             quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-             Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-             Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Text>
-
+             <Text style={donateStyles.subtitle}>Cancel at Anytime</Text>
+             <Text style={donateStyles.text}>By using and/or visiting this Service (collectively including all content, functionality and tools available through the ClubAppetite.com domain and Club Appetite’s mobile apps), you signify your agreement to (1) these terms and conditions (the ‘Terms of Service’), (2)Club Appetite’s privacy policy, found at http://www.ClubAppetite.com/privacy and incorporated here by reference and also incorporated here by reference. If you do not agree to any of these terms, the Club Appetite’s privacy policy, or the Community Guidelines, please do not use the Club Appetite Service. Changes in these Terms are almost certain to happen. We’ll announce changes over our website, and we may notify you of changes by sending an email to the address you have provided to us. You are free to decide whether to accept the changes in the terms or to stop using our Service. If you continue to use our Service after the effectiveness of that update, you agree to be bound by such modiﬁcations or revisions. Such revisions shall become effective ten (10) days after the notiﬁcation has been sent.</Text>
           </View>
-
+        </ScrollView>
 
       </View>
     );
@@ -163,8 +181,13 @@ var donateStyles = StyleSheet.create({
     alignItems: 'center',
     marginTop: height*0.11,
   },
+  header: {
+    width: width,
+    // top: -width*.74,
+    height: height*.253,
+    justifyContent: 'flex-end',
+  },
   module: {
-    flex: 3,
     flexDirection: 'column',
     backgroundColor: 'white',
     width: width*.95,
@@ -172,7 +195,6 @@ var donateStyles = StyleSheet.create({
     padding: 5,
   },
    module2: {
-     flex: 8,
      flexDirection: 'column',
      backgroundColor: 'white',
      width: width*.95,
@@ -180,7 +202,6 @@ var donateStyles = StyleSheet.create({
      padding: 5,
    },
   moduleclear: {
-    flex: 10,
     flexDirection: 'column',
     width: width*.95,
     marginTop: 20,
@@ -203,10 +224,12 @@ var donateStyles = StyleSheet.create({
     fontFamily: 'Gill Sans',
     flex:2,
     marginLeft: 10,
+    color: '#a3a3a3',
   },
   text: {
     fontSize: 11,
     fontFamily: 'Gill Sans',
+    color: '#a3a3a3'
   },
   alert: {
     justifyContent: 'center',
@@ -219,16 +242,43 @@ var donateStyles = StyleSheet.create({
     fontSize: 11,
     fontFamily: 'Gill Sans',
     alignSelf: 'center',
+    color: '#a3a3a3'
   },
   subtitle: {
     fontSize: 14,
     fontFamily: 'Gill Sans',
+    color: '#a3a3a3'
   },
   grey: {
     backgroundColor: '#efefef',
   },
   white: {
     backgroundColor: '#ffffff',
+  },
+  headerBg: {
+    bottom: height*.03,
+    backgroundColor: 'transparent',
+    overflow: 'hidden',
+    padding:0,
+    elevation:2,
+    shadowColor: '#000',
+    borderColor: '#1B8889',
+    shadowOpacity: 1,
+    shadowRadius: 2,
+    shadowOffset: {
+        height: 2,
+        width: 1
+    },
+    alignItems: 'center',
+  },
+  headerText: {
+    fontSize: font,
+    textAlign: 'center',
+    padding: 10,
+    height: height*.04,
+    width: width,
+    backgroundColor: 'transparent',
+    fontFamily: 'Gill Sans',
   },
 });
 
