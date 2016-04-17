@@ -304,7 +304,7 @@ const ReferStyles = StyleSheet.create({
       fontSize:font*2,
       color:'black',
       fontWeight:'bold',
-      fontFamily: 'Gill Sans',
+      fontFamily: 'PermanentMarker',
       textAlign:'center',
       marginTop:5,
     },
