@@ -307,6 +307,7 @@ const ReferStyles = StyleSheet.create({
       fontFamily: 'PermanentMarker',
       textAlign:'center',
       marginTop:5,
+      bottom:5,
     },
     message: {
 
