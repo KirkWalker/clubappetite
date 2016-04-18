@@ -111,8 +111,8 @@ class Cart extends Component {
   renderScene(route, navigator) {
 
     return (
-      <View style={styles.container}>
-        <View style={[cartStyles.module, cartStyles.module1]}>
+      <View style={cartStyles.container}>
+        <View style={[cartStyles.module1]}>
              <Image source={require('../img/cartheader.png')} style={cartStyles.cartheader} resizeMode={Image.resizeMode.contain} />
         </View>
         
@@ -120,13 +120,13 @@ class Cart extends Component {
           (!this.state.loaded) ? this.renderLoadingView() : this.renderProducts() 
         }
 
-        <View style={[cartStyles.module, cartStyles.module3]}>
+        <View style={[cartStyles.module]}>
            <View style={cartStyles.moduleRow}>
             <View style={cartStyles.moduleCell1}>
                 <Text style={cartStyles.total}>Total = ${ this.state.cartTotal }</Text>
             </View>
             <View style={cartStyles.moduleCell2}>
-                <Button
+                <Button 
                   onPress={this.doCheckout.bind(this)}
                   buttonText="CHECKOUT"
                   buttonColor="green"
@@ -134,7 +134,9 @@ class Cart extends Component {
             </View>
           </View>
         </View>
+        <View style={cartStyles.ad}>
         <BannerAd refThis={this} pageName={'Cart'} />
+        </View>
       </View>
 
     );
@@ -232,10 +234,10 @@ var Thumb = React.createClass({
     //console.log(this.props.obj);
     var points = Number(this.props.obj.product_price)*100;
     return (
-      <View style={[cartStyles.button]}>
+      <View style={[cartStyles.pagecontainer]}>
 
 
-         <Image source={require('../img/points-container.png')} style={cartStyles.ppp}>
+         <Image source={require('../img/points-container.png')} style={cartStyles.ppp} resizeMode={Image.resizeMode.contain}>
             <Text style={cartStyles.ppptext}>{points}</Text>
          </Image>
 
@@ -278,16 +280,24 @@ var Thumb = React.createClass({
 
 
 var cartStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: height*.11,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#f2f2f2'
+  },
   cartheader: {
     width: width,
     alignItems: 'stretch',
   },
   module: {
+    flex: 2,
     flexDirection: 'column',
     width: width,
   },
   module1: {
-    flex: 4,
+    flex: 3.5,
     justifyContent: 'center',
     alignItems: 'center',
 
@@ -296,11 +306,6 @@ var cartStyles = StyleSheet.create({
     marginTop: 10,
 
     flex: 10,
-  },
-  module3: {
-    marginTop: 10,
-    paddingBottom: 20,
-    flex: 1,
   },
    module4: {
      flex: 3,
@@ -321,11 +326,6 @@ var cartStyles = StyleSheet.create({
      justifyContent: 'center',
      alignItems: 'flex-start',
      marginLeft:10,
-  },
-  scrollView: {
-
-
-
   },
   horizontalScrollView: {
     height: height*.47,
@@ -358,7 +358,7 @@ var cartStyles = StyleSheet.create({
   white: {
     backgroundColor: '#ffffff',
   },
-button: {
+    pagecontainer: {
       width: width*.60,
       height: height*.43,
       margin: 7,
@@ -369,10 +369,10 @@ button: {
       elevation:2,
       shadowColor: '#999999',
       shadowOpacity: .8,
-      shadowRadius: 2,
+      shadowRadius: 5,
       shadowOffset: {
-          height: 1,
-          width: 1
+          height: 4,
+          width: 4
       },
     },
     buttonContents: {
@@ -416,17 +416,14 @@ button: {
      },
       circletext: {
         color:'white',
-        fontWeight:'bold',
       },
     total: {
       fontSize: 18,
       fontFamily: 'Gill Sans',
       color:'black',
-      fontWeight:'bold',
     },
     checkout: {
       backgroundColor: '#4A8A1D',
-
       paddingLeft:15,
       paddingRight:15,
       paddingTop:5,
@@ -435,7 +432,6 @@ button: {
     },
     checkouttext: {
       color:'white',
-      fontWeight:'bold',
       fontFamily: 'Gill Sans',
     },
 
@@ -449,7 +445,6 @@ button: {
     },
     ppptext: {
       color:'white',
-      fontWeight:'bold',
       fontFamily: 'Gill Sans',
       backgroundColor: 'rgb(074, 138, 029)',
     },
@@ -458,6 +453,9 @@ button: {
     color: 'rgb(163, 163, 163)',
     fontSize: 20,
   },
+  ad: {
+    flex: 2
+  }
 });
 
 
