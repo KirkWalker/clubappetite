@@ -62,12 +62,14 @@ class ThankYou extends Component {
       <View style={thankyouStyle.container}>
 
         <View style={thankyouStyle.bgContainer}>
-            <Image style={thankyouStyle.background} source={require('../img/thankyou-bg.png')} resizeMode={Image.resizeMode.cover}/>
+            <Image style={thankyouStyle.background} source={require('../img/thankyou-bg.jpg')} resizeMode={Image.resizeMode.cover}/>
         </View>
 
         <View style={thankyouStyle.hexcontainer}>
-          <Image style={thankyouStyle.hex} source={require('../img/thankyou-hex.png')} resizeMode={Image.resizeMode.contain}/>
-          <Text style={thankyouStyle.points}> You have earned {'\n'} {this.props.points} Points </Text>
+          <Image style={thankyouStyle.gif} source={require('../img/thankyou-points.gif')} resizeMode={Image.resizeMode.contain}/>
+          <Image style={thankyouStyle.hex} source={require('../img/hexagon.png')} resizeMode={Image.resizeMode.contain}>
+            <Text style={thankyouStyle.points}>WAY TO GO!{'\n\n'}You have earned {'\n'} {this.props.points} Points </Text>
+          </Image>
         </View>
 
       </View>
@@ -84,14 +86,18 @@ var thankyouStyle = StyleSheet.create({
      backgroundColor:'white',
   },
   hexcontainer: {
-
     alignItems: 'center',
     justifyContent: 'center',
-
   },
   hex: {
-    width: width*.7,
-    height: height*.7,
+    width: width*.65,
+    height: width*.65,
+    justifyContent: 'center',
+  },
+  gif: {
+    width: width,
+    height: height*.32,
+    bottom: -25
   },
   bgContainer: {
     position: 'absolute',
@@ -105,11 +111,10 @@ var thankyouStyle = StyleSheet.create({
   },
   points: {
     fontFamily: 'Gill Sans',
-    backgroundColor: '#1D888A',
+    backgroundColor: 'transparent',
     color: '#fff',
     textAlign: 'center',
     fontSize: font,
-    top: -height*.23
   }
 });
 
