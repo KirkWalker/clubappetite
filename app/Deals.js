@@ -250,7 +250,8 @@ const shopStyles = StyleSheet.create({
     width: width*.80,
     backgroundColor: 'transparent',
     fontFamily: 'Gill Sans',
-    color: '#fff'
+    color: '#fff',
+    top: height*.07
   },
   points: {
     fontWeight: '400',

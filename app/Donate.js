@@ -96,20 +96,7 @@ class Donate extends Component {
     return (
       <View style={[donateStyles.container, {backgroundColor: '#efefef'}]}>
           <Image source={require('../img/donate-header.jpg')} style={donateStyles.header} resizeMode='contain'>
-            <View style={donateStyles.headerBg}>
-              <TextInput 
-                style={donateStyles.headerText}
-                placeholder='DONATE TO YOU FOOD BANK'
-                editable={false}
-                placeholderTextColor='#fff'
-                />
-              <TextInput 
-                style={donateStyles.headerText}
-                placeholder='take care of your community'
-                editable={false}
-                placeholderTextColor='#fff'
-                />
-            </View>
+            <Text style={donateStyles.headerText}>DONATE TO YOUR FOOD BANK{'\n'}take care of your community</Text>
           </Image>
           <ScrollView>
           <View style={donateStyles.module}>
@@ -275,10 +262,9 @@ var donateStyles = StyleSheet.create({
     fontSize: font,
     textAlign: 'center',
     padding: 10,
-    height: height*.04,
-    width: width,
     backgroundColor: 'transparent',
     fontFamily: 'Gill Sans',
+    color: '#fff'
   },
 });
 
