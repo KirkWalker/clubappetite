@@ -3,7 +3,10 @@ var { View } = require('react-native')
 var DB = require('./DB');
 var resultData;
 var DEBUG = false;
-var SERVER_URL = 'http://restapi.clubappetite.com/api.php';
+
+var Config = require('../config');
+var SERVER_URL = Config.SERVER_URL;
+
 
 
 module.exports = {

@@ -1,7 +1,11 @@
 var {View} = require('react-native');
 var DB = require('./DB');
 
-var SERVER_URL = 'http://restapi.clubappetite.com/api.php?controller=api&action=';
+
+var Config = require('../config');
+var SERVER_URL = Config.SERVER_URL;
+SERVER_URL += '?controller=api&action=';
+
 var _page_name = '';
 var database;
 var InfoStore = {};
