@@ -151,14 +151,7 @@ class DealItem extends Component {
           <Image source={require('../img/shop-points-container.png')} style={shopStyles.pointsContainer}>
             <Text style={shopStyles.points}>{this.props.item.deal_price}</Text>
           </Image>
-          <View style={shopStyles.dealBg}>
-            <TextInput 
-              style={shopStyles.dealTitle}
-              placeholder={this.props.item.deal_title}
-              editable={false}
-              placeholderTextColor='#fff'
-              />
-          </View>
+          <Text style={shopStyles.dealTitle}>{this.props.item.deal_title}</Text>
         </Image>
       </TouchableOpacity>
       </View>
@@ -257,6 +250,7 @@ const shopStyles = StyleSheet.create({
     width: width*.80,
     backgroundColor: 'transparent',
     fontFamily: 'Gill Sans',
+    color: '#fff'
   },
   points: {
     fontWeight: '400',
