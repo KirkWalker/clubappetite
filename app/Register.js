@@ -1,5 +1,3 @@
-
-
 var React = require('react-native');
 var {
   StyleSheet,
@@ -19,24 +17,25 @@ var {
   Navigator,
 } = React;
 
+/* Stylesheets */
 var styles = require('../styles');
+
+/* Datalayer */
 var Users = require('../datalayer/User');
 var SubLocalities = require('../datalayer/Sublocalities');
+
+/* Modules */
 var SignupButton = require('../modules/ButtonLogin');
 var CancelButton = require('../modules/ButtonLogin');
 var ReferralCode = require('../app/ReferralCodeModal');
+var Autocomplete = require('../modules/Autocomplete');
 
+/* Dimensions */
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
 
-var Autocomplete = require('../modules/Autocomplete');
-let RegionList = Picker;
-let PickerItem = RegionList.Item;
-
-var FMPicker = require('../modules/ApplePicker');
-
+/* Register Page */
 class Register extends Component {
-
   constructor(props) {
     super(props);
     var code = (this.props.referralCode == undefined ? '' : this.props.referralCode);
@@ -48,23 +47,17 @@ class Register extends Component {
       sublocalities: [],
       sublocalitiesIds: [],
       locationIndex: 0,
-      selectedOption: 'not chosen',
       referralCode: code,
       query: '',
     };
     this.navigatorObj = props.navigator;
   }
 
-
   componentDidMount() {
     this.mounted = true;
     InteractionManager.runAfterInteractions(() => {
-      //SubLocalities.getSubLocalities(this);
-      this.setState({sublocalities: ['yo', 'whats', 'up', 'here', 'are', 'the', 'many', 'different',
-    'options', 'for', 'auto', 'complete', 'testing', 'towel', 'baking', 'soda', 'hi']})
+      SubLocalities.getSubLocalities(this);
     });
-
-    //this.redeemCode = this.redeemCode.bind(this);
   }
 
   componentWillUnmount() {
@@ -72,19 +65,23 @@ class Register extends Component {
   }
 
   render() {
-    var start = ['Please choose a location:'];
-    var end = this.state.sublocalities;
-    var data = start.concat(end);
+    // Used for autocomplete. This is the string inputted by the user.
     const { query } = this.state;
+    // The generated array of suggestions (see findSublocality method for more info)
     const sublocalities = this.findSublocality(query);
+    // comp is used  to help 'close' the autocomplete suggestions once a suggestion is chosen
+    // it's used in the Autocomplete component, as shown here:
+    //     data={sublocalities.length === 1 && comp(query, sublocalities[0]) ? [] : sublocalities}
+    // this ternary statement returns an empty array (thus 'closing' it) once the suggested array has
+    // only one option available, and that option is also written in the input field (which happens when
+    // an option is clicked)
     const comp = (s, s2) => s.toLowerCase().trim() === s2.toLowerCase().trim();
 
     return (
       <View>
-
-          <View style={registerStyles.bgContainer}>
-              <Image style={registerStyles.background} source={require('../img/splash-bg-ex.jpg')} resizeMode={Image.resizeMode.cover}/>
-          </View>
+        <View style={registerStyles.bgContainer}>
+          <Image style={registerStyles.background} source={require('../img/splash-bg-ex.jpg')} resizeMode={Image.resizeMode.cover}/>
+        </View>
 
         <View style={registerStyles.container} marginTop={30}>
           <Image source={require('../img/ClubAppetiteLogo.png')} style={registerStyles.logo} marginLeft={5} resizeMode={Image.resizeMode.contain}/>
@@ -120,7 +117,15 @@ class Register extends Component {
 
           })()}
 
-          {/*Test Comments*/}
+          {/*
+            * Autocomplete Component for location selection
+            *
+            * Rendered last because z-index is determined by render order. Putting it at the end gives it the highest
+            * z-index, meaning that the generated listview will be above the other elements, rather than below.
+            * It's position is absolute and is not determined by flexbox values.
+            *
+            * See declarations at the top of 'render()' for more information.
+            */}
           <Autocomplete
             containerStyle={registerStyles.autocompleteContainer}
             style={styles.input}
@@ -133,20 +138,12 @@ class Register extends Component {
             defaultValue={query}
             onChangeText={text => this.setState({query: text})}
             renderItem={data => (
-              <TouchableOpacity onPress={() => this.setState({query: data})}>
+              <TouchableOpacity onPress={() => this.handlePress(data)}>
                 <Text>{data}</Text>
               </TouchableOpacity>
             )}
           />
-
-
-
         </View>
-
-
-
-
-
       </View>
     );
   }
@@ -174,14 +171,35 @@ class Register extends Component {
   }
 
   findSublocality(query) {
-    if (query)
-    if (query === '') {
+    // escapes any special characters to prevent any crashes
+    let temp = query.trim();
+    temp = temp.replace(/\\/g, "\\\\");
+    temp = temp.replace(/\[/g, "\\[");
+    temp = temp.replace(/\*/g, "\\*");
+    temp = temp.replace(/\(/g, "\\(");
+    temp = temp.replace(/\)/g, "\\)");
+    temp = temp.replace(/\+/g, "\\+");
+
+    if (temp === '') {
       return [];
     }
 
+    // searches state.sublocalities array and returns any matches with 'temp'
     const { sublocalities } = this.state;
-    const regex = new RegExp(`${query.trim()}`, 'i');
+    const regex = new RegExp(`${temp.trim()}`, 'i');
     return sublocalities.filter(locality => locality.search(regex) >= 0);
+  }
+
+  handlePress(data) {
+    // sets the value of query (and therefore the input box) to the pressed option
+    this.setState({query: data});
+
+    // iterates through the sublocalities array and sets the registration state variables
+    for(i = 0; i < this.state.sublocalities.length; i++) {
+      if (this.state.sublocalities[i] === data) {
+        this.setState({locationIndex: i+1, selectedOption: data, location: data})
+      }
+    }
   }
 
   openReferralModal(referralCode) {
@@ -192,53 +210,6 @@ class Register extends Component {
     });
   }
 
-
-  iosPicker(data) {
-    return(
-      <View>
-        <Text>Current Location: {this.state.selectedOption}</Text>
-        <Text
-            style={{color:'blue'}}
-            onPress={()=>{
-                this.refs.picker.setoptions(data);
-                this.refs.picker.show();
-            }}>
-            Click here to select your location
-        </Text>
-
-        <FMPicker ref={'picker'} options={data}
-            onSubmit={(option)=>{
-                if(option.name == 'Please choose a location:') {
-                    this.setState({selectedOption: 'not chosen'})
-                }else {
-                    this.setState({locationIndex: option.index-1, selectedOption: option.name, location: option.name})
-                }
-            }}
-        />
-      </View>
-)}
-
-
-
-
-
-
-    androidPicker(data) {
-      return(
-        <RegionList
-            style={registerStyles.picker}
-            selectedValue={this.state.locationIndex+1}
-            onValueChange={(locationIndex) => this.setState({locationIndex: locationIndex-1, location: data[locationIndex]})}>
-              {data.map((regionName, locationIndex) => (
-                <PickerItem
-                style={{height: 50, margin:0,padding:0}}
-                  key={'region_' + locationIndex}
-                  value={locationIndex}
-                  label={regionName}
-                />
-                ))}
-        </RegionList>
-    );}
 
 
   gotoLogin() {
@@ -269,18 +240,18 @@ var registerStyles = StyleSheet.create({
     right: width*0.0718,
     top: 0,
   },
-container: {
-  flex: 1,
-  alignItems: 'center'
-},
+  container: {
+    flex: 1,
+    alignItems: 'center'
+  },
   logo: {
     width: width*.7,
     height: height*.18,
     alignItems: 'stretch',
   },
-moduleButtons: {
-  flexDirection: 'column'
-},
+  moduleButtons: {
+    flexDirection: 'column'
+  },
   bgContainer: {
     position: 'absolute'
   },
@@ -291,32 +262,32 @@ moduleButtons: {
     bottom: -height,
     flex: 1,
   },
-   picker: {
-       backgroundColor: '#efefef',
-       width: width*.80,
-       borderWidth:1,
-       borderColor:'#999999',
-       height: height*.06,
-       color: "#1B898A",
-       elevation:2,
-   },
-       basicContainer:{
-           flex: 1,
-           justifyContent: 'center',
-           alignItems: 'center',
-       },
-       modalContainer:{
-           position:'absolute',
-           bottom:0,
-           right:0,
-           left:0,
-           width:width,
-           height:height,
-           justifyContent: 'center',
-           alignItems: 'center',
-           padding:0,
-           backgroundColor: '#F5FCFF',
-       },
+  picker: {
+    backgroundColor: '#efefef',
+    width: width*.80,
+    borderWidth:1,
+    borderColor:'#999999',
+    height: height*.06,
+    color: "#1B898A",
+    elevation:2,
+  },
+  basicContainer:{
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContainer:{
+    position:'absolute',
+    bottom:0,
+    right:0,
+    left:0,
+    width:width,
+    height:height,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding:0,
+    backgroundColor: '#F5FCFF',
+  },
 });
 
 module.exports = Register;
