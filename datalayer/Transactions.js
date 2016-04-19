@@ -6,7 +6,7 @@ var {
 
 var DB = require('./DB');
 
-var DEBUG = true;
+var DEBUG = false;
 var Config = require('../config');
 var SERVER_URL = Config.SERVER_URL;
 var _page_name = 'Transactions:';
