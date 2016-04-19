@@ -26,10 +26,10 @@ var SignupButton = require('../modules/ButtonLogin');
 var CancelButton = require('../modules/ButtonLogin');
 var ReferralCode = require('../app/ReferralCodeModal');
 
-
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
 
+var Autocomplete = require('../modules/Autocomplete');
 let RegionList = Picker;
 let PickerItem = RegionList.Item;
 
@@ -38,27 +38,30 @@ var FMPicker = require('../modules/ApplePicker');
 class Register extends Component {
 
   constructor(props) {
-      super(props);
-      var code = (this.props.referralCode == undefined ? '' : this.props.referralCode);
-      this.state = {
-          inputTxt: '',
-          inputPass: '',
-          inputEmail: '',
-          location: "",
-          sublocalities: [],
-          sublocalitiesIds: [],
-          locationIndex: 0,
-          selectedOption: 'not chosen',
-          referralCode: code,
-      };
-      this.navigatorObj = props.navigator;
+    super(props);
+    var code = (this.props.referralCode == undefined ? '' : this.props.referralCode);
+    this.state = {
+      inputTxt: '',
+      inputPass: '',
+      inputEmail: '',
+      location: "",
+      sublocalities: [],
+      sublocalitiesIds: [],
+      locationIndex: 0,
+      selectedOption: 'not chosen',
+      referralCode: code,
+      query: '',
+    };
+    this.navigatorObj = props.navigator;
   }
 
 
   componentDidMount() {
     this.mounted = true;
     InteractionManager.runAfterInteractions(() => {
-      SubLocalities.getSubLocalities(this);
+      //SubLocalities.getSubLocalities(this);
+      this.setState({sublocalities: ['yo', 'whats', 'up', 'here', 'are', 'the', 'many', 'different',
+    'options', 'for', 'auto', 'complete', 'testing', 'towel', 'baking', 'soda', 'hi']})
     });
 
     //this.redeemCode = this.redeemCode.bind(this);
@@ -68,15 +71,15 @@ class Register extends Component {
       this.mounted = false;
   }
 
-
-
   render() {
     var start = ['Please choose a location:'];
     var end = this.state.sublocalities;
     var data = start.concat(end);
+    const { query } = this.state;
+    const sublocalities = this.findSublocality(query);
+    const comp = (s, s2) => s.toLowerCase().trim() === s2.toLowerCase().trim();
 
     return (
-
       <View>
 
           <View style={registerStyles.bgContainer}>
@@ -89,15 +92,7 @@ class Register extends Component {
 
         <View style={registerStyles.container} marginTop={40}>
 
-
-            {(() => {
-                switch (Platform.OS) {
-                  case "android":   return this.androidPicker(data);
-                  default:      return this.iosPicker(data);
-                }
-            })()}
-
-          <View style={styles.module} marginTop={3}>
+          <View style={styles.module} marginTop={height*0.083}>
             <View style={styles.inputContainer}>
               <TextInput placeholder="USERNAME" placeholderTextColor='#1B898A' style={styles.input} onChangeText={(text) => this.setState({inputTxt: text})} value={this.state.inputTxt} />
             </View>
@@ -124,6 +119,25 @@ class Register extends Component {
                return this.redeemCodeModal();
 
           })()}
+
+          {/*Test Comments*/}
+          <Autocomplete
+            containerStyle={registerStyles.autocompleteContainer}
+            style={styles.input}
+            autoCorrect={false}
+            autoCapitalize="none"
+            placeholder="SELECT A FOOD BANK"
+            placeholderTextColor='#1B898A'
+
+            data={sublocalities.length === 1 && comp(query, sublocalities[0]) ? [] : sublocalities}
+            defaultValue={query}
+            onChangeText={text => this.setState({query: text})}
+            renderItem={data => (
+              <TouchableOpacity onPress={() => this.setState({query: data})}>
+                <Text>{data}</Text>
+              </TouchableOpacity>
+            )}
+          />
 
 
 
@@ -157,6 +171,17 @@ class Register extends Component {
         </Text>
       </View>
     )
+  }
+
+  findSublocality(query) {
+    if (query)
+    if (query === '') {
+      return [];
+    }
+
+    const { sublocalities } = this.state;
+    const regex = new RegExp(`${query.trim()}`, 'i');
+    return sublocalities.filter(locality => locality.search(regex) >= 0);
   }
 
   openReferralModal(referralCode) {
@@ -234,6 +259,16 @@ class Register extends Component {
 }
 
 var registerStyles = StyleSheet.create({
+  // position is set to 'absolute' so that the listview
+  // goes 'on top' of the items below it
+  // otherwise the listview will move all items below it down
+  autocompleteContainer: {
+    flex: 1,
+    left: width*0.0718,
+    position: 'absolute',
+    right: width*0.0718,
+    top: 0,
+  },
 container: {
   flex: 1,
   alignItems: 'center'
