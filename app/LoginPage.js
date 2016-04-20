@@ -9,6 +9,7 @@ var {
   Image,
   Dimensions,
   PixelRatio,
+  Platform,
   Linking,
   Picker,
     TouchableHighlight,
@@ -24,10 +25,10 @@ var Button = require('../modules/ButtonLogin');
 
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
-var font = 25;
+var font = 23;
 
 if (PixelRatio.get() <= 2) {
-  font = 11;
+  font = 20;
 }
 
 var result;
@@ -94,8 +95,8 @@ class LoginPage extends Component {
             </View>
 
           </View>
+          <Text>{'\n\n\n\n'}</Text>
           <TouchableOpacity onPress={() => {this.openLink()}}><Text style={loginStyles.web}>www.clubappetite.com</Text></TouchableOpacity>
-
         </View>
 
       );
@@ -120,6 +121,10 @@ class LoginPage extends Component {
         Users.handleLogin(email,password,this);
     }
 
+}
+var webFont = font*.8;
+if (Platform.OS === 'ios'){
+  webFont = font;
 }
 
 var loginStyles = StyleSheet.create({
@@ -155,9 +160,10 @@ var loginStyles = StyleSheet.create({
     color: '#fff',
     textAlign: 'center',
     fontFamily: 'Gill Sans',
-    fontSize: font,
-    top: height*.23,
+    fontSize: webFont,
     fontWeight: '300',
+    // top: height*.05,
+    position: 'relative',
     letterSpacing: 2
   }
 });
