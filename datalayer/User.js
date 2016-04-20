@@ -25,7 +25,7 @@ var {
 var DB = require('./DB.js');
 
 var SERVER_URL = 'http://restapi.clubappetite.com/api.php';
-var DEBUG = false;
+var DEBUG = true;
 
 module.exports = {
 
@@ -365,7 +365,15 @@ module.exports = {
         var API_REQUEST = 'HandleRegister:';
         var error_message = '';
 
-        console.log("sublocality: " +sublocality);
+        if (DEBUG) { 
+            
+            console.log("username: " +username);
+            console.log("password: " +password);
+            console.log("email: " +email);
+            console.log("location: " +loc);
+            console.log("referralCode: " +referralCode);
+            console.log("sublocality: " +sublocality);
+        }
 
         if(username == '' || password == '' || email == '') {
             error_message = 'Please fill in all the form fields';
@@ -526,10 +534,7 @@ module.exports = {
 
 
     },
-//http://restapi.clubappetite.com/api.php?controller=api
-//&action=trackbannerclick
-//&ad_id=3
-//&token=KF31cSosW6HbhSWRi2FEkLBrVSAo8nu2fUO
+
     trackBannerClick(_ad_id, _user_profile) {
         var token = _user_profile.token;
         var ad_id = _ad_id;

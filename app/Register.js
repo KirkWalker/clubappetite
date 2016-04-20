@@ -197,7 +197,7 @@ class Register extends Component {
     // iterates through the sublocalities array and sets the registration state variables
     for(i = 0; i < this.state.sublocalities.length; i++) {
       if (this.state.sublocalities[i] === data) {
-        this.setState({locationIndex: i+1, selectedOption: data, location: data})
+        this.setState({locationIndex: i, selectedOption: data, location: data})
       }
     }
   }
