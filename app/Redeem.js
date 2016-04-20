@@ -120,7 +120,7 @@ class Redeem extends Component {
         <View style={redeemStyles.scrollview}>
         <ScrollView>
 
-           <Text style={redeemStyles.description}>{this.props.deal_info.deal_desc}</Text>
+           <Text style={redeemStyles.description}>{this.props.deal_info.deal_desc}{'\n\n'}</Text>
 
         </ScrollView>
         </View>
