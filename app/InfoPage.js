@@ -13,6 +13,7 @@ var {
   InteractionManager,
   Dimensions,
   PixelRatio,
+  Platform,
 } = React;
 
 var styles = require('../styles');
@@ -120,7 +121,7 @@ class InfoPage extends Component {
               startInLoadingState={false}
               scalesPageToFit={true}
             />
-
+            <Text>{'\n\n'}</Text>
 
           </View>
       </View>
@@ -132,6 +133,12 @@ class InfoPage extends Component {
 
 }
 
+var top = height*.03+10;
+var contentTop = 10;
+if (Platform.OS === 'ios'){
+  top = height*.03;
+  contentTop = 0;
+}
 
 
 const InfoStyles = StyleSheet.create({
@@ -148,11 +155,13 @@ const InfoStyles = StyleSheet.create({
       width: width*.895,
   },
   logo: {
+    top: top,
     width: width*.65,
     height: height*.12,
     marginBottom: 10,
   },
   touchableContainer: {
+    top: top,
     flexDirection: 'row',
     width: width,
     paddingTop: height*.025,
@@ -161,6 +170,7 @@ const InfoStyles = StyleSheet.create({
     paddingRight: width*.05,
     marginBottom: height*.05,
     alignItems: 'center',
+    elevation: 2,
     backgroundColor: '#fff',
     shadowColor: '#000',
     shadowOpacity: .3,
@@ -193,6 +203,7 @@ const InfoStyles = StyleSheet.create({
     width: width*.08,
   },
   contentContainer: {
+    top: contentTop,
     width: width*.97,
     paddingTop: height*.025,
     paddingBottom: height*.025,
@@ -201,6 +212,7 @@ const InfoStyles = StyleSheet.create({
     marginBottom: height*.05,
     alignItems: 'center',
     backgroundColor: '#fff',
+    elevation: 2,
     shadowColor: '#000',
     shadowOpacity: .3,
     shadowRadius: 3,
