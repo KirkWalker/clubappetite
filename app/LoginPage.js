@@ -8,6 +8,9 @@ var {
   Text,
   Image,
   Dimensions,
+  PixelRatio,
+  Platform,
+  Linking,
   Picker,
     TouchableHighlight,
     TouchableOpacity,
@@ -22,6 +25,11 @@ var Button = require('../modules/ButtonLogin');
 
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
+var font = 23;
+
+if (PixelRatio.get() <= 2) {
+  font = 20;
+}
 
 var result;
 
@@ -33,6 +41,19 @@ class LoginPage extends Component {
       super(props);
       this.state = { inputTxt: '', inputPass: '', data: null, language: "kelowna"};
       this.navigatorObj = props.navigator;
+  }
+
+  openLink() {
+    var website = 'http://www.clubappetite.com';
+    console.log(website);
+    Linking.canOpenURL(website).then(supported => {
+      if (supported) {
+        console.log("Opening link...");
+        return Linking.openURL(website);
+      } else {
+        console.log("Can\'t open this URI.");
+      }
+    });
   }
 
   render() {
@@ -74,7 +95,8 @@ class LoginPage extends Component {
             </View>
 
           </View>
-
+          <Text>{'\n\n\n\n'}</Text>
+          <TouchableOpacity onPress={() => {this.openLink()}}><Text style={loginStyles.web}>www.clubappetite.com</Text></TouchableOpacity>
         </View>
 
       );
@@ -100,6 +122,10 @@ class LoginPage extends Component {
     }
 
 }
+var webFont = font*.8;
+if (Platform.OS === 'ios'){
+  webFont = font;
+}
 
 var loginStyles = StyleSheet.create({
   container: {
@@ -117,7 +143,7 @@ var loginStyles = StyleSheet.create({
     textAlign: 'center',
     color:'#F0BB1A',
     fontSize: 16,
-    fontWeight:'bold',
+    fontWeight:'500',
     fontFamily: 'Gill Sans'
   },
   bgContainer: {
@@ -130,6 +156,16 @@ var loginStyles = StyleSheet.create({
     bottom: -height,
     flex: 1,
   },
+  web: {
+    color: '#fff',
+    textAlign: 'center',
+    fontFamily: 'Gill Sans',
+    fontSize: webFont,
+    fontWeight: '300',
+    // top: height*.05,
+    position: 'relative',
+    letterSpacing: 2
+  }
 });
 
 module.exports = LoginPage;
