@@ -10,6 +10,7 @@ var _page_name = '';
 var database;
 var InfoStore = {};
 var listView = false;
+var searchBar = false;
 
 var DEBUG = false;
 if (DEBUG) { console.log('WebAPI DEBUG flag is set\n---------------------------'); }
@@ -57,6 +58,10 @@ InfoStore.fetchData = function(_this, token, current_mod, data) {
 	if (_page_name == "messages" || _page_name == "sponsors") { listView = true; }
 	else { listView = false; }
 
+	// if the data is to be used in a page with a search bar, this needs to be true
+	if (_page_name == "sponsordeals" || _page_name == "sponsors") { searchBar = true; }
+	else { searchBar = false; }
+
 	var URL = SERVER_URL + _page_name + '&last_mod=' + current_mod + '&token=' + token;
 	if (DEBUG) { console.log(_page_name + ' fetchData: ', URL); }
 
@@ -95,19 +100,38 @@ InfoStore.fetchData = function(_this, token, current_mod, data) {
 
 							// Puts the data into a dataSource so that it can be displayed in a ListView
 							if (listView) {
-								_this.setState({
-									dataSource: _this.state.dataSource.cloneWithRows(responseData.details),
-									searchResults: _this.state.searchResults.cloneWithRows(responseData.details),
-									loaded: true,
-								});
+								// If a search bar is being used on the page
+								if (searchBar) {
+									_this.setState({
+										dataSource: _this.state.dataSource.cloneWithRows(responseData.details),
+										searchResults: _this.state.searchResults.cloneWithRows(responseData.details),
+										loaded: true,
+									});
+								}
+								else {
+									_this.setState({
+										dataSource: _this.state.dataSource.cloneWithRows(responseData.details),
+										loaded: true,
+									});
+								}
 							}
 							// If a ListView isn't being used, the data is put into an array
 							else {
-								_this.setState({
-									DataArray: responseData.details,
-									searchResults: responseData.details,
-									loaded: true,
-								});
+								// If a search bar is being used on the page
+								if (searchBar) {
+									_this.setState({
+										DataArray: responseData.details,
+										searchResults: responseData.details,
+										loaded: true,
+									});
+								}
+								else {
+									_this.setState({
+										DataArray: responseData.details,
+										searchResults: responseData.details,
+										loaded: true,
+									});
+								}
 							}
 						});
 					}
@@ -125,19 +149,37 @@ InfoStore.fetchData = function(_this, token, current_mod, data) {
 
 								// Puts the data into a dataSource so that it can be displayed in a ListView
 								if (listView) {
-									_this.setState({
-										dataSource: _this.state.dataSource.cloneWithRows(responseData.details),
-										searchResults: _this.state.searchResults.cloneWithRows(responseData.details),
-										loaded: true,
-									});
+									// If a search bar is being used on the page
+									if (searchBar) {
+										_this.setState({
+											dataSource: _this.state.dataSource.cloneWithRows(responseData.details),
+											searchResults: _this.state.searchResults.cloneWithRows(responseData.details),
+											loaded: true,
+										});
+									}
+									else {
+										_this.setState({
+											dataSource: _this.state.dataSource.cloneWithRows(responseData.details),
+											loaded: true,
+										});
+									}
 								}
 								// If a ListView isn't being used, the data is put into an array
 								else {
-									_this.setState({
+									// If a search bar is being used on the page
+									if (searchBar) {
+										_this.setState({
+											DataArray: responseData.details,
+											searchResults: responseData.details,
+											loaded: true,
+										});
+									}
+									else {
+										_this.setState({
 										DataArray: responseData.details,
-										searchResults: responseData.details,
 										loaded: true,
 									});
+									}
 								}
 							}
 						);
@@ -149,11 +191,20 @@ InfoStore.fetchData = function(_this, token, current_mod, data) {
 					// Puts the data into a dataSource so that it can be displayed in a ListView
 					if (listView) {
 						if (_this.state.dataSource != undefined) {
-							_this.setState({
-								dataSource: _this.state.dataSource.cloneWithRows(data[0].details),
-								searchResults: _this.state.searchResults.cloneWithRows(data[0].details),
-								loaded: true,
-							});
+							// If a search bar is being used on the page
+							if (searchBar) {
+								_this.setState({
+									dataSource: _this.state.dataSource.cloneWithRows(data[0].details),
+									searchResults: _this.state.searchResults.cloneWithRows(data[0].details),
+									loaded: true,
+								});
+							}
+							else {
+								_this.setState({
+									dataSource: _this.state.dataSource.cloneWithRows(data[0].details),
+									loaded: true,
+								});
+							}
 						}
 					}
 					// If a ListView isn't being used, the data is put into an array
@@ -164,11 +215,20 @@ InfoStore.fetchData = function(_this, token, current_mod, data) {
 							newArray.push(resultset[key]);
 						}
 
-						_this.setState({
-							DataArray: data[0].details,
-							searchResults: data[0].details,
-							loaded: true,
-						});
+						// If a search bar is being used on the page
+						if (searchBar) {
+							_this.setState({
+								DataArray: data[0].details,
+								searchResults: data[0].details,
+								loaded: true,
+							});
+						}
+						else {
+							_this.setState({
+								DataArray: data[0].details,
+								loaded: true,
+							});
+						}
 					}
 				}
 			}
