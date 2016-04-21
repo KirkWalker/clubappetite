@@ -9,6 +9,7 @@ var {
   Navigator,
   TouchableOpacity,
   Dimensions,
+  Linking,
   InteractionManager,
   Image,
 } = React;
@@ -49,6 +50,54 @@ class Share extends Component {
       this.mounted = false;
   }
 
+  openFacebook() {
+    var website = 'http://www.facebook.com/clubappetite/';
+    console.log(website);
+    Linking.canOpenURL(website).then(supported => {
+      if (supported) {
+        console.log("Opening link...");
+        return Linking.openURL(website);
+      } else {
+        console.log("Can\'t open this URI.");
+      }
+    });
+  }
+  openInstagram() {
+    var website = 'http://www.instagram.com/clubappetite/';
+    console.log(website);
+    Linking.canOpenURL(website).then(supported => {
+      if (supported) {
+        console.log("Opening link...");
+        return Linking.openURL(website);
+      } else {
+        console.log("Can\'t open this URI.");
+      }
+    });
+  }
+  openLinkedin() {
+    var website = 'http://www.linkedin.com/company/club-appetite';
+    console.log(website);
+    Linking.canOpenURL(website).then(supported => {
+      if (supported) {
+        console.log("Opening link...");
+        return Linking.openURL(website);
+      } else {
+        console.log("Can\'t open this URI.");
+      }
+    });
+  }
+  openTwitter() {
+    var website = 'http://twitter.com/clubappetite';
+    console.log(website);
+    Linking.canOpenURL(website).then(supported => {
+      if (supported) {
+        console.log("Opening link...");
+        return Linking.openURL(website);
+      } else {
+        console.log("Can\'t open this URI.");
+      }
+    });
+  }
 
   render() {
 
@@ -69,16 +118,16 @@ class Share extends Component {
     return (
       <View style={shareStyles.container}>
               <View style={shareStyles.iconsContainer}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => {this.openFacebook()}}>
                   <Image source={require('../img/share-facebook.png')} style={shareStyles.icons} resizeMode={Image.resizeMode.contain}/>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => {this.openInstagram()}}>
                   <Image source={require('../img/share-instagram.png')} style={shareStyles.icons} resizeMode={Image.resizeMode.contain}/>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => {this.openLinkedin()}}>
                   <Image source={require('../img/share-linkedin.png')} style={shareStyles.icons} resizeMode={Image.resizeMode.contain}/>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => {this.openTwitter()}}>
                   <Image source={require('../img/share-twitter.png')} style={shareStyles.icons} resizeMode={Image.resizeMode.contain}/>
                 </TouchableOpacity>
               </View>
