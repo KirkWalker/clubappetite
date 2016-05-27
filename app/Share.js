@@ -131,16 +131,7 @@ class Share extends Component {
                   <Image source={require('../img/share-twitter.png')} style={shareStyles.icons} resizeMode={Image.resizeMode.contain}/>
                 </TouchableOpacity>
               </View>
-              <TouchableOpacity onPress={this.gotoFacebook.bind(this)} >
-                <View style={shareStyles.optionsContainer}>
-                  <Image source={require('../img/3-hex.png')} style={shareStyles.hexes}/>
-                  <View style={shareStyles.textContainer}>
-                    <Text style={shareStyles.title}>Tell People</Text>
-                    <Text style={shareStyles.description}>100 points for each share</Text>
-                  </View>
-                  <Image source={require('../img/arrow.png')} style={shareStyles.arrow} resizeMode={Image.resizeMode.contain}/>
-                </View>
-              </TouchableOpacity>
+
               <TouchableOpacity onPress={this.gotoRefer.bind(this)} >
                 <View style={shareStyles.optionsContainer}>
                   <Image source={require('../img/3-hex.png')} style={shareStyles.hexes}/>
@@ -166,12 +157,7 @@ class Share extends Component {
     });
   }
 
-  gotoFacebook() {
-    this.props.navigator.push({
-      id: 'FacebookShare',
-      name: 'Facebook Share Page',
-    });
-  }
+
 
 }
 

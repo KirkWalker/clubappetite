@@ -1,6 +1,10 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
+ *
+ * React Native App for Club Appetite
+
+ * keytool -genkey -v -keystore clubappetite.keystore -alias clubappetite -keyalg RSA -keysize 2048 -validity 10000
+
+
  */
 'use strict';
 
@@ -27,7 +31,6 @@ var DealConfirm = require('./app/DealConfirm');
 var Cart = require('./app/Cart');
 var Share = require('./app/Share');
 var ReferAFriend = require('./app/ReferAFriend');
-var FacebookShare = require('./app/FacebookShare');
 var Donate = require('./app/Donate');
 var Checkout = require('./app/Checkout');
 var ThankYou = require('./app/Thankyou');
@@ -546,34 +549,6 @@ class AMGSandbox extends Component {
           navigator={navigator}
           openDrawer={this.openDrawer}
           pageName="Share"
-        />
-        </Drawer>
-      );
-    }
-    if (routeId === 'FacebookShare') {
-      return (
-      <Drawer
-                 ref={c => this.drawer = c}
-                 type={this.settings.drawerType}
-                 animation={this.settings.animation}
-                 openDrawerOffset={this.settings.openDrawerOffset}
-                 closedDrawerOffset={this.settings.closedDrawerOffset}
-                 panOpenMask={this.settings.panOpenMask}
-                 panCloseMask={this.settings.panCloseMask}
-                 relativeDrag={this.settings.relativeDrag}
-                 panStartCompensation={this.settings.panStartCompensation}
-                 openDrawerThreshold={this.settings.openDrawerThreshold}
-                 content={controlPanel}
-                 disabled={this.settings.disabled}
-                 tweenHandler={this.tweenHandler}
-                 tweenDuration={this.settings.tweenDuration}
-                 tweenEasing={this.settings.tweenEasing}
-                 negotiatePan={false}
-               >
-        <FacebookShare
-          navigator={navigator}
-          openDrawer={this.openDrawer}
-          pageName="Facebook"
         />
         </Drawer>
       );

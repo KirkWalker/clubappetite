@@ -24,10 +24,10 @@
 		298C45051CC3655800726318 /* PermanentMarker.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 298C45041CC3655800726318 /* PermanentMarker.ttf */; };
 		298C45061CC3655800726318 /* PermanentMarker.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 298C45041CC3655800726318 /* PermanentMarker.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		9FFF19541C8FA4A4004834B9 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FFF19511C8FA4A4004834B9 /* FBSDKCoreKit.framework */; };
-		9FFF19551C8FA4A4004834B9 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FFF19521C8FA4A4004834B9 /* FBSDKLoginKit.framework */; };
-		9FFF19561C8FA4A4004834B9 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FFF19531C8FA4A4004834B9 /* FBSDKShareKit.framework */; };
-		9FFF19861C8FA6F9004834B9 /* libRCTFBLogin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FFF197C1C8FA6EB004834B9 /* libRCTFBLogin.a */; };
+		9FFF19541C8FA4A4004834B9 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FFF19511C8FA4A4004834B9 /* FBSDKCoreKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		9FFF19551C8FA4A4004834B9 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FFF19521C8FA4A4004834B9 /* FBSDKLoginKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		9FFF19561C8FA4A4004834B9 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FFF19531C8FA4A4004834B9 /* FBSDKShareKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		9FFF19861C8FA6F9004834B9 /* libRCTFBLogin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FFF197C1C8FA6EB004834B9 /* libRCTFBLogin.a */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
