@@ -4,7 +4,7 @@
 
  * keytool -genkey -v -keystore clubappetite.keystore -alias clubappetite -keyalg RSA -keysize 2048 -validity 10000
 
-
+adb install app/build/outputs/apk/app-release-unsigned.apk
  */
 'use strict';
 
