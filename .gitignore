@@ -39,3 +39,8 @@ ios/FBSDKCoreKit.framework/
 ios/FBSDKShareKit.framework/
 ios/FBSDKLoginKit.framework/
 
+
+# Don't commit security credentials!
+.got/
+*.keystore
+fabric.properties
